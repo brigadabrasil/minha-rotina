@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Treino de pandeiro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1513">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Minha Rotina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{background:#0E1513;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+x-dc{display:block;visibility:hidden}
+x-dc>div{width:100%!important;max-width:560px;margin:0 auto;height:auto!important;min-height:100vh;min-height:100dvh}
+x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.nav{position:fixed!important;left:0;right:0;bottom:0;z-index:50;max-width:560px;margin:0 auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+</style>
+<script src="dc-lite.js" defer></script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1513}
+a{color:#4CC3B5}a:hover{color:#7DD8CD}
+.nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #2A3833;background:#121B18;padding:8px 6px 18px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;color:#9DACA6;text-decoration:none;font-size:11px;font-weight:600;border-radius:12px}
+.nav a.on{color:#F2A93B}
+.nav a:hover{color:#EEF3F0}
+.mt{min-width:0;min-height:44px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:99px;border:1px solid #2A3833;color:#EEF3F0;text-decoration:none;font-size:13px;font-weight:600;box-sizing:border-box}
+.mt:hover{color:#EEF3F0;border-color:#5A6B65}
+.mt.on{background:#F2A93B;color:#1A1205;border-color:#F2A93B}
+</style>
+</helmet>
+<div style="width: 390px; height: 2900px; display: flex; flex-direction: column; background: #0E1513; color: #EEF3F0; font-family: 'Figtree', sans-serif">
+<main style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 20px">
+<header>
+<div style="font-size: 14px; color: #9DACA6; font-weight: 500">20 min · 215 músicas em 5 ritmos</div>
+<h1 style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">Pandeiro</h1>
+</header>
+<nav aria-label="Instrumentos" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; flex-shrink: 0">
+<a class="mt" href="Berimbau.dc.html">Berimbau</a>
+<a class="mt on" href="Pandeiro.dc.html" aria-current="page">Pandeiro</a>
+<a class="mt" href="Atabaque.dc.html">Atabaque</a>
+<a class="mt" href="Violao.dc.html">Violão</a>
+<a class="mt" href="Harmonica.dc.html">Harmônica</a>
+</nav>
+
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{sesLabel}}</span><span style="font-size: 12px; color: #9DACA6">{{sesCount}}</span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><button onClick="{{sesPrev}}" aria-label="Estudo anterior" style="display: {{sesPrevDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">‹</button><div style="flex-grow: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{sesDate}}</span><button onClick="{{sesBack}}" style="display: {{sesBackDisp}}; padding: 0; border: 0; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">voltar ao próximo estudo</button></div><button onClick="{{sesNext}}" aria-label="Próximo estudo" style="display: {{sesNextDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">›</button></div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">{{sesName}}</div>
+<div style="font-size: 13px; color: #9DACA6; line-height: 1.45">{{sesFoco}}</div>
+<div style="display: {{cellsDisp}}; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px">
+<div style="height: 44px; border-radius: 10px; background: #4CC3B5; color: #06201C; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TUM<span style="font-size: 9px; font-weight: 600; opacity: 0.8">polegar</span></div>
+<div style="height: 44px; border-radius: 10px; background: #1D2925; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TI<span style="font-size: 9px; font-weight: 600; opacity: 0.8">dedos</span></div>
+<div style="height: 44px; border-radius: 10px; background: #F2A93B; color: #1A1205; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TI<span style="font-size: 9px; font-weight: 600; opacity: 0.8">pulso</span></div>
+<div style="height: 44px; border-radius: 10px; background: #1D2925; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TI<span style="font-size: 9px; font-weight: 600; opacity: 0.8">dedos</span></div>
+<div style="height: 44px; border-radius: 10px; background: #4CC3B5; color: #06201C; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TUM<span style="font-size: 9px; font-weight: 600; opacity: 0.8">polegar</span></div>
+<div style="height: 44px; border-radius: 10px; background: #1D2925; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TI<span style="font-size: 9px; font-weight: 600; opacity: 0.8">dedos</span></div>
+<div style="height: 44px; border-radius: 10px; background: #F2A93B; color: #1A1205; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TI<span style="font-size: 9px; font-weight: 600; opacity: 0.8">pulso</span></div>
+<div style="height: 44px; border-radius: 10px; background: #1D2925; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-direction: column; font-size: 13px">TI<span style="font-size: 9px; font-weight: 600; opacity: 0.8">dedos</span></div>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">MÚSICAS DESTE ESTUDO</span><button onClick="{{tdSongSwap}}" aria-label="Trocar músicas" style="display: {{tdSwapDisp}}; min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outras músicas</button></div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{tdSongItems}}" as="it" hint-placeholder-count="2">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.yt}}" target="_blank" rel="noopener" style="display: {{it.ytDisp}}; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #E5484D; color: #FFFFFF">▶ Ouvir no YouTube</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Plano · 20 min</h2>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">5'</span><div><div style="font-weight: 600">Exercícios de condução</div><div style="font-size: 12px; color: #9DACA6">{{planRit}}</div></div></div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border-radius: 14px; background: #16201D">
+<div style="display: flex; gap: 12px"><span style="font-weight: 700; width: 32px; color: #F2A93B">8'</span><div style="flex-grow: 1"><div style="font-weight: 600">Treinar as técnicas</div><div style="font-size: 12px; color: #9DACA6">{{planEx}}</div></div><a href="https://drive.google.com/drive/folders/16F3qs8gYPyRDZdwtZq_eAx38NEUqG6nG" target="_blank" rel="noopener" aria-label="Abrir pasta de técnicas no Google Drive" style="flex-shrink: 0; align-self: center; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid #2A3833; background: #121B18; color: #F2A93B; font-size: 16px; font-weight: 700; text-decoration: none">↗</a></div>
+</div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">7'</span><div><div style="font-weight: 600">Tocar uma música</div><div style="font-size: 12px; color: #9DACA6">{{planSong}}</div></div></div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Ritmos</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 12px; border-radius: 14px; background: #16201D"><div style="font-weight: 700">Samba</div><div style="font-size: 12px; color: #9DACA6">52 músicas</div></div>
+<div style="padding: 12px; border-radius: 14px; background: #16201D"><div style="font-weight: 700">Xote</div><div style="font-size: 12px; color: #9DACA6">28 músicas · inclui frevo</div></div>
+<div style="padding: 12px; border-radius: 14px; background: #16201D"><div style="font-weight: 700">Baião</div><div style="font-size: 12px; color: #9DACA6">18 músicas</div></div>
+<div style="padding: 12px; border-radius: 14px; background: #16201D"><div style="font-weight: 700">Coco</div><div style="font-size: 12px; color: #9DACA6">15 músicas</div></div>
+</div>
+</section>
+
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Meu acervo</h2>
+<span style="font-size: 13px; color: #9DACA6">{{total}}</span>
+</div>
+<div style="font-size: 12px; color: #9DACA6; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a5 5 0 1 1 1-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8Z"></path></svg>OneDrive › Pandeiro · letras por ritmo + Exercícios e Técnicas · toque numa música para ver a letra</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="min-height: 44px; padding: 0 12px; border-radius: 99px; border: 1px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px">{{c.label}}<span style="font-size: 11px; font-weight: 700; opacity: 0.8">{{c.n}}</span></button>
+</sc-for>
+</div>
+<div style="display: {{subsDisp}}; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{subs}}" as="sb" hint-placeholder-count="3"><button onClick="{{sb.pick}}" style="min-height: 36px; padding: 0 12px; border-radius: 99px; border: 1px solid {{sb.bd}}; background: {{sb.bg}}; color: {{sb.fg}}; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">{{sb.label}} · {{sb.n}}</button></sc-for>
+</div>
+<sc-for list="{{items}}" as="it" hint-placeholder-count="7">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.yt}}" target="_blank" rel="noopener" style="display: {{it.ytDisp}}; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #E5484D; color: #FFFFFF">▶ Ouvir no YouTube</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<button onClick="{{moreToggle}}" style="display: {{moreDisp}}; padding: 12px; border-radius: 14px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{moreLabel}}</button>
+</section>
+</main>
+<nav class="nav" aria-label="Navegação principal">
+<a href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Hoje</a>
+<a href="Alimentacao.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"></path></svg>Comida</a>
+<a href="Capoeira.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c8 5 8 15 0 20"></path><path d="M8 2v20"></path><circle cx="6" cy="16" r="3.5"></circle></svg>Capoeira</a>
+<a href="Surf.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2-1 3-5 6-8s8-4 11-1c2 2 1 5-2 5-2 0-3-2-1.5-3"></path><path d="M2 21c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"></path></svg>Surf</a>
+<a class="on" href="Berimbau.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Música</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var LYRQ = "letra";
+    var LYRL = "Ver letra";
+    var AUD = {"lad:soumandingueiro": "media/a/b00.mp4", "lad:voumeemboraprabahia": "media/a/b01.mp4", "lad:osenhordoengenho": "media/a/b02.mp4", "lad:tinhameudinheiro": "media/a/b03.mp4", "lad:anu": "media/a/b04.mp4", "lad:mamaequeroserbombeiro": "media/a/b05.mp4", "lad:eraeuerameumano": "media/a/b06.mp4", "qa:adeuscamaradaadeus": "media/a/b07.mp4", "qa:mamaeoxum": "media/a/b08.mp4", "qa:capoeiraquemmeensinou": "media/a/b09.mp4", "qa:botadende": "media/a/b10.mp4", "qa:maeafrica": "media/a/b11.mp4", "qa:lalaela": "media/a/b12.mp4", "qa:sobradodemamae": "media/a/b13.mp4", "ca:adeuscorina": "media/a/b14.mp4", "ca:soueumaita": "media/a/b15.mp4", "ca:paranae": "media/a/b16.mp4", "ca:ondevaicaiman": "media/a/b17.mp4", "ca:maresubiu": "media/a/b18.mp4", "ca:catarina": "media/a/b19.mp4", "ca:erabesouro": "media/a/b20.mp4", "ch:lembrancadomestre": "media/a/b21.mp4", "ch:quadras": "media/a/b22.mp4", "ch:eunascide7meses": "media/a/b23.mp4", "ch:saicatarina": "media/a/b24.mp4", "ch:eiparana": "media/a/b25.mp4", "ch:santoamaro": "media/a/b26.mp4", "qr:semprelembrado": "media/a/b27.mp4", "qr:besouromanganga": "media/a/b28.mp4", "qr:jogoarrepiado": "media/a/b29.mp4", "qr:jogoperigoso": "media/a/b30.mp4", "qr:aidenegaafricana": "media/a/b31.mp4", "qr:historiadepescador": "media/a/b32.mp4", "qr:africaseuniu": "media/a/b33.mp4", "cr:avisameumano": "media/a/b34.mp4", "cr:ouvifalar": "media/a/b35.mp4", "cr:leleleo": "media/a/b36.mp4", "cr:ventania": "media/a/b37.mp4", "cr:gungaemeu": "media/a/b38.mp4", "cr:sinhosaobento": "media/a/b39.mp4", "cr:catarinavemver": "media/a/b40.mp4", "sbg:acendealuz": "media/a/b41.mp4", "sbg:elalaelaela": "media/a/b42.mp4", "sbg:redenavaranda": "media/a/b43.mp4", "sbg:hojetemcapoeira": "media/a/b44.mp4", "sbg:maliciaemanha": "media/a/b45.mp4", "sbg:maranhao": "media/a/b46.mp4", "sbg:marecheia": "media/a/b47.mp4", "sr:areiadomar": "media/a/b48.mp4", "sr:pisanalinhalevantaoboi": "media/a/b49.mp4", "sr:alomangueira": "media/a/b50.mp4", "sr:notabuleirodabaiana": "media/a/b51.mp4", "sr:ojoaochofer": "media/a/b52.mp4", "sr:alobahia": "media/a/b53.mp4", "sr:queluzeaquela": "media/a/b54.mp4", "mac:maculelebarrao": "media/a/b55.mp4", "mac:maculelesuassuna": "media/a/b56.mp4", "mac:maculelesuassuna2": "media/a/b57.mp4", "mac:ocongochegou": "media/a/b58.mp4", "mac:maculelecarolinasoares": "media/a/b59.mp4", "mac:maculeleorixas": "media/a/b60.mp4", "mac:racas": "media/a/b61.mp4", "pr:puxadaderedesaopaulo": "media/a/b62.mp4", "pr:puxadaderedeburgues1": "media/a/b63.mp4", "pr:puxadaderedeburgues2": "media/a/b64.mp4", "pr:puxadaderedecarolinasoares": "media/a/b65.mp4", "pr:puxadaderedekenura": "media/a/b66.mp4", "folk:blowininthewind": "media/a/h67.mp4", "folk:dontthinktwiceitsallright": "media/a/h68.mp4", "folk:heartofgold": "media/a/h69.mp4", "folk:theriver": "media/a/h70.mp4", "folk:maryjaneslastdance": "media/a/h71.mp4", "rock:lovemedo": "media/a/h72.mp4", "rock:roadhouseblues": "media/a/h73.mp4", "rock:missyou": "media/a/h74.mp4", "rock:midnightrambler": "media/a/h75.mp4", "rock:houseoftherisingsun": "media/a/h76.mp4", "rock:cryin": "media/a/h77.mp4", "rock:redemptionsong": "media/a/h78.mp4", "folk:comesatime": "media/a/h79.mp4", "folk:atlanticcity": "media/a/h80.mp4", "sroda:areiadomar": "media/a/b48.mp4", "sroda:sambaderodacaicara": "media/s/s147.mp4", "sroda:sambaderodacurio": "media/s/s148.mp4", "sroda:sambaderodaburgues": "media/s/s149.mp4", "sroda:sambaderodakenura": "media/s/s150.mp4", "sroda:sambaderodadeputado": "media/s/s151.mp4", "sroda:sambaderodacarolinasoares": "media/s/s152.mp4", "sroda:pisanalinhalevantaoboi": "media/a/b49.mp4", "sroda:alomangueira": "media/a/b50.mp4", "sroda:notabuleirodabaiana": "media/a/b51.mp4", "sroda:ojoaochofer": "media/a/b52.mp4", "sroda:alobahia": "media/a/b53.mp4", "sroda:saisaisaiopiranha": "media/s/s153.mp4", "sroda:senosdoismorassejunto": "media/s/s154.mp4", "sroda:paiepaimaeemae": "media/s/s155.mp4", "sroda:queluzeaquela": "media/a/b54.mp4"};
+    function nrm(t) { return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+    var LYRT = 'Letra';
+    var LYRPH = 'Cole aqui a letra da sua apostila';
+    var SUFFIX_UNUSED = "pandeiro";
+    var CATS = [{"id": "samba", "label": "Samba", "n": 52, "items": [["Conselho", "Almir Guineto"], ["Favela", "Arlindo Cruz"], ["Vou Festejar", "Beth Carvalho"], ["A Semente", "Bezerra da Silva"], ["Malandragem Dá Um Tempo", "Bezerra da Silva"], ["Reunião de Bacana", "Bezerra da Silva"], ["Se Leonardo Da Vinte", "Bezerra da Silva"], ["Sequestraram Minha Sogra", "Bezerra da Silva"], ["Candidato Caô Caô", "Bezerra da Silva"], ["Alvorada", "Cartola"], ["As Rosas Não Falam", "Cartola"], ["O Sol Nascerá", "Cartola"], ["Pranto dos Poetas", "Cartola"], ["Preciso Me Encontrar", "Cartola"], ["A Banda", "Chico Buarque"], ["Cotidiano", "Chico Buarque"], ["Canto das Três Raças", "Clara Nunes"], ["Deixa", "Dazaranha"], ["Trem das Onze", "Demônios da Garoa"], ["Comer Fora", "Dicró"], ["Pede Que Ela Dá", "Dicró"], ["Flor de Lis", "Djavan"], ["O Que É, o Que É", "Gonzaguinha"], ["Capoeira Mata Um", "Jackson do Pandeiro"], ["Eu e Você Sempre", "Jorge Aragão"], ["Mas Que Nada", "Jorge Ben Jor"], ["Menina Mulher da Pele Preta", "Jorge Ben Jor"], ["O Telefone Tocou Novamente", "Jorge Ben Jor"], ["Oba, Lá Vem Ela", "Jorge Ben Jor"], ["Diz Que Fui Por Aí", "Luiz Melodia"], ["Estácio, Holly Estácio", "Luiz Melodia"], ["Juventude Transviada", "Luiz Melodia"], ["Nega do Cabelo Duro", "Marcha de Carnaval"], ["De Mais Ninguém", "Marisa Monte"], ["Disritmia", "Martinho da Vila"], ["Mulheres", "Martinho da Vila"], ["A Volta do Ponteiro", "Originais do Samba"], ["Confiança", "Originais do Samba"], ["Falador Passa Mal", "Originais do Samba"], ["A Minha Menina", "Os Mutantes"], ["A Voz do Morro", "Paulinho da Viola"], ["Dança da Solidão", "Paulinho da Viola"], ["Pecado Capital", "Paulinho da Viola"], ["Tive Razão", "Seu Jorge"], ["Trabalhador", "Seu Jorge"], ["Deixa a Vida Me Levar", "Zeca Pagodinho"], ["Maneiras", "Zeca Pagodinho"], ["Vacilão", "Zeca Pagodinho"], ["Verdade", "Zeca Pagodinho"], ["Marginal Menestrel", "MV Bill"], ["Cabeça de Nego", "Sabotage"], ["Caviar", "Zeca Pagodinho"]], "dir": "Pandeiro › Samba"}, {"id": "xote", "label": "Xote", "n": 28, "items": [["Pisa na Fulô", "Alceu Valença"], ["Tropicana", "Alceu Valença"], ["Nosso Xote", "Bicho de Pé"], ["Ando Meio Desligado", "Bicho de Pé"], ["Eu Só Quero Um Xodó", "Dominguinhos"], ["Lamento Sertanejo", "Dominguinhos"], ["Ai Que Saudade de Ocê", "Elba Ramalho"], ["Medo de Escuro", "Falamansa"], ["Oh Chuva", "Falamansa"], ["Rindo à Toa", "Falamansa"], ["Xote da Alegria", "Falamansa"], ["Xote dos Milagres", "Falamansa"], ["Amor em Caraíva", "Forró da Lua"], ["Dona da Minha Cabeça", "Geraldo Azevedo"], ["Esperando na Janela", "Gilberto Gil"], ["Vida de Viajante", "Gonzaguinha"], ["Sapatilha 37", "Guentae"], ["A Vida do Viajante", "Luiz Gonzaga"], ["Petrolina Juazeiro", "Luiz Gonzaga"], ["Súplica Cearense", "Luiz Gonzaga"], ["Xote das Meninas", "Luiz Gonzaga"], ["Colo de Menina", "Rastapé"], ["De Teresina a São Luís", "Trio Nordestino"], ["Avôhai", "Zé Ramalho"], ["Táxi Lunar", "Zé Ramalho"], ["Pagode Russo (frevo)", "Luiz Gonzaga"], ["Frevo Mulher (frevo)", "Trio Virgulino"], ["Admirável Gado Novo (frevo)", "Zé Ramalho"]], "dir": "Pandeiro › Xote"}, {"id": "baiao", "label": "Baião", "n": 18, "items": [["Anunciação", "Alceu Valença"], ["Coração Bobo", "Alceu Valença"], ["La Belle de Jour", "Alceu Valença"], ["Feira de Mangaio", "Clara Nunes"], ["Isso Aqui Tá Bom Demais", "Dominguinhos"], ["Avisa", "Falamansa"], ["Pisa Maneiro", "Jacinto Silva"], ["Feito de Manteiga", "Jackson do Pandeiro"], ["Carcará", "João do Vale"], ["Estrela Miúda", "João do Vale"], ["Asa Branca", "Luiz Gonzaga"], ["Assum Preto", "Luiz Gonzaga"], ["Baião", "Luiz Gonzaga"], ["Vem Morena", "Luiz Gonzaga"], ["Baião de Quatro Tempos", "Luiz Tatit"], ["Catarina", "Raiz do Sana"], ["Bicho do Mato", "Rastapé"], ["Os Números", "Raul Seixas"]], "dir": "Pandeiro › Baião"}, {"id": "coco", "label": "Coco", "n": 15, "items": [["Derradeiro Coco", "Coco de Roda"], ["A Vida Tava Tão Boa", "Coco do Arcoverde"], ["Abelha Aripuã", "Coco do Arcoverde"], ["Acorda Criança", "Coco do Arcoverde"], ["Andrelina", "Coco do Arcoverde"], ["Ê Boi", "Coco do Arcoverde"], ["Seu Maia", "Coco do Arcoverde"], ["Areia", "Dona Selma"], ["Boa Noite", "Dona Selma"], ["Rolinha", "Dona Selma"], ["Xô Xô Meu Sabiá", "Dona Selma"], ["Coco de Embolada", "Jacinto Silva"], ["Perfume Dela", "Martinha do Coco"], ["Cobra Coral", "Pandeiro do Mestre"], ["Coco das Quatro Praias", "Pandeiro do Mestre"]], "dir": "Pandeiro › Coco"}, {"id": "sroda", "label": "Samba de Roda", "n": 102, "items": [["1. Jauá Jauá cheguei agora Jauá", "4 tempos", "Cantigas de Entrada"], ["2. Ê e e eu cheguei agora", "4 tempos", "Cantigas de Entrada"], ["3. Já cheguei pessoal", "4 tempos", "Cantigas de Entrada"], ["4. Foi agora que eu cheguei Doná", "4 tempos", "Cantigas de Entrada"], ["5. Eu chegue agora eu perdi a hora", "4 tempos (ou 2)", "Cantigas de Entrada"], ["6. Eu vim cá apanhar uma rosa", "2 tempos", "Cantigas de Entrada"], ["7. Eu vim aqui foi pra vadiar", "4 tempos", "Cantigas de Entrada"], ["8. Nazaré, Nazaré olha o povo do samba", "4 tempos", "Cantigas de Entrada"], ["9. Nazaré, Nazaré acorda quem ta dormindo", "4 tempos (ou 2)", "Cantigas de Entrada"], ["10. Minha comadre eu vim aqui porque", "2 tempos", "Cantigas de Entrada"], ["11. Dona da casa, me dê licença quero falar com a senhora", "2 tempos", "Cantigas de Entrada"], ["12. Dona da casa, a casa é sua a varanda é minha", "4 tempos", "Cantigas de Entrada"], ["13. Levanta mulher corre a roda", "4 tempos", "Cantigas de Entrada"], ["14. Quando nessa casa entrei", "4 tempos", "Cantigas de Entrada"], ["15. Quando nessa casa entrei", "4 tempos", "Cantigas de Entrada"], ["16. Com meu chapéu de couro por Deus abençoado", "2 tempos", "Cantigas de Entrada"], ["17. Eu vim lá de Feira passei em Serrinha", "2 tempos", "Cantigas de Entrada"], ["18. Violeiro bom, ta aí", "4 tempos", "Cantigas de Entrada"], ["19. Eu cheguei não me diga que não", "4 tempos", "Cantigas de Entrada"], ["20. Eu vim da ilha", "4 tempos", "Cantigas de Entrada"], ["1. Tava no mato tava vaquejando gado", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["2. Ê que vaqueiro malvado", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["3. Maré encheu, maré vazou", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["4. Papagaio louro é de Iaiá", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["5. Meu boi Ceará", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["6. Chega pra cá venha ver", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["7. Minha comadre eu vim aqui porque", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["8. Varanda boa, varanda de vadiar", "Cantigas de 4 Tempos", "Cantigas de 4 Tempos"], ["1. Tiricotico na cabeça do Didico", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["2. Eu vim lá de Feira passei em Serrinha", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["3. Maria Tereza seu cabelo cheira", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["4. O cabelo da cigana", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["5. Não vai errar na letra", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["6. No samba da tiririca", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["7. Mamãe me deu de machucador", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["8. Eu vou aboiá meu gado", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["9. Na vaquejada da Lapa", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["10. Fui convidado pra ir lá no céu", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["11. Ai aí ai escute o que eu to lhe falando", "Cantigas de 2 Tempos", "Cantigas de 2 Tempos"], ["1. Eu vim lá de Feira passei em Serrinha", "2 tempos", "Samba Rural"], ["2. Vou vender o meu gado", "4 tempos (ou 2)", "Samba Rural"], ["3. Boia boiadeiro", "4 tempos (ou 2)", "Samba Rural"], ["4. Chama dois vaqueiros", "4 tempos (ou 2)", "Samba Rural"], ["5. Tava no mato tava vaquejando gado", "4 tempos (ou 2)", "Samba Rural"], ["6. Na vaquejada da Lapa", "2 tempos", "Samba Rural"], ["7. Deixa o boi beber", "4 tempos", "Samba Rural"], ["8. Maria ô Maria eu vou-me embora mas não posso te levar", "2 tempos", "Samba Rural"], ["1. Meu sabiá, bem-te-vi não tem coroa", "4 tempos", "Cantigas de Pássaros"], ["2. Meu sofrer meu sabiá", "2 tempos", "Cantigas de Pássaros"], ["3. Passarinho perdeu a pena, o peixe perdeu escama", "2 tempos", "Cantigas de Pássaros"], ["4. Gavião perdeu a pena no passar de Igarapé", "2 tempos", "Cantigas de Pássaros"], ["5. Minha sabiá, minha zabelê", "2 tempos", "Cantigas de Pássaros"], ["6. Eu queria ser um canário", "4 tempos", "Cantigas de Pássaros"], ["7. Canarinho da Alemanha quem matou meu curió", "4 tempos", "Cantigas de Pássaros"], ["8. Vôa sabiá do galho da laranjeira", "4 tempos (ou 2)", "Cantigas de Pássaros"], ["9. Eu vi a ema lá na lagoa", "4 tempos", "Cantigas de Pássaros"], ["10. Corre ema, corre ema, corre ema corredeira", "2 tempos", "Cantigas de Pássaros"], ["11. Eu vi lá no oco do pau andorinha brigando com um pica pau", "2 tempos", "Cantigas de Pássaros"], ["12. Ê pica-pau belisca na fulô", "4 tempos", "Cantigas de Pássaros"], ["13. Ê pica-pau não suba no engombeiro", "4 tempos", "Cantigas de Pássaros"], ["14. O ema o ema", "2 tempos", "Cantigas de Pássaros"], ["15. Quixabeira", "2 tempos", "Cantigas de Pássaros"], ["1. Papai, mamãe, nunca peguei no alheio", "4 tempos", "Cantigas de Pai e Mãe"], ["2. Pai é pai, mãe é mãe", "Cantigas de Pai e Mãe", "Cantigas de Pai e Mãe"], ["3. Mãe é mãe, pai é pai", "4 tempos", "Cantigas de Pai e Mãe"], ["4. Sou eu, sou eu, sou eu amor de mãe", "4 tempos", "Cantigas de Pai e Mãe"], ["5. Papai não chora por mamãe", "2 tempos (ou 4)", "Cantigas de Pai e Mãe"], ["6. Eu vou beber mel", "4 tempos", "Cantigas de Pai e Mãe"], ["7. Papai Nicolau tirador de cipó", "4 tempos", "Cantigas de Pai e Mãe"], ["8. Ô mamãe, papai me bateu", "4 tempos", "Cantigas de Pai e Mãe"], ["9. Mamãe me deu de machucador", "2 tempos", "Cantigas de Pai e Mãe"], ["10. Ô José, senhor meu pai", "2 tempos (ou 4)", "Cantigas de Pai e Mãe"], ["1. Quando matar o boi o mocotó é meu", "2 tempos", "Cantigas de Mourão"], ["2. Meu boi vermelho", "2 tempos", "Cantigas de Mourão"], ["3. Carrego minha faca", "2 tempos", "Cantigas de Mourão"], ["4. O pandeiro furou na beirada", "4 tempos", "Cantigas de Mourão"], ["5. Quem quer ser o que não é fica pior do que tá", "4 tempos", "Cantigas de Mourão"], ["6. Onde é que amarra o boi?", "4 tempos", "Cantigas de Mourão"], ["7. Boiada boa boiada de São Vicente", "2 tempos", "Cantigas de Mourão"], ["8. Terra alheia, não é morada", "4 tempos", "Cantigas de Mourão"], ["9. Pisa no massapê escorrega", "4 tempos", "Cantigas de Mourão"], ["1. Violeiro bom, ta aí", "4 tempos", "Cantigas de Viola"], ["2. Que viola boa", "4 tempos", "Cantigas de Viola"], ["3. Vou vender viola, vou vender viola", "4 tempos", "Cantigas de Viola"], ["4. Tum-tum-tum Carolina, uma vez só prima minha", "4 tempos", "Cantigas de Viola"], ["5. O Izaura, toca viola", "4 tempos", "Cantigas de Viola"], ["1. A canoa virou marinheiro", "Cantigas de Corrido", "Cantigas de Corrido"], ["2. Samba no mar, samba no mar marinheiro", "Cantigas de Corrido", "Cantigas de Corrido"], ["3. Não tem quem panha areia lá no mar", "Cantigas de Corrido", "Cantigas de Corrido"], ["4. Sereia, sereia", "Cantigas de Corrido", "Cantigas de Corrido"], ["5. Se a maré ta cheia o Piau", "Cantigas de Corrido", "Cantigas de Corrido"], ["6. Ê baleia da-lhe um tombo na água", "Cantigas de Corrido", "Cantigas de Corrido"], ["7. Onda vai, onda vem", "Cantigas de Corrido", "Cantigas de Corrido"], ["8. Ê canoeiro, canoa virou no mar", "Cantigas de Corrido", "Cantigas de Corrido"], ["1. Vovó lava roupa mamãe lava roupa", "Cantigas do Minduim", "Cantigas do Minduim"], ["2. Se duvida do que eu digo chega pra cá venha ver", "Cantigas do Minduim", "Cantigas do Minduim"], ["3. Tindolelê Mariê", "Cantigas do Minduim", "Cantigas do Minduim"], ["4. O seu vaqueiro e o seu cavalo", "Cantigas do Minduim", "Cantigas do Minduim"], ["5. Eu vou embora mamãe chegou a hora", "Cantigas do Minduim", "Cantigas do Minduim"], ["6. Ah sabiá, oh bem-te-ví", "Cantigas do Minduim", "Cantigas do Minduim"], ["7. Ê Rosa Maria, a saudade vem e vai", "Cantigas do Minduim", "Cantigas do Minduim"], ["8. Morena me chamou", "Cantigas do Minduim", "Cantigas do Minduim"]], "dir": "apostila Músicas Samba de Roda (PDF)"}];
+    var self = this;
+    var st = this.state || {};
+    var SESS = [[20260921, "17:00"], [20260928, "17:00"], [20261004, "09:00"], [20261011, "09:00"], [20261018, "09:00"], [20261024, "09:00"], [20261031, "09:00"], [20261107, "09:00"], [20261113, "17:00"], [20261120, "09:00"], [20261127, "09:00"], [20261203, "09:00"], [20261210, "09:00"], [20261217, "09:00"], [20261223, "09:00"], [20261230, "09:00"], [20270106, "09:00"], [20270112, "09:00"], [20270119, "09:00"], [20270126, "09:00"], [20270201, "09:00"], [20270208, "17:00"], [20270215, "17:00"], [20270221, "09:00"], [20270228, "09:00"], [20270307, "09:00"], [20270313, "09:00"], [20270320, "09:00"], [20270327, "09:00"], [20270402, "17:00"], [20270409, "09:00"], [20270416, "09:00"], [20270422, "09:00"], [20270429, "09:00"], [20270506, "09:00"], [20270512, "09:00"], [20270519, "09:00"], [20270526, "09:00"], [20270601, "09:00"], [20270608, "09:00"], [20270615, "09:00"], [20270621, "09:00"], [20270628, "17:00"]];
+    var ROT = [
+      { n: 'Samba', c: 'samba', cells: true, foco: 'TUM no polegar, condução nos dedos e no pulso · comece a 80 bpm' },
+      { n: 'Xote', c: 'xote', foco: 'Levada do xote · comece devagar ouvindo as músicas do acervo e mantenha a condução regular' },
+      { n: 'Baião', c: 'baiao', foco: 'Levada do baião · comece devagar ouvindo as músicas do acervo e mantenha a condução regular' },
+      { n: 'Coco', c: 'coco', foco: 'Levada do coco · comece devagar ouvindo as músicas do acervo e mantenha a condução regular' },
+      { n: 'Samba de Roda', c: 'sroda', foco: 'Levada do samba de roda · balanço solto, acompanhe as palmas e o canto' }
+    ];
+    var nowS = new Date(), todayN = nowS.getFullYear() * 10000 + (nowS.getMonth() + 1) * 100 + nowS.getDate();
+    var defSi = SESS.length - 1;
+    for (var si0 = 0; si0 < SESS.length; si0++) { if (SESS[si0][0] >= todayN) { defSi = si0; break; } }
+    var si = st.si === undefined ? defSi : Math.max(0, Math.min(SESS.length - 1, st.si));
+    var SE = SESS[si], RT = ROT[si % ROT.length];
+    var WDS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    var sy = Math.floor(SE[0] / 10000), sm = Math.floor(SE[0] / 100) % 100, sd = SE[0] % 100;
+    var sdow = new Date(Date.UTC(sy, sm - 1, sd)).getUTCDay();
+    var sesTag = SE[0] === todayN ? 'Hoje' : (si === defSi ? 'Próximo' : (SE[0] < todayN ? 'Anterior' : 'Depois'));
+    var sesReset = { sgPick: null, tdSong: null };
+    var SES_OUT = {
+      cellsDisp: 'none', sesFoco: RT.foco, planRit: 'Sem força, com jeito', planEx: RT.n + ' · abafar o grave com a mão de apoio',
+      sesLabel: 'TOQUE DO DIA · ' + sesTag, sesName: RT.n, sesDate: WDS[sdow] + ' ' + sd + '/' + sm + ' · ' + SE[1], sesCount: 'Estudo ' + (si + 1) + ' de ' + SESS.length,
+      sesPrevDisp: si > 0 ? 'flex' : 'none', sesNextDisp: si < SESS.length - 1 ? 'flex' : 'none', sesBackDisp: si !== defSi ? 'inline-flex' : 'none',
+      sesPrev: function () { self.setState(Object.assign({ si: si - 1 }, sesReset)); },
+      sesNext: function () { self.setState(Object.assign({ si: si + 1 }, sesReset)); },
+      sesBack: function () { self.setState(Object.assign({ si: defSi }, sesReset)); }
+    };
+    var sel = st.cat || CATS[0].id;
+    var cur = CATS[0];
+    var total = 0;
+    var cats = CATS.map(function (c) {
+      total += c.n;
+      var on = c.id === sel;
+      if (on) cur = c;
+      return {
+        label: c.label, n: c.n, on: on,
+        bg: on ? '#F2A93B' : '#16201D', fg: on ? '#1A1205' : '#EEF3F0', bd: on ? '#F2A93B' : '#2A3833',
+        pick: function () { self.setState({ cat: c.id, song: null, showAll: false, sub: null }); }
+      };
+    });
+    var openSong = st.song;
+    var picsAll = st.pics || {};
+    var YTM = {"samba:0": "CTIvQ4KGtKM", "samba:1": "GePLq83phNM", "samba:2": "KmUe9VYxJYQ", "samba:3": "evJzTY33efU", "samba:4": "zDB0za2ikZo", "samba:5": "O7KVkqymkZ4", "samba:6": "2FPHLsIfqYE", "samba:7": "KUOI8DvlnH4", "samba:8": "fp-nhGFVSvI", "samba:9": "rEpH62jRFr0", "samba:10": "pBWg7LGETL0", "samba:11": "qIGN9fDhrEU", "samba:12": "CnK0DgFbQw8", "samba:13": "56mu8KSUYqk", "samba:14": "n-uywG1_GnI", "samba:15": "dHYOVuq_Fco", "samba:16": "9OBBkQxMtXs", "samba:17": "0Wy00JuQkow", "samba:18": "hVAzdtd9X_A", "samba:19": "PXCPoP8_htg", "samba:20": "9Qk-2m0XxdU", "samba:21": "TLc2xpAc-sM", "samba:22": "IYZcsb706q8", "samba:23": "cc6w4YtKTWo", "samba:24": "A83Wy6NG00c", "samba:25": "hg0XftC43Zo", "samba:26": "COGWtCxmxrI", "samba:27": "qh8iJMsOXw0", "samba:28": "gWUAEnb4BVM", "samba:29": "5fIWwjWdZQk", "samba:30": "F5QmwbkizBg", "samba:31": "bpzAPtfS0e4", "samba:32": "JYSJRIYCcik", "samba:33": "TMdZqj-xkYY", "samba:34": "9y7P1af3NAM", "samba:35": "2WoLyh_Q1Xk", "samba:36": "CFEa0L_dslQ", "samba:37": "nzVvpNRsGxA", "samba:38": "V6w-5JKA3FQ", "samba:39": "XIbJylD_c84", "samba:40": "pebcDCvtJKE", "samba:41": "PBtfKsXEhFo", "samba:42": "hGIv3B6IrdY", "samba:43": "8m6wrCCRvm8", "samba:44": "eC5HXfR21lI", "samba:45": "oTREAvZbmME", "samba:46": "bO59n1Rfwmw", "samba:47": "INA4fzd0U9A", "samba:48": "ITongbC_dy0", "samba:49": "1i8yRy6h91E", "samba:50": "iuvYZvhaGzM", "samba:51": "UFCK1Xzfimw", "xote:0": "Pq0MhIZIwqg", "xote:1": "Bd76Bj0ostQ", "xote:2": "tDFKMlOWU-8", "xote:3": "dcELUk8g0tM", "xote:4": "GUanq0Uhes8", "xote:5": "eUAc2Lv50CE", "xote:6": "XggONZJm0-A", "xote:7": "xZYRPyHur9U", "xote:8": "Veeu7KSsZ4c", "xote:9": "MXpTa90Or6A", "xote:10": "bGVH0CxQi24", "xote:11": "qMjXfiG-obQ", "xote:12": "c5lcXQ4ArVA", "xote:13": "6H9tCXRmXPI", "xote:14": "5S-ZrxBkqKU", "xote:15": "w1OXDVG_N_4", "xote:16": "P3vNjHR9Kyg", "xote:17": "s2yhxUL4Hj4", "xote:18": "t_70Bfif9BQ", "xote:19": "pVexU0c4t-g", "xote:20": "4hBmHs0-f14", "xote:21": "tQSxabyAiZo", "xote:22": "f8I6l0Ve8g0", "xote:23": "SBEyjXJlv-8", "xote:24": "VlT-JQJOKi0", "xote:25": "IAWkTqqTZOw", "xote:26": "5uScKySDpHI", "xote:27": "t_sUkOXO4zU", "baiao:0": "OR74idpsweg", "baiao:1": "dEDubYTK5IM", "baiao:2": "UxvTdW9CLfI", "baiao:3": "V0KLXs0SCpE", "baiao:4": "QaZx-Z9OAew", "baiao:5": "K7rVNYMEwAE", "baiao:6": "F0i3DPn-ULo", "baiao:7": "rAWqf7RNrNA", "baiao:8": "rsMGd0_yQ7Y", "baiao:9": "MAybxkvSgFU", "baiao:10": "zIy3EwyBBI0", "baiao:11": "3s97f23PV6E", "baiao:12": "mwFGvGMxotc", "baiao:13": "R0kIwfEymEs", "baiao:14": "NkbgL1csydg", "baiao:15": "eHqJhxfAmS4", "baiao:16": "vcm9L42cVbk", "baiao:17": "-VqNbHOoUXs", "coco:0": "8y4FYwaSMcw", "coco:1": "aWECRYH_Uv8", "coco:2": "FzkJO3NuNOY", "coco:3": "nkqa_c0NUN4", "coco:4": "FNeZLyklh44", "coco:5": "gpqpz1u-pbI", "coco:6": "J0BBj9xNuPE", "coco:7": "PzKFHGtI7JM", "coco:8": "VzvZnXub0so", "coco:9": "Axm_g8FonpY", "coco:10": "m9MWXnOSqvM", "coco:11": "zK81c7Ghh9Q", "coco:12": "H-uxmDqqfxo", "coco:13": "ZybHEwmc3L8", "coco:14": "6a0ydduu4wo"};
+    function mkItem(cur, i, idx, open, toggleFn) {
+      var ytv = cur.id === 'sroda' ? null : (YTM[cur.id + ':' + idx] || '');
+      var skey = cur.id + ':' + i[0];
+      var pics = picsAll[skey] || [];
+      var audio = AUD[cur.id + ':' + nrm(i[0])] || '';
+      return {
+        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio,
+        open: open, chev: open ? '−' : '+', bd: open ? '#F2A93B' : '#16201D',
+        toggle: toggleFn,
+        where: 'No seu OneDrive: ' + cur.dir + (cur.byItem ? ' › ' + i[1] : ''),
+        lyr: 'https://www.google.com/search?q=' + encodeURIComponent(LYRQ + ' ' + i[0] + ' ' + i[1]),
+        lyrLabel: LYRL,
+        ytDisp: ytv === null ? 'none' : 'inline-flex', yt: ytv ? 'https://www.youtube.com/watch?v=' + ytv : 'https://www.youtube.com/results?search_query=' + encodeURIComponent(i[1] + ' ' + i[0]),
+        pics: pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0] }; }), hasPics: pics.length > 0,
+        canUpload: !(i[5] && i[5].length), upLabel: pics.length ? 'Inserir outra imagem' : 'Inserir imagem da ' + LYRT.toLowerCase(),
+        lyrTitle: LYRT.toUpperCase(), tid: 'img-' + cur.id + '-' + idx,
+        onFile: function (e) {
+          var f = e.target.files && e.target.files[0];
+          if (!f) return;
+          var r = new FileReader();
+          r.onload = function () {
+            var all = Object.assign({}, (self.state || {}).pics || {});
+            all[skey] = (all[skey] || []).concat([r.result]);
+            self.setState({ pics: all });
+          };
+          r.readAsDataURL(f);
+        }
+      };
+    }
+    var SUBS = [];
+    if (cur.id === 'sroda') cur.items.forEach(function (i) { var g = i[2] || 'Outras'; if (SUBS.indexOf(g) < 0) SUBS.push(g); });
+    var subSel = SUBS.length ? (SUBS.indexOf(st.sub) >= 0 ? st.sub : SUBS[0]) : null;
+    var listAll = cur.items.map(function (i, idx) { return [i, idx]; }).filter(function (p) { return !subSel || (p[0][2] || 'Outras') === subSel; });
+    var listShown = st.showAll ? listAll : listAll.slice(0, 10);
+    var items = listShown.map(function (p) { var i = p[0], idx = p[1];
+      var key = cur.id + ':' + idx, open = openSong === key;
+      return mkItem(cur, i, idx, open, function () { self.setState({ song: open ? null : key }); });
+    });
+    var SONG_POOL = [];
+    CATS.forEach(function (c) { if ((function (c) { return c.id === RT.c; })(c)) c.items.forEach(function (it, ix) { SONG_POOL.push([c.id, ix]); }); });
+    var NS = Math.min(2, SONG_POOL.length);
+    function pickN(n, k, avoid) { var out = [], tries = 0; while (out.length < k && tries < 200) { var r = Math.floor(Math.random() * n); tries++; if (out.indexOf(r) < 0 && (!avoid || avoid.indexOf(r) < 0 || tries > 100)) out.push(r); } return out; }
+    var sgPick = st.sgPick || (function () { var o = []; for (var q = 0; q < NS; q++) { var v = (si * 7 + q * 5 + 3) % SONG_POOL.length; while (o.indexOf(v) >= 0) v = (v + 1) % SONG_POOL.length; o.push(v); } return o; })();
+    var tdSongItems = sgPick.map(function (k) { var p = SONG_POOL[k]; var c = CATS.filter(function (x) { return x.id === p[0]; })[0];
+      var key = 'td:' + p[0] + ':' + p[1], open = st.tdSong === key;
+      return mkItem(c, c.items[p[1]], p[1], open, function () { self.setState({ tdSong: open ? null : key }); }); });
+    SES_OUT.tdSongItems = tdSongItems;
+    SES_OUT.tdSongSwap = function () { self.setState({ sgPick: pickN(SONG_POOL.length, NS, sgPick), tdSong: null }); };
+    SES_OUT.tdSwapDisp = SONG_POOL.length > NS ? 'block' : 'none';
+    SES_OUT.songNames = tdSongItems.map(function (x) { return '“' + x.t + '”'; });
+    SES_OUT.planSong = 'Hoje: ' + SES_OUT.songNames.join(' ou ') + ' cantando junto';
+    var more = 0;
+    var subs = SUBS.map(function (g) { var on = g === subSel; return { label: g, n: cur.items.filter(function (i) { return (i[2] || 'Outras') === g; }).length, bg: on ? '#4CC3B5' : '#121B18', fg: on ? '#06201C' : '#EEF3F0', bd: on ? '#4CC3B5' : '#2A3833', pick: function () { self.setState({ sub: g, song: null, showAll: false }); } }; });
+    var out = {
+      cats: cats, items: items, total: total + ' músicas',
+      subs: subs, subsDisp: subs.length ? 'flex' : 'none', moreLabel: listAll.length <= 10 ? '' : (st.showAll ? 'Ver menos' : 'Ver mais (' + (listAll.length - 10) + ')'), moreDisp: listAll.length > 10 ? 'block' : 'none', moreToggle: function () { self.setState({ showAll: !st.showAll, song: null }); }
+    };
+
+    var CH = [{"id": "tum", "name": "TUM", "sub": "Grave solto", "tag": "grave", "body": "O som mais grave do pandeiro. Polegar na lateral inferior ou dedos juntos na lateral superior.\nO polegar faz as notas de marcação: deixe-o relaxado. Não é força, é jeito.\nTambém dá para tirar o grave nos dedos — é um dos sons mais difíceis: o contato com a pele precisa ser o mais curto possível."}, {"id": "tu", "name": "TU", "sub": "Grave abafado", "tag": "abafado", "body": "O mesmo golpe do TUM, mas o dedo médio da mão que segura o pandeiro pressiona a pele por baixo. A ressonância é cortada e o som fica opaco, preso.\nFunciona com o polegar ou com o grave nos dedos."}, {"id": "ti", "name": "TI", "sub": "Condução", "tag": "condução", "body": "O som que conduz o ritmo, como um ganzá ou o chimbal da bateria.\nPulso: a parte de baixo da mão encosta na borda e volta. Destaca as platinelas, som curto e bem definido.\nDedos: o bloco dos 4 dedos repousa rapidamente na pele. Parecido, um pouco menos estalado."}, {"id": "ta", "name": "TÁ", "sub": "Agudo e estalado", "tag": "tapa", "body": "Tapa: mão espalmada no centro do pandeiro, sem rebote. O som deve ser seco e agudo; pode deixar a mão na pele depois.\nTapa com polegar: o polegar bate bem no centro, procurando um som agudo, bem diferente do grave.\nTreine bastante para o tapa ficar definido."}, {"id": "tri", "name": "TRI", "sub": "Rulo e acento", "tag": "efeito", "body": "Rulo: pressione levemente o dedo médio na pele e escorregue a ponta dos dedos para um som contínuo das platinelas.\nRulo de pulso: arraste o pulso do centro para a borda. Soa igual, mas acaba mais rápido.\nAcento (>): tocar mais forte naquela nota. Vale para qualquer som e é muito importante em alguns ritmos.\n\nLembrete do autor: não existe jeito “certo”. O certo é o jeito que está saindo música."}];
+    var openCh = st.ch === undefined ? null : st.ch;
+    out.chs = CH.map(function (c) {
+      var o = openCh === c.id;
+      return { name: c.name, sub: c.sub, tag: c.tag, body: c.body, open: o, chev: o ? '−' : '+', bd: c.tag === 'hoje' ? '#F2A93B' : '#16201D',
+        toggle: function () { self.setState({ ch: o ? null : c.id }); } };
+    });
+    Object.keys(SES_OUT).forEach(function (k) { out[k] = SES_OUT[k]; });
+    return out;
+  }
+}
+</script>
+</body>
+</html>

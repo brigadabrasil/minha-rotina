@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Treino de violão</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1513">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Minha Rotina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{background:#0E1513;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+x-dc{display:block;visibility:hidden}
+x-dc>div{width:100%!important;max-width:560px;margin:0 auto;height:auto!important;min-height:100vh;min-height:100dvh}
+x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.nav{position:fixed!important;left:0;right:0;bottom:0;z-index:50;max-width:560px;margin:0 auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+</style>
+<script src="dc-lite.js" defer></script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1513}
+a{color:#4CC3B5}a:hover{color:#7DD8CD}
+.nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #2A3833;background:#121B18;padding:8px 6px 18px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;color:#9DACA6;text-decoration:none;font-size:11px;font-weight:600;border-radius:12px}
+.nav a.on{color:#F2A93B}
+.nav a:hover{color:#EEF3F0}
+.mt{min-width:0;min-height:44px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:99px;border:1px solid #2A3833;color:#EEF3F0;text-decoration:none;font-size:13px;font-weight:600;box-sizing:border-box}
+.mt:hover{color:#EEF3F0;border-color:#5A6B65}
+.mt.on{background:#F2A93B;color:#1A1205;border-color:#F2A93B}
+.fb{position:relative;width:70px;height:64px;border-top:4px solid #EEF3F0;background-image:linear-gradient(to right,#5A6B65 1px,transparent 1px),linear-gradient(to bottom,#5A6B65 1px,transparent 1px);background-size:14px 100%,100% 16px;border-right:1px solid #5A6B65;border-bottom:1px solid #5A6B65;box-sizing:content-box}
+.dot{position:absolute;width:10px;height:10px;border-radius:5px;background:#F2A93B}
+</style>
+</helmet>
+<div style="width: 390px; height: 3550px; display: flex; flex-direction: column; background: #0E1513; color: #EEF3F0; font-family: 'Figtree', sans-serif">
+<main style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 20px">
+<header>
+<div style="font-size: 14px; color: #9DACA6; font-weight: 500">30 min · teoria e 424 cifras</div>
+<h1 style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">Violão</h1>
+</header>
+<nav aria-label="Instrumentos" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; flex-shrink: 0">
+<a class="mt" href="Berimbau.dc.html">Berimbau</a>
+<a class="mt" href="Pandeiro.dc.html">Pandeiro</a>
+<a class="mt" href="Atabaque.dc.html">Atabaque</a>
+<a class="mt on" href="Violao.dc.html" aria-current="page">Violão</a>
+<a class="mt" href="Harmonica.dc.html">Harmônica</a>
+</nav>
+
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{sesLabel}}</span><span style="font-size: 12px; color: #9DACA6">{{sesCount}}</span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><button onClick="{{sesPrev}}" aria-label="Estudo anterior" style="display: {{sesPrevDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">‹</button><div style="flex-grow: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{sesDate}}</span><button onClick="{{sesBack}}" style="display: {{sesBackDisp}}; padding: 0; border: 0; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">voltar ao próximo estudo</button></div><button onClick="{{sesNext}}" aria-label="Próximo estudo" style="display: {{sesNextDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">›</button></div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 24px; font-weight: 800; line-height: 1.15">{{sesName}}</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center">
+<sc-for list="{{campo}}" as="x" hint-placeholder-count="7"><div style="padding: 8px 0; border-radius: 10px; background: {{x.bg}}; color: {{x.fg}}"><div style="font-weight: 800; font-size: 13px">{{x.c}}</div><div style="font-size: 10px; color: {{x.dc}}">{{x.d}}</div></div></sc-for>
+</div>
+<div style="font-size: 13px; color: #9DACA6; line-height: 1.45">Progressão do dia: <strong style="color: #EEF3F0">{{sesProg}}</strong>. Base de muitas músicas populares.</div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{sofTitle}}</span><div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{sof}}" as="x" hint-placeholder-count="6"><button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="padding: 8px 12px; border-radius: 10px; border: 1px solid {{x.bd}}; background: {{x.bg}}; color: {{x.fg}}; font-family: inherit; font-weight: 700; font-size: 13px; cursor: pointer">{{x.c}}</button></sc-for></div><div style="display: {{cdDisp}}; gap: 16px; align-items: center; padding: 14px; border-radius: 14px; background: #121B18; border: 1px solid #2A3833">
+<div style="position: relative; width: 140px; height: 150px; flex-shrink: 0">
+<span style="position: absolute; left: 0; top: 30px; font-size: 11px; font-weight: 700; color: #9DACA6">{{cdBase}}</span>
+<div style="position: absolute; left: 20px; top: 20px; width: 110px; height: 125px; border-top: {{cdNut}} solid #EEF3F0; background-image: linear-gradient(to right, #5A6B65 1px, transparent 1px), linear-gradient(to bottom, #5A6B65 1px, transparent 1px); background-size: 22px 100%, 100% 25px; border-right: 1px solid #5A6B65; border-bottom: 1px solid #5A6B65; box-sizing: border-box">
+<sc-for list="{{cdMarks}}" as="m" hint-placeholder-count="6"><span style="position: absolute; left: {{m.x}}px; top: -20px; width: 14px; text-align: center; font-size: 12px; font-weight: 700; color: #9DACA6">{{m.t}}</span></sc-for>
+<sc-for list="{{cdDots}}" as="d" hint-placeholder-count="4"><span style="position: absolute; left: {{d.x}}px; top: {{d.y}}px; width: 20px; height: 20px; border-radius: 10px; background: {{d.bg}}; color: #1A1205; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{d.t}}</span></sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 800">{{cdName}}</span><span style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{cdDesc}}</span><span style="font-size: 12px; color: #C9D4CF; line-height: 1.45">{{cdNotes}}</span><button onClick="{{cdVNext}}" style="display: {{cdVDisp}}; align-self: flex-start; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">{{cdVLabel}}</button></div>
+</div>
+<span style="font-size: 12px; color: #9DACA6">{{sofNote}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{scTitle}}</span><div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{scs}}" as="x" hint-placeholder-count="8"><button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="padding: 8px 12px; border-radius: 10px; border: 1px solid {{x.bd}}; background: {{x.bg}}; color: {{x.fg}}; font-family: inherit; font-weight: 700; font-size: 13px; cursor: pointer">{{x.c}}</button></sc-for></div>
+<div style="display: {{scDisp}}; flex-direction: column; gap: 10px; padding: 14px 3px 10px; border-radius: 14px; background: #121B18; border: 1px solid #2A3833">
+<div style="padding: 0 10px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">{{scName}}</span><span style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{scDesc}}</span><span style="font-size: 13px; color: #EEF3F0; font-weight: 600">{{scNotes}}</span></div>
+<div style="position: relative; width: 312px; height: 112px; margin: 0 auto">
+<div style="position: absolute; left: 0; top: 0; width: 312px; height: 96px; background-image: linear-gradient(to bottom, transparent 7px, #5A6B65 7px, #5A6B65 8px, transparent 8px), linear-gradient(to right, transparent 23px, #3A4A44 23px); background-size: 100% 16px, 24px 100%"></div>
+<div style="position: absolute; left: 22px; top: 6px; width: 3px; height: 84px; background: #EEF3F0"></div>
+<sc-for list="{{scDots}}" as="d" hint-placeholder-count="20"><span style="position: absolute; left: {{d.x}}px; top: {{d.y}}px; width: 16px; height: 16px; border-radius: 8px; background: {{d.bg}}; color: {{d.fg}}; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{d.t}}</span></sc-for>
+<sc-for list="{{scFrets}}" as="f" hint-placeholder-count="5"><span style="position: absolute; left: {{f.x}}px; top: 98px; width: 24px; text-align: center; font-size: 10px; color: #9DACA6">{{f.t}}</span></sc-for>
+</div>
+<span style="padding: 0 10px; font-size: 11px; color: #9DACA6">Braço do violão até a casa 12 · corda Mi aguda em cima · laranja = tônica</span>
+</div></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; justify-items: center">
+<sc-for list="{{shapes}}" as="s" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><span style="font-weight: 800">{{s.c}}</span><div class="fb"><span class="dot" style="display: {{s.d0}}; left: {{s.l0}}px; top: {{s.t0}}px"></span><span class="dot" style="display: {{s.d1}}; left: {{s.l1}}px; top: {{s.t1}}px"></span><span class="dot" style="display: {{s.d2}}; left: {{s.l2}}px; top: {{s.t2}}px"></span><span class="dot" style="display: {{s.d3}}; left: {{s.l3}}px; top: {{s.t3}}px"></span><span class="dot" style="display: {{s.d4}}; left: {{s.l4}}px; top: {{s.t4}}px"></span><span class="dot" style="display: {{s.d5}}; left: {{s.l5}}px; top: {{s.t5}}px"></span></div></div></sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">MÚSICAS DESTE ESTUDO</span><button onClick="{{tdSongSwap}}" aria-label="Trocar músicas" style="display: {{tdSwapDisp}}; min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outras músicas</button></div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{tdSongItems}}" as="it" hint-placeholder-count="2">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.lyr}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #E5484D; color: #FFFFFF">{{it.lyrLabel}}</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="metodo" style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Material de estudo</h2><span style="font-size: 13px; color: #9DACA6">4 materiais de teoria e harmonia · toque para abrir</span></div>
+<sc-for list="{{chs}}" as="ch" hint-placeholder-count="4">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{ch.bd}}">
+<button onClick="{{ch.toggle}}" aria-expanded="{{ch.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 11px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; display: flex; flex-direction: column"><span style="font-weight: 600">{{ch.name}}</span><span style="font-size: 12px; color: #9DACA6; line-height: 1.4">{{ch.sub}}</span></span>
+<span style="flex-shrink: 0; display: flex; align-items: center; gap: 8px"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: #F2A93B">{{ch.tag}}</span><span style="width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{ch.chev}}</span></span>
+</button>
+<sc-if value="{{ch.open}}" hint-placeholder-val="{{false}}"><div style="padding: 0 14px 14px; font-size: 13px; line-height: 1.55; color: #C9D4CF; white-space: pre-line">{{ch.body}}</div></sc-if>
+</div>
+</sc-for>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Plano · 30 min</h2>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">10'</span><div><div style="font-weight: 600">Escala do dia</div><div style="font-size: 12px; color: #9DACA6">{{planScale}}</div></div></div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">10'</span><div><div style="font-weight: 600">Troca de acordes sofisticados</div><div style="font-size: 12px; color: #9DACA6">{{planSof}}</div></div></div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">10'</span><div><div style="font-weight: 600">Música</div><div style="font-size: 12px; color: #9DACA6">{{planSong}}</div></div></div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Meu acervo</h2>
+<span style="font-size: 13px; color: #9DACA6">{{total}}</span>
+</div>
+<div style="font-size: 12px; color: #9DACA6; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a5 5 0 1 1 1-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8Z"></path></svg>OneDrive › Violão · cifras com tom, por estilo e por artista · toque numa música para ver a letra</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="min-height: 44px; padding: 0 12px; border-radius: 99px; border: 1px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px">{{c.label}}<span style="font-size: 11px; font-weight: 700; opacity: 0.8">{{c.n}}</span></button>
+</sc-for>
+</div>
+<sc-for list="{{items}}" as="it" hint-placeholder-count="7">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.lyr}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #E5484D; color: #FFFFFF">{{it.lyrLabel}}</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<button onClick="{{moreToggle}}" style="display: {{moreDisp}}; padding: 12px; border-radius: 14px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{moreLabel}}</button>
+</section>
+</main>
+<nav class="nav" aria-label="Navegação principal">
+<a href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Hoje</a>
+<a href="Alimentacao.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"></path></svg>Comida</a>
+<a href="Capoeira.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c8 5 8 15 0 20"></path><path d="M8 2v20"></path><circle cx="6" cy="16" r="3.5"></circle></svg>Capoeira</a>
+<a href="Surf.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2-1 3-5 6-8s8-4 11-1c2 2 1 5-2 5-2 0-3-2-1.5-3"></path><path d="M2 21c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"></path></svg>Surf</a>
+<a class="on" href="Berimbau.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Música</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var LYRQ = "cifra";
+    var LYRL = "▶ Ouvir música";
+    var AUD = {"lad:soumandingueiro": "media/a/b00.mp4", "lad:voumeemboraprabahia": "media/a/b01.mp4", "lad:osenhordoengenho": "media/a/b02.mp4", "lad:tinhameudinheiro": "media/a/b03.mp4", "lad:anu": "media/a/b04.mp4", "lad:mamaequeroserbombeiro": "media/a/b05.mp4", "lad:eraeuerameumano": "media/a/b06.mp4", "qa:adeuscamaradaadeus": "media/a/b07.mp4", "qa:mamaeoxum": "media/a/b08.mp4", "qa:capoeiraquemmeensinou": "media/a/b09.mp4", "qa:botadende": "media/a/b10.mp4", "qa:maeafrica": "media/a/b11.mp4", "qa:lalaela": "media/a/b12.mp4", "qa:sobradodemamae": "media/a/b13.mp4", "ca:adeuscorina": "media/a/b14.mp4", "ca:soueumaita": "media/a/b15.mp4", "ca:paranae": "media/a/b16.mp4", "ca:ondevaicaiman": "media/a/b17.mp4", "ca:maresubiu": "media/a/b18.mp4", "ca:catarina": "media/a/b19.mp4", "ca:erabesouro": "media/a/b20.mp4", "ch:lembrancadomestre": "media/a/b21.mp4", "ch:quadras": "media/a/b22.mp4", "ch:eunascide7meses": "media/a/b23.mp4", "ch:saicatarina": "media/a/b24.mp4", "ch:eiparana": "media/a/b25.mp4", "ch:santoamaro": "media/a/b26.mp4", "qr:semprelembrado": "media/a/b27.mp4", "qr:besouromanganga": "media/a/b28.mp4", "qr:jogoarrepiado": "media/a/b29.mp4", "qr:jogoperigoso": "media/a/b30.mp4", "qr:aidenegaafricana": "media/a/b31.mp4", "qr:historiadepescador": "media/a/b32.mp4", "qr:africaseuniu": "media/a/b33.mp4", "cr:avisameumano": "media/a/b34.mp4", "cr:ouvifalar": "media/a/b35.mp4", "cr:leleleo": "media/a/b36.mp4", "cr:ventania": "media/a/b37.mp4", "cr:gungaemeu": "media/a/b38.mp4", "cr:sinhosaobento": "media/a/b39.mp4", "cr:catarinavemver": "media/a/b40.mp4", "sbg:acendealuz": "media/a/b41.mp4", "sbg:elalaelaela": "media/a/b42.mp4", "sbg:redenavaranda": "media/a/b43.mp4", "sbg:hojetemcapoeira": "media/a/b44.mp4", "sbg:maliciaemanha": "media/a/b45.mp4", "sbg:maranhao": "media/a/b46.mp4", "sbg:marecheia": "media/a/b47.mp4", "sr:areiadomar": "media/a/b48.mp4", "sr:pisanalinhalevantaoboi": "media/a/b49.mp4", "sr:alomangueira": "media/a/b50.mp4", "sr:notabuleirodabaiana": "media/a/b51.mp4", "sr:ojoaochofer": "media/a/b52.mp4", "sr:alobahia": "media/a/b53.mp4", "sr:queluzeaquela": "media/a/b54.mp4", "mac:maculelebarrao": "media/a/b55.mp4", "mac:maculelesuassuna": "media/a/b56.mp4", "mac:maculelesuassuna2": "media/a/b57.mp4", "mac:ocongochegou": "media/a/b58.mp4", "mac:maculelecarolinasoares": "media/a/b59.mp4", "mac:maculeleorixas": "media/a/b60.mp4", "mac:racas": "media/a/b61.mp4", "pr:puxadaderedesaopaulo": "media/a/b62.mp4", "pr:puxadaderedeburgues1": "media/a/b63.mp4", "pr:puxadaderedeburgues2": "media/a/b64.mp4", "pr:puxadaderedecarolinasoares": "media/a/b65.mp4", "pr:puxadaderedekenura": "media/a/b66.mp4", "folk:blowininthewind": "media/a/h67.mp4", "folk:dontthinktwiceitsallright": "media/a/h68.mp4", "folk:heartofgold": "media/a/h69.mp4", "folk:theriver": "media/a/h70.mp4", "folk:maryjaneslastdance": "media/a/h71.mp4", "rock:lovemedo": "media/a/h72.mp4", "rock:roadhouseblues": "media/a/h73.mp4", "rock:missyou": "media/a/h74.mp4", "rock:midnightrambler": "media/a/h75.mp4", "rock:houseoftherisingsun": "media/a/h76.mp4", "rock:cryin": "media/a/h77.mp4", "rock:redemptionsong": "media/a/h78.mp4", "folk:comesatime": "media/a/h79.mp4", "folk:atlanticcity": "media/a/h80.mp4"};
+    function nrm(t) { return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+    var LYRT = 'Cifra';
+    var LYRPH = 'Cole aqui a cifra da sua apostila';
+    var SUFFIX_UNUSED = "violão cifra";
+    var CATS = [{"id": "mpb", "label": "MPB", "n": 35, "items": [["Acende o Farol", "Tim Maia", "Tom C", "#F2A93B", "otf5gISvjGU"], ["Alcohol", "Jorge Ben", "", "#F2A93B", "Z2qdbNS8SD4"], ["Anunciação", "Alceu Valença", "", "#F2A93B", "mOC92PFtowg"], ["Aquarela", "Toquinho", "Tom Em", "#F2A93B", "dzzrdbVt7HY"], ["Berimbau", "Vinicius de Moraes", "Tom F", "#F2A93B", "9TzyqE2ad_E"], ["Boa Noite", "Djavan", "", "#F2A93B", "EaNp9EqxdoA"], ["Bom Senso", "Tim Maia", "", "#F2A93B", "NdqM_oFRbz4"], ["Chove Chuva", "Jorge Ben", "", "#F2A93B", "Ubol9NyLWZc"], ["Chão de Giz", "Zé Ramalho", "Tom G", "#F2A93B", "nL_QNpNOssI"], ["Deixa", "Dazaranha", "", "#F2A93B", "0Wy00JuQkow"], ["Do Leme ao Pontal", "Tim Maia", "Tom C", "#F2A93B", "JBKBJka6X1Q"], ["Ela Partiu", "Tim Maia", "", "#F2A93B", "syqJAgTQdlU"], ["Eu Amo Você", "Tim Maia", "", "#F2A93B", "qBBwXuEV4jA"], ["Eu Te Devoro", "Djavan", "", "#F2A93B", "_dnB4nWckxg"], ["Garoto de Aluguel", "Zé Ramalho", "", "#F2A93B", "dxrQNkQWQp8"], ["Gostava Tanto de Você", "Tim Maia", "", "#F2A93B", "cxSzri346W0"], ["Jorge da Capadócia", "Jorge Ben", "", "#F2A93B", "8EXtwBdH2Gk"], ["La Belle de Jour", "Alceu Valença", "", "#F2A93B", "UxvTdW9CLfI"], ["Mas Que Nada", "Jorge Ben", "", "#F2A93B", "cmElAxpeMMI"], ["Menina Mulher da Pele Preta", "Jorge Ben", "", "#F2A93B", "COGWtCxmxrI"], ["Meu Esquema", "Mundo Livre S/A", "", "#F2A93B", "G6IRIg21iXI"], ["Nem Um Dia", "Djavan", "", "#F2A93B", "rSCMHj0ZfuY"], ["Oba Lá Vem Ela", "Jorge Ben", "", "#F2A93B", "gWUAEnb4BVM"], ["Paciência", "Lenine", "", "#F2A93B", "SWm1uvCRfvA"], ["Por Quase Um Segundo", "Cazuza", "", "#F2A93B", "dbItUfLLRiY"], ["Samurai", "Djavan", "", "#F2A93B", "3-qwqrQXsXQ"], ["Se", "Djavan", "", "#F2A93B", "ZSZyth38-zk"], ["Sina", "Djavan", "", "#F2A93B", "5siQ-ml5lqY"], ["Sábado À Noite", "Lulu Santos", "", "#F2A93B", "98r48fVksXk"], ["São Gonça", "Seu Jorge", "", "#F2A93B", "nRshoehRVIc"], ["Só", "Luiz Melodia", "", "#F2A93B", "9uInr9vOGF4"], ["That's My Way", "Seu Jorge", "", "#F2A93B", "ysfm_adxRrI"], ["Tive Razão", "Seu Jorge", "", "#F2A93B", "8m6wrCCRvm8"], ["Táxi Lunar", "Alceu Valença", "Tom D", "#F2A93B", "4BVWHiQ7WfQ"], ["Umbabarauma", "Jorge Ben", "", "#F2A93B", "u3evfHGACoU"]], "dir": "Violão › MPB"}, {"id": "reggae", "label": "Reggae", "n": 16, "items": [["Africa Unite", "Bob Marley", "Tom G", "#F2A93B", "psm68xZPZTA"], ["Andei Só", "Natiruts", "", "#F2A93B", "EXMJnPwdvNM"], ["Aonde Você Mora", "Cidade Negra", "Tom G", "#F2A93B", "IOTjWnrwjSI"], ["Firmamento", "Cidade Negra", "Tom F", "#F2A93B", "SyZOBBvZnGU"], ["Food for Thought", "UB40", "", "#F2A93B", "mOBZ6ygWk7I"], ["Forever Loving Jah", "Bob Marley", "Tom D", "#F2A93B", "TGyuIjcJ8yY"], ["Is This Love", "Bob Marley", "Tom A", "#F2A93B", "69RdQFDuYPI"], ["Misty Morning", "Bob Marley", "", "#F2A93B", "OBBlIfUH9bY"], ["Naticongo", "Natiruts", "", "#F2A93B", "rLc2OxUur2w"], ["Pensamento", "Cidade Negra", "", "#F2A93B", "lzg5VUX4PtU"], ["Redemption Song", "Bob Marley", "", "#F2A93B", "yv5xonFSC4c"], ["Roots Rock Reggae", "Bob Marley", "", "#F2A93B", "OQYmGg3mKHg"], ["She's Gone", "Bob Marley", "", "#F2A93B", "duhd9pIDylo"], ["Take It Easy My Brother Charles", "Jorge Ben", "", "#F2A93B", "g_8OUVko7FA"], ["Them Belly Full", "Bob Marley", "", "#F2A93B", "6laq9l3qXYs"], ["Trenchtown Rock", "Bob Marley", "", "#F2A93B", "ocYp5_aIL4s"]], "dir": "Violão › Reggae"}, {"id": "rn", "label": "Rock Nacional", "n": 26, "items": [["A Luz dos Olhos", "Cássia Eller", "Tom C", "#F2A93B", "apXxepen87E"], ["A Minha Alma", "O Rappa", "", "#F2A93B", "dixEvTzhlaY"], ["Adivinha o Quê", "Lulu Santos", "", "#F2A93B", "P5jaVyaW8gA"], ["Ainda é Cedo", "Legião Urbana", "Tom Dm", "#F2A93B", "8zMYwEJw5NI"], ["Anjos", "O Rappa", "Tom Dm", "#F2A93B", "BPbCLtBl_g4"], ["Aonde Quer Que Eu Vá", "Os Paralamas do Sucesso", "", "#F2A93B", "eSXjkIg1gGE"], ["Bonita", "Raimundos", "", "#F2A93B", "zSS9E5eMMlI"], ["Com ou Sem", "Dazaranha", "", "#F2A93B", "uvM-Q7zNn7w"], ["Céu Azul", "Charlie Brown Jr.", "", "#F2A93B", "0dLX40UMUKo"], ["Dívida", "Ultraman", "", "#F2A93B", "U2eMbvd27WI"], ["Gita", "Raul Seixas", "", "#F2A93B", "2Xc-Yll4xc0"], ["Malandragem", "Cássia Eller", "", "#F2A93B", "4NYmZ-FsBq8"], ["Marvin", "Titãs", "", "#F2A93B", "iQT9_6zLOTw"], ["Me Encontra", "Charlie Brown Jr.", "", "#F2A93B", "Qv6IZkh4fFM"], ["Me Lambe", "Raimundos", "", "#F2A93B", "g0QKf3VPoYY"], ["Metamorfose Ambulante", "Raul Seixas", "", "#F2A93B", "7VE6PNwmr9g"], ["Meu Novo Mundo", "Charlie Brown Jr.", "", "#F2A93B", "jp288zfsNTI"], ["Mulher de Fases", "Raimundos", "", "#F2A93B", "x52cIFOupJY"], ["Na Frente do Reto", "O Rappa", "", "#F2A93B", "g_raYMEPi4E"], ["Os Cegos do Castelo", "Titãs", "", "#F2A93B", "VZzMAGVXpLc"], ["S. O. S.", "Raul Seixas", "", "#F2A93B", "II1HjAeo7k4"], ["Samba Makossa", "Charlie Brown Jr.", "", "#F2A93B", "XA7Rw_poKCg"], ["Sonífera Ilha", "Titãs", "", "#F2A93B", "T4zkb05tkms"], ["Tempo Perdido", "Legião Urbana", "", "#F2A93B", "qHJ8CIM4jCw"], ["Tendo A Lua", "Os Paralamas do Sucesso", "", "#F2A93B", "19QqSrhZmfM"], ["Um Sonho", "Nação Zumbi", "", "#F2A93B", "5MCpTa0yYVM"]], "dir": "Violão › Rock Nacional"}, {"id": "ri", "label": "Rock Internacional", "n": 37, "items": [["Alive", "Pearl Jam", "", "#F2A93B", "qM0zINtulhM"], ["All Screwed Up", "Ramones", "", "#F2A93B", "ol6UQLrAasY"], ["Atwa", "System of a Down", "", "#F2A93B", "g3x3qI5ttXg"], ["Back in Black", "AC/DC", "Tom E", "#F2A93B", "pAgnJDJN4VA"], ["Best Of You", "Foo Fighters", "", "#F2A93B", "h_L4Rixya64"], ["Black Hole Sun", "Soundgarden", "", "#F2A93B", "3mbBbFH9fAg"], ["Black", "Pearl Jam", "", "#F2A93B", "qgaRVvAKoqQ"], ["Can't Stop", "Red Hot Chili Peppers", "", "#F2A93B", "8DyziWtkfBw"], ["Cherub Rock", "Smashing Pumpkins", "", "#F2A93B", "q-KE9lvU810"], ["Come As You Are", "Nirvana", "", "#F2A93B", "vabnZ9-ex7o"], ["Cumbersome", "7 Mary 3", "Tom E", "#F2A93B", "NjNn4bbbgSw"], ["Dancing In The Moonlight", "Smashing Pumpkins", "", "#F2A93B", "CBPzZE-jRNM"], ["Disarm", "Smashing Pumpkins", "", "#F2A93B", "d1acEVmnVhI"], ["Don't Look Back In Anger", "Oasis", "", "#F2A93B", "cmpRLQZkTb8"], ["Everlong", "Foo Fighters", "", "#F2A93B", "eBG7P-K-r1Y"], ["Fell On Black Days", "Soundgarden", "", "#F2A93B", "ySzrJ4GRF7s"], ["Hey", "Pixies", "", "#F2A93B", "tVCUAXOBF7w"], ["Highway to Hell", "AC/DC", "Tom D", "#F2A93B", "l482T0yNkeo"], ["I Believe In Miracles", "Ramones", "", "#F2A93B", "p16SDuEcJpU"], ["Indifference", "Pearl Jam", "", "#F2A93B", "MH4na8a5b9M"], ["Iris", "Goo Goo Dolls", "", "#F2A93B", "NdYWuo9OFAw"], ["Lake of Fire", "Nirvana", "", "#F2A93B", "d4LdUQzCPPM"], ["Last Kiss", "Pearl Jam", "", "#F2A93B", "tNDWJ_KDkAc"], ["Live Forever", "Oasis", "", "#F2A93B", "TDe1DqxwJoc"], ["Morning Glory", "Oasis", "", "#F2A93B", "Wm54XyLwBAk"], ["Mr. Jones", "Counting Crows", "", "#F2A93B", "-oqAU5VxFWs"], ["My My, Hey Hey", "Neil Young", "", "#F2A93B", "i6RZY4Ar3fw"], ["Nutshell", "Alice in Chains", "", "#F2A93B", "G23iLGhh9lo"], ["Plush", "Stone Temple Pilots", "", "#F2A93B", "V5UOC0C0x8Q"], ["Roulette", "System of a Down", "", "#F2A93B", "PllrpKGJbOY"], ["Shade", "Silverchair", "", "#F2A93B", "p9zF9R9lFag"], ["Talk Tonight", "Oasis", "", "#F2A93B", "bb6e2Brz9Nw"], ["Tears In Heaven", "Eric Clapton", "", "#F2A93B", "JxPj3GAYYZ0"], ["Tomorrow", "Silverchair", "", "#F2A93B", "PjsMnvqL7eY"], ["Where Did You Sleep Last Night", "Nirvana", "", "#F2A93B", "hEMm7gxBYSc"], ["Wish You Were Here", "Pink Floyd", "", "#F2A93B", "K6qj09OHvjw"], ["Wonderwall", "Oasis", "", "#F2A93B", "bx1Bh8ZvH84"]], "dir": "Violão › Rock Internacional"}, {"id": "surf", "label": "Surf Music", "n": 20, "items": [["40 Oz to Freedom", "Sublime", "Tom C", "#F2A93B", "FQJXu56fJPM"], ["Ashes", "Pepper", "Tom C", "#F2A93B", "B8vFWWwFa4E"], ["Burn One Down", "Ben Harper", "Tom F", "#F2A93B", "7e6QRe7AyRI"], ["Come Original", "311", "", "#F2A93B", "KWo-02Hsab4"], ["Doin' Time", "Sublime", "", "#F2A93B", "2yT8RsCarJA"], ["Down Under", "Men At Work", "Tom D", "#F2A93B", "XfR9iY5y94s"], ["How To Fly", "Sticky Fingers", "", "#F2A93B", "hKX9rEEgb0I"], ["I Could Have Lied", "Red Hot Chili Peppers", "", "#F2A93B", "vvfWewLU7N0"], ["Jailhouse", "Sublime", "", "#F2A93B", "qedAvBgiaC4"], ["La Mar", "Beautiful Girls", "", "#F2A93B", "YiXVRuMIajQ"], ["No Control", "Pepper", "", "#F2A93B", "8g09JyE0IB0"], ["Overkill", "Men at Work", "", "#F2A93B", "RY7S6EgSlCI"], ["Periscopes", "Beautiful Girls", "", "#F2A93B", "kBikn4L5ptU"], ["Right Back", "Sublime", "", "#F2A93B", "NPBpZzoYQzo"], ["Road Trippin'", "Red Hot Chili Peppers", "", "#F2A93B", "11GYvfYjyV0"], ["Rodeo Clowns", "Jack Johnson", "", "#F2A93B", "NV6qMkzMVkY"], ["Same In The End", "Sublime", "", "#F2A93B", "XINAJ7jgg6Y"], ["Santeria", "Sublime", "", "#F2A93B", "AEYN5w4T_aM"], ["Scar Tissue", "Red Hot Chili Peppers", "", "#F2A93B", "mzJj5-lubeM"], ["Something About It", "The Green", "", "#F2A93B", "Jfc7yacJkl0"]], "dir": "Violão › Surf Music"}, {"id": "nac", "label": "Nacionais", "n": 139, "items": [["Anunciação", "Alceu Valença", "", "#F2A93B", "mOC92PFtowg"], ["La Belle de Jour", "Alceu Valença", "Tom Am", "#F2A93B", "UxvTdW9CLfI"], ["Morena Tropicana", "Alceu Valença", "", "#F2A93B", "CIwFGtYCb6A"], ["Táxi Lunar", "Alceu Valença", "Tom D", "#F2A93B", "4BVWHiQ7WfQ"], ["A Luz dos Olhos", "Cássia Eller", "Tom C", "#F2A93B", "apXxepen87E"], ["E.C.T.", "Cássia Eller", "", "#F2A93B", "7MF16IsMsws"], ["Lanterna dos Afogados", "Cássia Eller", "", "#F2A93B", "KfOIL-224e4"], ["Malandragem", "Cássia Eller", "", "#F2A93B", "4NYmZ-FsBq8"], ["O Segundo Sol", "Cássia Eller", "", "#F2A93B", "hTDOOE6U_50"], ["Blues da Piedade", "Cazuza", "", "#F2A93B", "gdBK0j2fTxw"], ["Codinome Beija-flor", "Cazuza", "", "#F2A93B", "8sEWbuA-1FY"], ["O Tempo Não Para", "Cazuza", "", "#F2A93B", "_Jcn10Iiuu4"], ["Por Quase Um Segundo", "Cazuza", "", "#F2A93B", "dbItUfLLRiY"], ["Céu Azul", "Charlie Brown Jr.", "", "#F2A93B", "0dLX40UMUKo"], ["Me Encontra", "Charlie Brown Jr.", "", "#F2A93B", "Qv6IZkh4fFM"], ["Meu Novo Mundo", "Charlie Brown Jr.", "", "#F2A93B", "jp288zfsNTI"], ["O Preço", "Charlie Brown Jr.", "", "#F2A93B", "gU3nJG6I4Q4"], ["Quinta-feira", "Charlie Brown Jr.", "", "#F2A93B", "ApcIG_O3Czo"], ["Samba Makossa", "Charlie Brown Jr.", "", "#F2A93B", "XA7Rw_poKCg"], ["Vícios e Virtudes", "Charlie Brown Jr.", "", "#F2A93B", "5FZ76ztmrkY"], ["Zóio de Lula", "Charlie Brown Jr.", "", "#F2A93B", "Df_gGM1h9No"], ["A Estrada", "Cidade Negra", "", "#F2A93B", "xMQso-BWFmA"], ["A Sombra da Maldade", "Cidade Negra", "", "#F2A93B", "jsYa18tG3xI"], ["Aonde Você Mora", "Cidade Negra", "", "#F2A93B", "IOTjWnrwjSI"], ["Firmamento", "Cidade Negra", "", "#F2A93B", "SyZOBBvZnGU"], ["Girassol", "Cidade Negra", "", "#F2A93B", "Kt1MpsQ-jiA"], ["Johnny B. Goode", "Cidade Negra", "", "#F2A93B", "xORrCBgNJ9A"], ["Pensamento", "Cidade Negra", "", "#F2A93B", "lzg5VUX4PtU"], ["Com ou Sem", "Dazaranha", "", "#F2A93B", "uvM-Q7zNn7w"], ["Cubo", "Dazaranha", "", "#F2A93B", "zLM8E6E3SKU"], ["Deixa", "Dazaranha", "", "#F2A93B", "0Wy00JuQkow"], ["Pagode do Revoltado", "Dazaranha", "", "#F2A93B", "U4tdkThrbIM"], ["Paralisa", "Dazaranha", "", "#F2A93B", "jl9zgsqNj_g"], ["Se", "Dazaranha", "", "#F2A93B", "v5-ate3m7OA"], ["Vagabundo Confesso", "Dazaranha", "", "#F2A93B", "-DMlR7T8ddY"], ["Açaí", "Djavan", "", "#F2A93B", "q8vyMK6_2BQ"], ["Boa Noite", "Djavan", "", "#F2A93B", "EaNp9EqxdoA"], ["Eu Te Devoro", "Djavan", "", "#F2A93B", "_dnB4nWckxg"], ["Flor de Lis", "Djavan", "", "#F2A93B", "TLc2xpAc-sM"], ["Lilás", "Djavan", "", "#F2A93B", "wQH6OQQ5RjQ"], ["Nem Um Dia", "Djavan", "", "#F2A93B", "rSCMHj0ZfuY"], ["Samurai", "Djavan", "", "#F2A93B", "3-qwqrQXsXQ"], ["Se", "Djavan", "", "#F2A93B", "ZSZyth38-zk"], ["Sina", "Djavan", "", "#F2A93B", "5siQ-ml5lqY"], ["Alcohol", "Jorge Ben", "", "#F2A93B", "Z2qdbNS8SD4"], ["Chove Chuva", "Jorge Ben", "", "#F2A93B", "Ubol9NyLWZc"], ["Filho Maravilha", "Jorge Ben", "", "#F2A93B", "RXqfj88I-p8"], ["Jorge da Capadócia", "Jorge Ben", "", "#F2A93B", "8EXtwBdH2Gk"], ["Mas Que Nada", "Jorge Ben", "", "#F2A93B", "cmElAxpeMMI"], ["Menina Mulher da Pele Preta", "Jorge Ben", "", "#F2A93B", "COGWtCxmxrI"], ["O Telefone Tocou Novamente", "Jorge Ben", "", "#F2A93B", "qh8iJMsOXw0"], ["Oba Lá Vem Ela", "Jorge Ben", "", "#F2A93B", "gWUAEnb4BVM"], ["Os Alquimistas Estão Chegando", "Jorge Ben", "", "#F2A93B", "0y1kGcMi_l8"], ["País Tropical", "Jorge Ben", "", "#F2A93B", "JzByVhWju88"], ["Taj Mahal", "Jorge Ben", "", "#F2A93B", "rfrpOhC6858"], ["Take It Easy My Brother Charles", "Jorge Ben", "", "#F2A93B", "g_8OUVko7FA"], ["Umbabarauma", "Jorge Ben", "", "#F2A93B", "u3evfHGACoU"], ["W Brasil", "Jorge Ben", "", "#F2A93B", "bkM1u4GxHzw"], ["Ainda é Cedo", "Legião Urbana", "", "#F2A93B", "8zMYwEJw5NI"], ["Daniel Na Cova Dos Leões", "Legião Urbana", "", "#F2A93B", "UbNDLB0-zMQ"], ["Teatro dos Vampiros", "Legião Urbana", "", "#F2A93B", "B6iuIssVqRA"], ["Tempo Perdido", "Legião Urbana", "", "#F2A93B", "qHJ8CIM4jCw"], ["Índios", "Legião Urbana", "", "#F2A93B", "nM_gEzvhsM0"], ["Hoje Eu Quero Sair Só", "Lenine", "", "#F2A93B", "tBcT07Ug4ZE"], ["Paciência", "Lenine", "", "#F2A93B", "SWm1uvCRfvA"], ["Adivinha o Quê", "Lulu Santos", "", "#F2A93B", "P5jaVyaW8gA"], ["Sábado À Noite", "Lulu Santos", "", "#F2A93B", "98r48fVksXk"], ["Meu Esquema", "Mundo Livre S/A", "", "#F2A93B", "G6IRIg21iXI"], ["Andei Só", "Natiruts", "", "#F2A93B", "EXMJnPwdvNM"], ["Dance Se Quiser Dançar", "Natiruts", "", "#F2A93B", "vLdiVPAsqx0"], ["Naticongo", "Natiruts", "", "#F2A93B", "rLc2OxUur2w"], ["Natiruts Reggae Power", "Natiruts", "", "#F2A93B", "2i-1F1kBbxo"], ["O Carcara e a Rosa", "Natiruts", "", "#F2A93B", "wIxJaMv5oSs"], ["Serei Luz", "Natiruts", "", "#F2A93B", "rUaGN2iPU5Q"], ["A Minha Alma", "O Rappa", "", "#F2A93B", "dixEvTzhlaY"], ["Anjos", "O Rappa", "", "#F2A93B", "BPbCLtBl_g4"], ["Auto-Reverse", "O Rappa", "", "#F2A93B", "vgZwa7GKRCA"], ["Eu Quero Ver Gol", "O Rappa", "", "#F2A93B", "kbj3ifGGKTo"], ["Hey Joe", "O Rappa", "", "#F2A93B", "j9OkZCEZPt4"], ["Mar de Gente", "O Rappa", "", "#F2A93B", "SkNb-jGKv7U"], ["Me Deixa", "O Rappa", "", "#F2A93B", "SA5ov_Hkj6s"], ["Na Frente do Reto", "O Rappa", "", "#F2A93B", "g_raYMEPi4E"], ["O Que Sobrou do Céu", "O Rappa", "", "#F2A93B", "kab3hBdmVoo"], ["Pescador de Ilusões", "O Rappa", "", "#F2A93B", "43iERWI5ArY"], ["Rodo Cotidiano", "O Rappa", "", "#F2A93B", "z4x1uNCQqtk"], ["Súplica Cearense", "O Rappa", "", "#F2A93B", "F19PnbWigSA"], ["Tribunal de Rua", "O Rappa", "", "#F2A93B", "fN3R-KhrdBI"], ["Vapor Barato", "O Rappa", "", "#F2A93B", "ilBIkv09xAA"], ["Tenha Fé", "Originais do Samba", "", "#F2A93B", "OI8rU8YJPOM"], ["Aonde Quer Que Eu Vá", "Os Paralamas do Sucesso", "", "#F2A93B", "eSXjkIg1gGE"], ["Caleidoscópio", "Os Paralamas do Sucesso", "", "#F2A93B", "kYD0qfhV7-s"], ["Lanterna dos Afogados", "Cássia Eller", "", "#F2A93B", "KfOIL-224e4"], ["Meu Erro", "Os Paralamas do Sucesso", "", "#F2A93B", "jkDLGRNIEYM"], ["Tendo A Lua", "Os Paralamas do Sucesso", "", "#F2A93B", "19QqSrhZmfM"], ["Bestinha", "Raimundos", "", "#F2A93B", "X_i1DszRJnQ"], ["Bonita", "Raimundos", "", "#F2A93B", "zSS9E5eMMlI"], ["Carrão de Dois", "Raimundos", "", "#F2A93B", "pM95Z_fA478"], ["Me Lambe", "Raimundos", "", "#F2A93B", "g0QKf3VPoYY"], ["Mulher de Fases", "Raimundos", "", "#F2A93B", "x52cIFOupJY"], ["Pompem", "Raimundos", "", "#F2A93B", "oW2xwM9RAOk"], ["As Minas do Rei Salomão", "Raul Seixas", "", "#F2A93B", "l8_-sI6YxH8"], ["Eu Nasci Há 10 Mil Anos Atrás", "Raul Seixas", "", "#F2A93B", "DcoVEMethks"], ["Gita", "Raul Seixas", "", "#F2A93B", "2Xc-Yll4xc0"], ["Maluco Beleza", "Raul Seixas", "", "#F2A93B", "OTFN-zCSLY4"], ["Metamorfose Ambulante", "Raul Seixas", "", "#F2A93B", "7VE6PNwmr9g"], ["Rock das Aranhas", "Raul Seixas", "", "#F2A93B", "qcEfm7wJnUk"], ["S. O. S.", "Raul Seixas", "", "#F2A93B", "II1HjAeo7k4"], ["Sociedade Alternativa", "Raul Seixas", "", "#F2A93B", "CfgYcLBP9lI"], ["Tente Outra Vez", "Raul Seixas", "", "#F2A93B", "hu_XSw4e9GU"], ["Alma de Guerreiro", "Seu Jorge", "", "#F2A93B", "fSZ9OGuCqTY"], ["Mangueira", "Seu Jorge", "", "#F2A93B", "yOGw4ZucKpo"], ["São Gonça", "Seu Jorge", "", "#F2A93B", "nRshoehRVIc"], ["That's My Way", "Seu Jorge", "", "#F2A93B", "ysfm_adxRrI"], ["Tive Razão", "Seu Jorge", "", "#F2A93B", "8m6wrCCRvm8"], ["Acende o Farol", "Tim Maia", "", "#F2A93B", "otf5gISvjGU"], ["Bom Senso", "Tim Maia", "", "#F2A93B", "NdqM_oFRbz4"], ["Do Leme ao Pontal", "Tim Maia", "", "#F2A93B", "JBKBJka6X1Q"], ["Ela Partiu", "Tim Maia", "", "#F2A93B", "syqJAgTQdlU"], ["Eu Amo Você", "Tim Maia", "", "#F2A93B", "qBBwXuEV4jA"], ["Gostava Tanto de Você", "Tim Maia", "", "#F2A93B", "cxSzri346W0"], ["Imunização Racional", "Tim Maia", "", "#F2A93B", "86Wjb15h9zc"], ["Não Quero Dinheiro", "Tim Maia", "", "#F2A93B", "FM2tZnIPZUk"], ["O Descobridor dos 7 Mares", "Tim Maia", "", "#F2A93B", "aZs1RZJnNds"], ["Réu Confesso", "Tim Maia", "", "#F2A93B", "z-ji9JsWjPU"], ["Sozinho", "Tim Maia", "", "#F2A93B", "3rG8tJbQ5kU"], ["Velho Camarada", "Tim Maia", "", "#F2A93B", "AnmwPPVyq14"], ["Marvin", "Titãs", "", "#F2A93B", "iQT9_6zLOTw"], ["Os Cegos do Castelo", "Titãs", "", "#F2A93B", "VZzMAGVXpLc"], ["Polícia", "Titãs", "", "#F2A93B", "NylbZB7p4rA"], ["Sonífera Ilha", "Titãs", "", "#F2A93B", "T4zkb05tkms"], ["Aquarela", "Toquinho", "", "#F2A93B", "dzzrdbVt7HY"], ["Dívida", "Ultraman", "", "#F2A93B", "U2eMbvd27WI"], ["Berimbau", "Vinicius de Moraes", "", "#F2A93B", "9TzyqE2ad_E"], ["Admirável Gado Novo", "Zé Ramalho", "", "#F2A93B", "t_sUkOXO4zU"], ["Avohai", "Zé Ramalho", "", "#F2A93B", "SBEyjXJlv-8"], ["Chão de Giz", "Zé Ramalho", "", "#F2A93B", "nL_QNpNOssI"], ["Garoto de Aluguel", "Zé Ramalho", "", "#F2A93B", "dxrQNkQWQp8"], ["Sinônimo", "Zé Ramalho", "", "#F2A93B", "5AWTSkdD6hg"], ["Táxi Lunar", "Alceu Valença", "Tom D", "#F2A93B", "4BVWHiQ7WfQ"]], "dir": "Violão › Nacionais", "byItem": true}, {"id": "int", "label": "Internacionais", "n": 151, "items": [["Cumbersome", "7 Mary 3", "Tom E", "#F2A93B", "NjNn4bbbgSw"], ["Back in Black", "AC/DC", "Tom E", "#F2A93B", "pAgnJDJN4VA"], ["Highway to Hell", "AC/DC", "Tom D", "#F2A93B", "l482T0yNkeo"], ["Down In A Hole", "Alice in Chains", "", "#F2A93B", "f8hT3oDDf6c"], ["Got Me Wrong", "Alice in Chains", "Tom D", "#F2A93B", "3AM1yB4L4xo"], ["Man in the Box", "Alice in Chains", "", "#F2A93B", "TAqZb52sgpU"], ["Nutshell", "Alice in Chains", "", "#F2A93B", "G23iLGhh9lo"], ["La Mar", "Beautiful Girls", "", "#F2A93B", "YiXVRuMIajQ"], ["Periscopes", "Beautiful Girls", "", "#F2A93B", "kBikn4L5ptU"], ["Boa Sorte", "Ben Harper", "", "#F2A93B", "v4k6JgC7UVA"], ["Burn One Down", "Ben Harper", "", "#F2A93B", "7e6QRe7AyRI"], ["Sexual Healing", "Ben Harper", "", "#F2A93B", "Yhc2cDi66ug"], ["Walk Away", "Ben Harper", "", "#F2A93B", "zFRGdkSL35M"], ["Iron Man", "Black Sabbath", "", "#F2A93B", "b3-QqGVt-tM"], ["N.I.B.", "Black Sabbath", "", "#F2A93B", "9kgQQuPZ8K0"], ["Paranoid", "Black Sabbath", "", "#F2A93B", "0qanF-91aJo"], ["Sweet Leaf", "Black Sabbath", "", "#F2A93B", "pZcMp40ZMwc"], ["All the Small Things", "Blink-182", "", "#F2A93B", "9Ht5RZpzPqw"], ["Dammit", "Blink-182", "", "#F2A93B", "sT0g16_LQaQ"], ["Dumpweed", "Blink-182", "", "#F2A93B", "gFDnKd4eemw"], ["Man Overboard", "Blink-182", "", "#F2A93B", "yyJogifpT2w"], ["What's My Age Again", "Blink-182", "", "#F2A93B", "K7l5ZeVVoCA"], ["Africa Unite", "Bob Marley", "", "#F2A93B", "psm68xZPZTA"], ["Forever Loving Jah", "Bob Marley", "", "#F2A93B", "TGyuIjcJ8yY"], ["Iron Lion Zion", "Bob Marley", "", "#F2A93B", "wBznzT-GZlg"], ["Is This Love", "Bob Marley", "", "#F2A93B", "69RdQFDuYPI"], ["Jamming", "Bob Marley", "", "#F2A93B", "oqVy6eRXc7Q"], ["Misty Morning", "Bob Marley", "", "#F2A93B", "OBBlIfUH9bY"], ["No Woman No Cry", "Bob Marley", "", "#F2A93B", "IT8XvzIfi4U"], ["Redemption Song", "Bob Marley", "", "#F2A93B", "yv5xonFSC4c"], ["Roots Rock Reggae", "Bob Marley", "", "#F2A93B", "OQYmGg3mKHg"], ["She's Gone", "Bob Marley", "", "#F2A93B", "duhd9pIDylo"], ["So Much Trouble In the World", "Bob Marley", "", "#F2A93B", "H78yhjo4m7U"], ["Them Belly Full", "Bob Marley", "", "#F2A93B", "6laq9l3qXYs"], ["Trenchtown Rock", "Bob Marley", "", "#F2A93B", "ocYp5_aIL4s"], ["Zimbabwe", "Bob Marley", "", "#F2A93B", "yxmsZXYhQCg"], ["Mr. Jones", "Counting Crows", "", "#F2A93B", "-oqAU5VxFWs"], ["Cocaine", "Eric Clapton", "", "#F2A93B", "O6yeLNNVa4A"], ["Tears In Heaven", "Eric Clapton", "", "#F2A93B", "JxPj3GAYYZ0"], ["Arlandria", "Foo Fighters", "", "#F2A93B", "Gt3j_nm25LU"], ["Best Of You", "Foo Fighters", "", "#F2A93B", "h_L4Rixya64"], ["Everlong", "Foo Fighters", "", "#F2A93B", "eBG7P-K-r1Y"], ["Learn to Fly", "Foo Fighters", "", "#F2A93B", "1VQ_3sBZEm0"], ["My Hero", "Foo Fighters", "", "#F2A93B", "EqWRaAF6_WY"], ["Godzilla", "Fu Manchu", "", "#F2A93B", "micpz18ga1A"], ["Iris", "Goo Goo Dolls", "", "#F2A93B", "NdYWuo9OFAw"], ["Flake", "Jack Johnson", "", "#F2A93B", "u3S6_NtxARY"], ["Gone", "Jack Johnson", "", "#F2A93B", "NYSzOgA_vfo"], ["High Tide Or Low Tide", "Jack Johnson", "", "#F2A93B", "63eZk7pt1Tc"], ["Middle Man", "Jack Johnson", "", "#F2A93B", "DHx6QuFmgSU"], ["Rodeo Clowns", "Jack Johnson", "", "#F2A93B", "NV6qMkzMVkY"], ["Sitting, Waiting, Wishing", "Jack Johnson", "", "#F2A93B", "Erpv9L7696U"], ["Down Under", "Men at Work", "", "#F2A93B", "XfR9iY5y94s"], ["Overkill", "Men at Work", "", "#F2A93B", "RY7S6EgSlCI"], ["Mama Said", "Metallica", "", "#F2A93B", "4FKYsUEuvIo"], ["No Cigar", "Millencolin", "", "#F2A93B", "aqh-pg-Py_I"], ["Shut You Out", "Millencolin", "", "#F2A93B", "lMku2BK0XGY"], ["Hate the Police", "Mudhoney", "", "#F2A93B", "SJ2xAtGwtaA"], ["Touch Me I'm Sick", "Mudhoney", "", "#F2A93B", "9MfhE5Dkr4Q"], ["You Got It", "Mudhoney", "", "#F2A93B", "EnPImXvmU34"], ["Hey Hey, My My", "Neil Young", "", "#F2A93B", "UDTx0JQlXRY"], ["My My, Hey Hey", "Neil Young", "", "#F2A93B", "i6RZY4Ar3fw"], ["Old Man", "Neil Young", "", "#F2A93B", "ZKCiC-H2Xbg"], ["Rockin' in the Free World", "Neil Young", "", "#F2A93B", "DvxxdZpMFHg"], ["About A Girl", "Nirvana", "", "#F2A93B", "AhcttcXcRYY"], ["Aneurysm", "Nirvana", "", "#F2A93B", "AE3ynTXTm_8"], ["Come As You Are", "Nirvana", "", "#F2A93B", "vabnZ9-ex7o"], ["Dive", "Nirvana", "", "#F2A93B", "paxCkni3ahU"], ["In Bloom", "Nirvana", "", "#F2A93B", "PbgKEjNBHqM"], ["Lake of Fire", "Nirvana", "", "#F2A93B", "d4LdUQzCPPM"], ["Opinion", "Nirvana", "", "#F2A93B", "WdO6WAWmHxA"], ["Polly", "Nirvana", "", "#F2A93B", "DrlaVYKWeLU"], ["Return of the Rat", "Nirvana", "", "#F2A93B", "yxgN2nbs37Q"], ["Sappy", "Nirvana", "", "#F2A93B", "jOg8IblMNK4"], ["Smells Like Teen Spirit", "Nirvana", "", "#F2A93B", "hTWKbfoikeg"], ["Where Did You Sleep Last Night", "Nirvana", "", "#F2A93B", "hEMm7gxBYSc"], ["Champagne Supernova", "Oasis", "", "#F2A93B", "tI-5uv4wryI"], ["Don't Look Back In Anger", "Oasis", "", "#F2A93B", "cmpRLQZkTb8"], ["Live Forever", "Oasis", "", "#F2A93B", "TDe1DqxwJoc"], ["Morning Glory", "Oasis", "", "#F2A93B", "Wm54XyLwBAk"], ["Talk Tonight", "Oasis", "", "#F2A93B", "bb6e2Brz9Nw"], ["Wonderwall", "Oasis", "", "#F2A93B", "bx1Bh8ZvH84"], ["Alive", "Pearl Jam", "", "#F2A93B", "qM0zINtulhM"], ["Better Man", "Pearl Jam", "", "#F2A93B", "nDK-wsdEhNE"], ["Black", "Pearl Jam", "", "#F2A93B", "qgaRVvAKoqQ"], ["Even Flow", "Pearl Jam", "", "#F2A93B", "CxKWTzr-k6s"], ["Indifference", "Pearl Jam", "", "#F2A93B", "MH4na8a5b9M"], ["Last Kiss", "Pearl Jam", "", "#F2A93B", "tNDWJ_KDkAc"], ["Low Light", "Pearl Jam", "", "#F2A93B", "m6lzolomMOU"], ["Rearviewmirror", "Pearl Jam", "", "#F2A93B", "eHX_q86-Zpc"], ["State of Love and Trust", "Pearl Jam", "", "#F2A93B", "jfNm2HLW9xI"], ["Ashes", "Pepper", "", "#F2A93B", "B8vFWWwFa4E"], ["No Control", "Pepper", "", "#F2A93B", "8g09JyE0IB0"], ["Another Brick In The Wall", "Pink Floyd", "", "#F2A93B", "HrxX9TBj2zY"], ["Money", "Pink Floyd", "", "#F2A93B", "-0kcet4aPpQ"], ["Time", "Pink Floyd", "", "#F2A93B", "Qr0-7Ds79zo"], ["Wish You Were Here", "Pink Floyd", "", "#F2A93B", "K6qj09OHvjw"], ["Gouge Away", "Pixies", "", "#F2A93B", "2twLJU_ggGI"], ["Hey", "Pixies", "", "#F2A93B", "tVCUAXOBF7w"], ["Just Like Heaven", "Pixies", "", "#F2A93B", "n3nPiBai66M"], ["Everybody Hurts", "R.E.M.", "", "#F2A93B", "5rOiW_xY-kc"], ["It's The End Of The World As We Know It (And I Feel Fine)", "R.E.M.", "", "#F2A93B", "8OyBtMPqpNY"], ["Losing My Religion", "R.E.M.", "", "#F2A93B", "xwtdhWltSIg"], ["All Screwed Up", "Ramones", "", "#F2A93B", "ol6UQLrAasY"], ["Anyway You Want It", "Ramones", "", "#F2A93B", "QS2S9ArmyZc"], ["Blitzkrieg Bop", "Ramones", "", "#F2A93B", "268C3N2dDYk"], ["I Believe In Miracles", "Ramones", "", "#F2A93B", "p16SDuEcJpU"], ["I Wanna Be Sedated", "Ramones", "", "#F2A93B", "bm51ihfi1p4"], ["Pet Sematary", "Ramones", "", "#F2A93B", "HJWFsZ_YUc4"], ["Poison Heart", "Ramones", "", "#F2A93B", "OfIfzVf8t6E"], ["Strength To Endure", "Ramones", "", "#F2A93B", "w-0fEVwd3iM"], ["The Crusher", "Ramones", "", "#F2A93B", "jJKhed1NdaI"], ["The KKK Took My Baby Away", "Ramones", "", "#F2A93B", "RYXS5q0105Y"], ["Can't Stop", "Red Hot Chili Peppers", "", "#F2A93B", "8DyziWtkfBw"], ["Don't Forget Me", "Red Hot Chili Peppers", "", "#F2A93B", "SnQ0E-UVt1g"], ["I Could Have Lied", "Red Hot Chili Peppers", "", "#F2A93B", "vvfWewLU7N0"], ["Otherside", "Red Hot Chili Peppers", "", "#F2A93B", "rn_YodiJO6k"], ["Road Trippin'", "Red Hot Chili Peppers", "", "#F2A93B", "11GYvfYjyV0"], ["Scar Tissue", "Red Hot Chili Peppers", "", "#F2A93B", "mzJj5-lubeM"], ["Under the Bridge", "Red Hot Chili Peppers", "", "#F2A93B", "GLvohMXgcBo"], ["All I Know", "Screaming Trees", "", "#F2A93B", "rwvlUEm_fmA"], ["More Or Less", "Screaming Trees", "", "#F2A93B", "4P-TCg4w2_A"], ["Nearly Lost You", "Screaming Trees", "", "#F2A93B", "PE5f561Y1x4"], ["Uncle Anesthesia", "Screaming Trees", "", "#F2A93B", "NBypiIybzqQ"], ["Witness", "Screaming Trees", "", "#F2A93B", "X7q3R7j7jZA"], ["Ana's Song", "Silverchair", "", "#F2A93B", "zNK_r2QAXAo"], ["Shade", "Silverchair", "", "#F2A93B", "p9zF9R9lFag"], ["Tomorrow", "Silverchair", "", "#F2A93B", "PjsMnvqL7eY"], ["Cherub Rock", "Smashing Pumpkins", "", "#F2A93B", "q-KE9lvU810"], ["Dancing In The Moonlight", "Smashing Pumpkins", "", "#F2A93B", "CBPzZE-jRNM"], ["Disarm", "Smashing Pumpkins", "", "#F2A93B", "d1acEVmnVhI"], ["Tonight, Tonight", "Smashing Pumpkins", "", "#F2A93B", "NOG3eus4ZSo"], ["Black Hole Sun", "Soundgarden", "", "#F2A93B", "3mbBbFH9fAg"], ["Fell On Black Days", "Soundgarden", "", "#F2A93B", "ySzrJ4GRF7s"], ["Creep", "Stone Temple Pilots", "", "#F2A93B", "sT1DdO3SISg"], ["Interstate Love Song", "Stone Temple Pilots", "", "#F2A93B", "yjJL9DGU7Gg"], ["Plush", "Stone Temple Pilots", "", "#F2A93B", "V5UOC0C0x8Q"], ["40 Oz to Freedom", "Sublime", "", "#F2A93B", "FQJXu56fJPM"], ["Bad Fish", "Sublime", "", "#F2A93B", "rmadSGJCzo8"], ["Right Back", "Sublime", "", "#F2A93B", "NPBpZzoYQzo"], ["Santeria", "Sublime", "", "#F2A93B", "AEYN5w4T_aM"], ["Saw Red", "Sublime", "", "#F2A93B", "YSXoKqjhFrw"], ["Seed", "Sublime", "", "#F2A93B", "_dC48Y4Fk34"], ["Smoke Two Joints", "Sublime", "", "#F2A93B", "KQnzeKKg7Yc"], ["What I Got", "Sublime", "", "#F2A93B", "0Uc3ZrmhDN4"], ["Atwa", "System of a Down", "", "#F2A93B", "g3x3qI5ttXg"], ["Chop Suey!", "System of a Down", "", "#F2A93B", "CSvFpBOe8eY"], ["Lonely Day", "System of a Down", "", "#F2A93B", "DnGdoEa1tPg"], ["Roulette", "System of a Down", "", "#F2A93B", "PllrpKGJbOY"], ["Just Like Heaven", "The Cure", "", "#F2A93B", "n3nPiBai66M"], ["Food for Thought", "UB40", "", "#F2A93B", "mOBZ6ygWk7I"]], "dir": "Violão › Internacionais", "byItem": true}];
+    var self = this;
+    var st = this.state || {};
+    var SESS = [[20260924, "09:00"], [20260930, "09:00"], [20261007, "09:00"], [20261014, "09:00"], [20261020, "09:00"], [20261027, "09:00"], [20261103, "09:00"], [20261109, "09:00"], [20261116, "17:00"], [20261123, "17:00"], [20261129, "09:00"], [20261206, "09:00"], [20261213, "09:00"], [20261219, "09:00"], [20261226, "09:00"], [20270102, "09:00"], [20270108, "17:00"], [20270115, "09:00"], [20270122, "09:00"], [20270128, "09:00"], [20270204, "09:00"], [20270211, "09:00"], [20270217, "09:00"], [20270224, "09:00"], [20270303, "09:00"], [20270309, "09:00"], [20270316, "09:00"], [20270323, "09:00"], [20270329, "09:00"], [20270405, "17:00"], [20270412, "17:00"], [20270418, "09:00"], [20270425, "09:00"], [20270502, "09:00"], [20270508, "09:00"], [20270515, "09:00"], [20270522, "09:00"], [20270528, "17:00"], [20270604, "09:00"], [20270611, "09:00"], [20270617, "09:00"], [20270624, "09:00"]];
+    var ROT = [
+      { k: 'Sol', ch: ['G', 'Am', 'Bm', 'C', 'D', 'Em', 'F#°'], r: 'G', pg: ', págs. 4 e 5' },
+      { k: 'Dó', ch: ['C', 'Dm', 'Em', 'F', 'G', 'Am', 'B°'], r: 'C', pg: '' },
+      { k: 'Ré', ch: ['D', 'Em', 'F#m', 'G', 'A', 'Bm', 'C#°'], r: 'D', pg: '' },
+      { k: 'Lá', ch: ['A', 'Bm', 'C#m', 'D', 'E', 'F#m', 'G#°'], r: 'A', pg: '' },
+      { k: 'Fá', ch: ['F', 'Gm', 'Am', 'Bb', 'C', 'Dm', 'E°'], r: 'F', pg: '' }
+    ].map(function (x) { x.n = 'Campo harmônico de ' + x.k + ' maior'; return x; });
+    var nowS = new Date(), todayN = nowS.getFullYear() * 10000 + (nowS.getMonth() + 1) * 100 + nowS.getDate();
+    var defSi = SESS.length - 1;
+    for (var si0 = 0; si0 < SESS.length; si0++) { if (SESS[si0][0] >= todayN) { defSi = si0; break; } }
+    var si = st.si === undefined ? defSi : Math.max(0, Math.min(SESS.length - 1, st.si));
+    var SE = SESS[si], RT = ROT[si % ROT.length];
+    var WDS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    var sy = Math.floor(SE[0] / 10000), sm = Math.floor(SE[0] / 100) % 100, sd = SE[0] % 100;
+    var sdow = new Date(Date.UTC(sy, sm - 1, sd)).getUTCDay();
+    var sesTag = SE[0] === todayN ? 'Hoje' : (si === defSi ? 'Próximo' : (SE[0] < todayN ? 'Anterior' : 'Depois'));
+    var sesReset = { sgPick: null, tdSong: null, sofC: null, sofV: 0, scI: null };
+    var SHAPES = { G: [[0,3],[1,2],[5,3]], Em: [[1,2],[2,2]], C: [[1,3],[2,2],[4,1]], D: [[3,2],[4,3],[5,2]], Am: [[2,2],[3,2],[4,1]], F: [[0,1],[1,3],[2,3],[3,2],[4,1],[5,1]], Bm: [[1,2],[2,4],[3,4],[4,3],[5,2]], A: [[2,2],[3,2],[4,2]], 'F#m': [[0,2],[1,4],[2,4],[3,2],[4,2],[5,2]], E: [[1,2],[2,2],[3,1]], Dm: [[3,2],[4,3],[5,1]], Bb: [[1,1],[2,3],[3,3],[4,3],[5,1]] };
+    var DEG = ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii'];
+    var prog = [RT.ch[0], RT.ch[5], RT.ch[3], RT.ch[4]];
+    var SOF = [RT.ch[0] + '7M', RT.ch[1] + '7(9)', RT.ch[2] + '7(11)', RT.ch[3] + '7M(9)', RT.ch[4] + '13', RT.ch[5] + '7(9)'];
+    var SES_OUT = {
+      campo: RT.ch.map(function (c, i) { var hi = [0, 3, 4, 5].indexOf(i) >= 0; return { c: c, d: DEG[i], bg: hi ? '#F2A93B' : '#1D2925', fg: hi ? '#1A1205' : '#EEF3F0', dc: hi ? '#1A1205' : '#9DACA6' }; }),
+      sesProg: 'I – vi – IV – V (' + prog.join(' – ') + ')',
+      sofTitle: 'VERSÃO SOFISTICADA · CAMPO DE ' + RT.r, sof: SOF.map(function (x) { return { c: x }; }), sofNote: 'Desenhos na apostila Acordes Sofisticados' + RT.pg,
+      shapes: prog.map(function (c) { var sh = SHAPES[c] || []; var o = { c: c }; for (var q = 0; q < 6; q++) { var p = sh[q]; o['d' + q] = p ? 'block' : 'none'; o['l' + q] = p ? (-5 + 14 * p[0]) : 0; o['t' + q] = p ? (3 + 16 * (p[1] - 1)) : 0; } return o; }),
+      planScale: 'Pentatônica maior de ' + RT.k + ' nas digitações do Guia de Escalas',
+      planSof: SOF[0] + ' → ' + SOF[5] + ' → ' + SOF[3] + ' → ' + SOF[4] + ' a 70 bpm · dedilhado com a 3ª corda solta',
+      sesLabel: 'TEORIA DO DIA · ' + sesTag, sesName: RT.n, sesDate: WDS[sdow] + ' ' + sd + '/' + sm + ' · ' + SE[1], sesCount: 'Estudo ' + (si + 1) + ' de ' + SESS.length,
+      sesPrevDisp: si > 0 ? 'flex' : 'none', sesNextDisp: si < SESS.length - 1 ? 'flex' : 'none', sesBackDisp: si !== defSi ? 'inline-flex' : 'none',
+      sesPrev: function () { self.setState(Object.assign({ si: si - 1 }, sesReset)); },
+      sesNext: function () { self.setState(Object.assign({ si: si + 1 }, sesReset)); },
+      sesBack: function () { self.setState(Object.assign({ si: defSi }, sesReset)); }
+    };
+
+    var NS_ = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'], NF_ = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+    var PT = { C: 'Dó', D: 'Ré', E: 'Mi', F: 'Fá', G: 'Sol', A: 'Lá', B: 'Si' };
+    function pcOf(n) { var b = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[n[0]]; if (n[1] === '#') b++; if (n[1] === 'b') b--; return (b + 12) % 12; }
+    var useFlat = RT.r === 'F';
+    function nn(pc) { return (useFlat ? NF_ : NS_)[(pc + 120) % 12]; }
+    var TUNE = [4, 9, 2, 7, 11, 4];
+    var IVN = { 0: 'R', 1: 'b9', 2: '9', 3: 'b3', 4: '3', 5: '11', 6: 'b5', 7: '5', 8: 'b13', 9: '13', 10: 'b7', 11: '7' };
+    var TPL = {
+      '7M': { d: 'Maior com sétima maior · som aberto e suave, típico da bossa nova', t: [[6, [0, null, 1, 1, 0, null]], [5, [null, 0, 2, 1, 2, null]], [6, [0, 2, 1, 1, null, null]], [4, [null, null, 0, 2, 2, 2]]] },
+      'm7(9)': { d: 'Menor com sétima e nona · menor macio, muito usado em MPB', t: [[6, [0, null, 0, 0, 0, 2]], [5, [null, 0, -2, 0, 0, null]], [6, [0, 2, 0, 0, 0, 2]]] },
+      'm7(11)': { d: 'Menor com sétima e décima primeira · som suspenso, moderno', t: [[6, [0, null, 0, 0, -2, null]], [5, [null, 0, 0, 0, 1, null]], [5, [null, 0, 0, 0, 1, 0]], [6, [0, 0, 0, 0, -2, null]]] },
+      '7M(9)': { d: 'Sétima maior com nona · o IV grau mais brilhante', t: [[6, [0, null, 1, -1, 0, null]], [5, [null, 0, -1, 1, 0, null]], [4, [null, null, 0, 2, 2, 0]]] },
+      '13': { d: 'Dominante com décima terceira · pede resolução no I grau', t: [[6, [0, null, 0, 1, 2, null]], [5, [null, 0, null, 0, 2, 2]]] }
+    };
+    function parseCh(c) { var m = c.match(/^([A-G][#b]?)(.*)$/); var q = m[2]; var ty = q === '7M' ? '7M' : q === 'm7(9)' ? 'm7(9)' : q === 'm7(11)' ? 'm7(11)' : q === '7M(9)' ? '7M(9)' : '13'; return { root: m[1], ty: ty }; }
+    function voicing(c) {
+      var p = parseCh(c), pc = pcOf(p.root), all = [], seen = {};
+      TPL[p.ty].t.forEach(function (tt) {
+        var r0 = (pc - (tt[0] === 6 ? 4 : tt[0] === 5 ? 9 : 2) + 12) % 12;
+        [r0, r0 + 12].forEach(function (r) {
+          var fr = tt[1].map(function (v) { return v === null ? null : r + v; });
+          var ok = fr.every(function (f) { return f === null || f >= 0; }); if (!ok) return;
+          var mx = Math.max.apply(null, fr.filter(function (f) { return f !== null; }));
+          if (mx > 15) return;
+          var key = fr.join(','); if (seen[key]) return; seen[key] = 1; all.push({ fr: fr, mx: mx });
+        });
+      });
+      all.sort(function (a, b) { return a.mx - b.mx; }); return { all: all, root: p.root, pc: pc, ty: p.ty };
+    }
+    var sofSel = SOF.indexOf(st.sofC) >= 0 ? st.sofC : null;
+    var cd = { cdVLabel: '', cdVDisp: 'none', cdVNext: null, cdDisp: 'none', cdDots: [], cdMarks: [], cdBase: '', cdNut: '1px', cdName: '', cdDesc: '', cdNotes: '' };
+    if (sofSel) {
+      var v = voicing(sofSel), vi = (st.sofV || 0) % v.all.length, fr = v.all[vi].fr, used = fr.filter(function (f) { return f !== null && f > 0; });
+      var mn = used.length ? Math.min.apply(null, used) : 1, mx = used.length ? Math.max.apply(null, used) : 1;
+      var base = mx <= 5 ? 1 : mn;
+      var notes = [];
+      cd.cdMarks = fr.map(function (f, i) { return { x: i * 22 - 7, t: f === null ? '×' : (f === 0 ? '○' : '') }; });
+      fr.forEach(function (f, i) { if (f === null) return; var npc = (TUNE[i] + f) % 12, iv = IVN[(npc - v.pc + 12) % 12]; notes.push(nn(npc) + ' (' + iv + ')'); if (f > 0) cd.cdDots.push({ x: i * 22 - 10, y: (f - base) * 25 + 2, t: iv, bg: iv === 'R' ? '#F2A93B' : '#EEF3F0' }); });
+      cd.cdDisp = 'flex'; cd.cdBase = base > 1 ? base + 'ª' : ''; cd.cdNut = base === 1 ? '5px' : '1px';
+      cd.cdName = sofSel; cd.cdVLabel = '⇄ Trocar acorde · ' + (vi + 1) + '/' + v.all.length; cd.cdVDisp = v.all.length > 1 ? 'inline-flex' : 'none'; cd.cdVNext = function () { self.setState({ sofV: vi + 1 }); }; cd.cdDesc = TPL[v.ty].d; cd.cdNotes = 'Notas (grave → aguda): ' + notes.join(' · ');
+    }
+    SES_OUT.sof = SOF.map(function (x) { var on = x === sofSel; return { c: x, on: on, bg: on ? '#F2A93B' : '#1D2925', fg: on ? '#1A1205' : '#EEF3F0', bd: on ? '#F2A93B' : '#1D2925', pick: function () { self.setState({ sofC: on ? null : x, sofV: 0 }); } }; });
+    Object.keys(cd).forEach(function (k) { SES_OUT[k] = cd[k]; });
+    var KP = pcOf(RT.r), MAJ = [0, 2, 4, 5, 7, 9, 11];
+    var MODES = ['jônio', 'dórico', 'frígio', 'lídio', 'mixolídio', 'eólio', 'lócrio'];
+    var MDESC = ['A própria escala maior do campo', 'Para o ii grau', 'Para o iii grau', 'Para o IV grau · a 4ª aumentada dá o brilho', 'Para o V grau · som de blues e baião', 'Para o vi grau', 'Para o vii grau (diminuto)'];
+    var relM = nn(KP + 9);
+    var SC = [
+      { c: 'Maior de ' + RT.r, n: 'Escala maior de ' + RT.r + ' (' + PT[RT.r[0]] + ')', d: 'Todas as notas do campo harmônico · serve sobre todos os acordes', root: KP, iv: MAJ },
+      { c: 'Pentatônica maior', n: 'Pentatônica maior de ' + RT.r, d: 'Sem as notas de tensão (4ª e 7ª) · a mais segura para solar em qualquer acorde do campo', root: KP, iv: [0, 2, 4, 7, 9] },
+      { c: 'Menor relativa (' + relM + 'm)', n: 'Menor natural de ' + relM + ' (eólio)', d: 'Mesmas notas da maior, começando no vi grau · clima mais melancólico', root: KP + 9, iv: [0, 2, 3, 5, 7, 8, 10] },
+      { c: 'Pentatônica menor (' + relM + 'm)', n: 'Pentatônica menor de ' + relM, d: 'Mesmas notas da pentatônica maior, a partir do vi grau', root: KP + 9, iv: [0, 3, 5, 7, 10] },
+      { c: 'Blues (' + relM + 'm)', n: 'Blues de ' + relM, d: 'Pentatônica menor com a blue note (b5) · use a nota de passagem, não pare nela', root: KP + 9, iv: [0, 3, 5, 6, 7, 10] }
+    ];
+    RT.ch.forEach(function (c, i) { if (i === 0 || i === 5) return; var r = KP + MAJ[i]; SC.push({ c: nn(r) + ' ' + MODES[i], n: nn(r) + ' ' + MODES[i] + ' · sobre ' + c, d: MDESC[i] + ' · mesmas notas da escala maior, centradas em ' + nn(r), root: r, iv: MAJ.map(function (x) { return (x - MAJ[i] + 12) % 12; }).sort(function (a, b) { return a - b; }) }); });
+    var scSel = st.scI !== undefined && st.scI !== null && st.scI < SC.length ? st.scI : null;
+    SES_OUT.scTitle = 'ESCALAS DO CAMPO DE ' + RT.r;
+    SES_OUT.scs = SC.map(function (x, i) { var on = i === scSel; return { c: x.c, on: on, bg: on ? '#4CC3B5' : '#1D2925', fg: on ? '#06201C' : '#EEF3F0', bd: on ? '#4CC3B5' : '#1D2925', pick: function () { self.setState({ scI: on ? null : i }); } }; });
+    SES_OUT.scDisp = scSel === null ? 'none' : 'flex';
+    SES_OUT.scDots = []; SES_OUT.scFrets = [3, 5, 7, 9, 12].map(function (f) { return { x: f * 24, t: f }; });
+    if (scSel !== null) {
+      var S = SC[scSel], rp = (S.root + 120) % 12, set = S.iv.map(function (x) { return (rp + x) % 12; });
+      SES_OUT.scName = S.n; SES_OUT.scDesc = S.d; SES_OUT.scNotes = set.map(nn).join(' – ');
+      for (var str = 0; str < 6; str++) for (var f = 0; f <= 12; f++) { var npc = (TUNE[str] + f) % 12; if (set.indexOf(npc) < 0) continue; var isR = npc === rp;
+        SES_OUT.scDots.push({ x: f * 24 + 4, y: (5 - str) * 16, t: nn(npc), bg: isR ? '#F2A93B' : '#2E3D38', fg: isR ? '#1A1205' : '#EEF3F0' }); }
+    } else { SES_OUT.scName = ''; SES_OUT.scDesc = ''; SES_OUT.scNotes = ''; }
+    var sel = st.cat || CATS[0].id;
+    var cur = CATS[0];
+    var total = 0;
+    var cats = CATS.map(function (c) {
+      total += c.n;
+      var on = c.id === sel;
+      if (on) cur = c;
+      return {
+        label: c.label, n: c.n, on: on,
+        bg: on ? '#F2A93B' : '#16201D', fg: on ? '#1A1205' : '#EEF3F0', bd: on ? '#F2A93B' : '#2A3833',
+        pick: function () { self.setState({ cat: c.id, song: null, showAll: false }); }
+      };
+    });
+    var openSong = st.song;
+    var picsAll = st.pics || {};
+    function mkItem(cur, i, idx, open, toggleFn) {
+      var skey = cur.id + ':' + i[0];
+      var pics = picsAll[skey] || [];
+      var audio = AUD[cur.id + ':' + nrm(i[0])] || '';
+      return {
+        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio,
+        open: open, chev: open ? '−' : '+', bd: open ? '#F2A93B' : '#16201D',
+        toggle: toggleFn,
+        where: 'No seu OneDrive: ' + cur.dir + (cur.byItem ? ' › ' + i[1] : ''),
+        lyr: i[4] ? 'https://www.youtube.com/watch?v=' + i[4] : 'https://www.youtube.com/results?search_query=' + encodeURIComponent(i[0] + ' ' + i[1]),
+        lyrLabel: LYRL,
+        pics: pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0] }; }), hasPics: pics.length > 0,
+        canUpload: !(i[5] && i[5].length), upLabel: pics.length ? 'Inserir outra imagem' : 'Inserir imagem da ' + LYRT.toLowerCase(),
+        lyrTitle: LYRT.toUpperCase(), tid: 'img-' + cur.id + '-' + idx,
+        onFile: function (e) {
+          var f = e.target.files && e.target.files[0];
+          if (!f) return;
+          var r = new FileReader();
+          r.onload = function () {
+            var all = Object.assign({}, (self.state || {}).pics || {});
+            all[skey] = (all[skey] || []).concat([r.result]);
+            self.setState({ pics: all });
+          };
+          r.readAsDataURL(f);
+        }
+      };
+    }
+    var items = (st.showAll ? cur.items : cur.items.slice(0, 10)).map(function (i, idx) {
+      var key = cur.id + ':' + idx, open = openSong === key;
+      return mkItem(cur, i, idx, open, function () { self.setState({ song: open ? null : key }); });
+    });
+    var SONG_POOL = [];
+    CATS.forEach(function (c) { if ((function (c) { return true; })(c)) c.items.forEach(function (it, ix) { SONG_POOL.push([c.id, ix]); }); });
+    var NS = Math.min(2, SONG_POOL.length);
+    function pickN(n, k, avoid) { var out = [], tries = 0; while (out.length < k && tries < 200) { var r = Math.floor(Math.random() * n); tries++; if (out.indexOf(r) < 0 && (!avoid || avoid.indexOf(r) < 0 || tries > 100)) out.push(r); } return out; }
+    var sgPick = st.sgPick || (function () { var o = []; for (var q = 0; q < NS; q++) { var v = (si * 7 + q * 5 + 3) % SONG_POOL.length; while (o.indexOf(v) >= 0) v = (v + 1) % SONG_POOL.length; o.push(v); } return o; })();
+    var tdSongItems = sgPick.map(function (k) { var p = SONG_POOL[k]; var c = CATS.filter(function (x) { return x.id === p[0]; })[0];
+      var key = 'td:' + p[0] + ':' + p[1], open = st.tdSong === key;
+      return mkItem(c, c.items[p[1]], p[1], open, function () { self.setState({ tdSong: open ? null : key }); }); });
+    SES_OUT.tdSongItems = tdSongItems;
+    SES_OUT.tdSongSwap = function () { self.setState({ sgPick: pickN(SONG_POOL.length, NS, sgPick), tdSong: null }); };
+    SES_OUT.tdSwapDisp = SONG_POOL.length > NS ? 'block' : 'none';
+    SES_OUT.songNames = tdSongItems.map(function (x) { return '“' + x.t + '”'; });
+    SES_OUT.planSong = 'Uma do acervo: ' + SES_OUT.songNames.join(' ou ');
+    var more = cur.n - cur.items.length;
+    var out = {
+      cats: cats, items: items, total: total + ' cifras',
+      moreLabel: st.showAll ? 'Ver menos' : 'Ver mais (' + (cur.items.length - 10) + ')', moreDisp: cur.items.length > 10 ? 'block' : 'none', moreToggle: function () { self.setState({ showAll: !st.showAll, song: null }); }
+    };
+
+    var CH = [{"id": "esc", "name": "Guia de Escalas", "sub": "Vilmar Gusberti · mais de 20 escalas", "tag": "94 págs.", "body": "Método sugerido pelo autor para cada escala: aprender a estrutura no papel e no braço → transpor para vários tons → tocar na horizontal, uma corda por vez → memorizar os formatos na vertical → improvisar sobre um acorde ou jam track.\n\nOrdem do livro:\nConceitos básicos — notas, tom e semitom, intervalos (pág. 9)\nPentatônica maior e menor (pág. 14)\nPentatônica blues (pág. 24)\nEscala maior e menor natural, em 3 notas por corda e no CAGED (pág. 28)\nModos gregos (pág. 40)\nMenor harmônica (pág. 42)\nE mais: bebop dominante, blues voodoo, pentatônica diminuta, diminuta, menor cigana e hirajoshi.\n\nComece pela pentatônica."}, {"id": "sof", "name": "Acordes Sofisticados", "sub": "Violão para o Reino · campos harmônicos", "tag": "12 págs.", "body": "Um campo harmônico por tom, com versões mais ricas dos acordes: add9, sus9, 7M(9), m7(11), 13 e baixos invertidos como C#m7/G# e Asus9/C#.\n\nTons e páginas:\nE — págs. 2 e 3\nG — págs. 4 e 5\nA — págs. 6 e 7\nD — págs. 8 e 9\nC — págs. 10 e 11\nF — pág. 12\n\nTreino: toque uma progressão com os acordes comuns e depois troque cada um pela versão sofisticada do mesmo grau."}, {"id": "con", "name": "Acordes que Conectam · bônus", "sub": "Matheus Furlan · 3 lições", "tag": "3 lições", "body": "Pré-requisito: dominar o material principal, Acordes Que Conectam.\n\nLição 1 — Power chords: pedaços de 2 ou 3 cordas graves tirados dos shapes de E, A e D.\nLição 2 — Acordes “guitarrísticos”: pedaços agudos do mesmo acorde, bons para dedilhados pop.\nDedilhados em G: a 3ª corda (Sol) fica solta em todos os acordes.\nDedilhados em D: a mesma ideia no tom de Ré.\n\nIdeia central: não é decorar acordes novos, é enxergar pedaços dos que você já sabe."}, {"id": "calc", "name": "Calculadora de inversões", "sub": "Sua planilha de acordes e intervalos", "tag": "planilha", "body": "Escolha um acorde e a planilha mostra a tônica, a terça, a quinta e a sétima menor, para maiores e menores.\nPara inverter: deixe o grau desejado como nota mais grave. Exemplo: G/B é a primeira inversão de Sol, com a terça (B) no baixo.\nA aba Intervalos tem as distâncias da 2ª à 7ª (e 9ª, 11ª, 13ª) e as escalas maiores de C a B.\n\nCorreção: na linha de Fá# menor, a terça está como “A ou B”. O certo é A."}];
+    var openCh = st.ch === undefined ? null : st.ch;
+    out.chs = CH.map(function (c) {
+      var o = openCh === c.id;
+      return { name: c.name, sub: c.sub, tag: c.tag, body: c.body, open: o, chev: o ? '−' : '+', bd: c.tag === 'hoje' ? '#F2A93B' : '#16201D',
+        toggle: function () { self.setState({ ch: o ? null : c.id }); } };
+    });
+    Object.keys(SES_OUT).forEach(function (k) { out[k] = SES_OUT[k]; });
+    return out;
+  }
+}
+</script>
+</body>
+</html>

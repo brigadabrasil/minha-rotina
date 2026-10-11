@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Capoeira</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1513">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Minha Rotina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{background:#0E1513;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+x-dc{display:block;visibility:hidden}
+x-dc>div{width:100%!important;max-width:560px;margin:0 auto;height:auto!important;min-height:100vh;min-height:100dvh}
+x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.nav{position:fixed!important;left:0;right:0;bottom:0;z-index:50;max-width:560px;margin:0 auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+</style>
+<script src="dc-lite.js" defer></script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1513}
+a{color:#4CC3B5}a:hover{color:#7DD8CD}
+.nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #2A3833;background:#121B18;padding:8px 6px 18px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;color:#9DACA6;text-decoration:none;font-size:11px;font-weight:600;border-radius:12px}
+.nav a.on{color:#F2A93B}
+.nav a:hover{color:#EEF3F0}
+.nb{min-height:44px;padding:0 14px;border-radius:12px;border:1px solid #2A3833;background:#16201D;color:#EEF3F0;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+.nb:hover{border-color:#F2A93B}
+</style>
+</helmet>
+<div style="width: 390px; height: 1560px; display: flex; flex-direction: column; background: #0E1513; color: #EEF3F0; font-family: 'Figtree', sans-serif">
+<main style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+<section style="background: #F2A93B; color: #1A1205; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px">BATIZADO &amp; FORMATURA</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800; line-height: 1.1">Sábado, 12 de dezembro</div>
+<div style="font-size: 13px; line-height: 1.4">Formandos: Mestra Liara · CM Cicatriz · CM Rodrigão · CM Peter</div>
+<div style="display: flex; gap: 8px"><span style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 99px; background: #1A1205; color: #F2A93B">{{eventLeft}}</span></div>
+</section>
+
+<header style="display: flex; flex-direction: column; gap: 4px">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #4CC3B5">TREINO DIÁRIO · GRUPO ANGATU</div>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">Capoeira</h1>
+<div style="font-size: 13px; color: #9DACA6">Um treino por dia, montado das suas planilhas: Força, Sequências e Temas</div>
+</header>
+
+<div role="tablist" aria-label="Visualização" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 14px; background: #16201D; border: 1px solid #2A3833">
+<sc-for list="{{views}}" as="v" hint-placeholder-count="3">
+<button role="tab" aria-selected="{{v.on}}" onClick="{{v.pick}}" style="min-height: 40px; border: 0; border-radius: 10px; background: {{v.bg}}; color: {{v.fg}}; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{v.label}}</button>
+</sc-for>
+</div>
+
+<div style="display: {{navDisp}}; justify-content: space-between; align-items: center; gap: 8px">
+<button class="nb" onClick="{{prev}}" aria-label="Dia anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg>Anterior</button>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center">
+<span style="font-weight: 700; font-size: 14px">{{navTitle}}</span>
+<button onClick="{{goNext}}" style="display: {{backDisp}}; background: none; border: 0; padding: 0; font-family: inherit; font-size: 12px; font-weight: 700; color: #4CC3B5; cursor: pointer">Voltar para hoje</button>
+</div>
+<button class="nb" onClick="{{next}}" aria-label="Próximo dia" style="background: #F2A93B; color: #1A1205; border-color: #F2A93B">Próximo dia<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+
+<div style="display: {{chipsDisp}}; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="5">
+<button aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 36px; padding: 0 12px; border-radius: 99px; border: 1px solid {{c.bc}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">{{c.label}}</button>
+</sc-for>
+</div>
+
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="10">
+<div style="display: flex; flex-direction: column; margin-top: {{r.mt}}">
+<div style="display: {{r.dHead}}; align-items: stretch; border-radius: {{r.hrad}}; background: #1D2925; border-left: 4px solid {{r.color}}; overflow: hidden">
+<button onClick="{{r.act}}" aria-expanded="{{r.open}}" style="display: flex; flex-grow: 1; min-width: 0; justify-content: space-between; align-items: center; gap: 10px; width: 100%; box-sizing: border-box; padding: 12px 14px; border: 0; border-radius: 0; background: transparent; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer">
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 11px; font-weight: 700; letter-spacing: 1px; color: {{r.color}}">{{r.eyebrow}}</span><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.2">{{r.title}}</span><span style="display: {{r.dSub}}; font-size: 12px; color: #9DACA6">{{r.sub}}</span></span>
+<span style="flex-shrink: 0; display: flex; align-items: center; gap: 8px"><span style="font-size: 12px; font-weight: 700; color: #C9D3CF">{{r.right}}</span></span>
+</button>
+<div style="display: {{r.dSwap}}; flex-direction: column; justify-content: center; gap: 4px; padding: 8px 8px 8px 0">
+<button onClick="{{r.troca}}" aria-label="Trocar exercícios deste bloco" style="min-height: 32px; padding: 0 10px; border-radius: 8px; border: 1px solid {{r.color}}; background: transparent; color: {{r.color}}; font-family: inherit; font-size: 12px; font-weight: 800; cursor: pointer; white-space: nowrap">⇄ Trocar</button>
+<button onClick="{{r.undo}}" aria-label="Voltar ao treino original deste bloco" style="display: {{r.dUndo}}; align-items: center; justify-content: center; min-height: 26px; padding: 0 8px; border-radius: 8px; border: 0; background: #16201D; color: #9DACA6; font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap">↺ Original</button>
+</div>
+<button onClick="{{r.act}}" aria-expanded="{{r.open}}" aria-label="Expandir ou minimizar" style="flex-shrink: 0; display: flex; align-items: center; padding: 0 12px 0 2px; border: 0; background: transparent; cursor: pointer"><span style="width: 28px; height: 28px; border-radius: 8px; background: #16201D; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; line-height: 1; color: #C9D3CF">{{r.chev}}</span></button>
+</div>
+<button onClick="{{r.act}}" aria-pressed="{{r.done}}" style="display: {{r.dItem}}; grid-template-columns: 22px 22px minmax(0, 1fr); column-gap: 10px; align-items: start; width: 100%; box-sizing: border-box; padding: 10px 14px; border: 0; border-left: 4px solid {{r.color}}; border-bottom: 1px solid #1D2925; border-radius: {{r.rad}}; background: #16201D; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer; opacity: {{r.op}}">
+<span style="width: 22px; height: 22px; border-radius: 7px; border: 2px solid {{r.ckBc}}; background: {{r.ckBg}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #0E1513; font-size: 12px; font-weight: 900; line-height: 1">{{r.ck}}</span>
+<span style="font-size: 13px; font-weight: 800; color: {{r.color}}; padding-top: 2px">{{r.n}}</span>
+<span style="font-size: 14px; line-height: 1.4; text-decoration: {{r.deco}}">{{r.txt}}</span>
+</button>
+<div style="display: {{r.dNote}}; font-size: 13px; line-height: 1.45; padding: 10px 12px; border-radius: 12px; background: #10251F; color: #C9D3CF">{{r.note}}</div>
+</div>
+</sc-for>
+
+
+<a href="Berimbau.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; padding: 0 16px; border-radius: 16px; background: #1D2925; color: #EEF3F0; text-decoration: none; font-weight: 600">Revisar toques da roda no berimbau<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></a>
+</main>
+<nav class="nav" aria-label="Navegação principal">
+<a href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Hoje</a>
+<a href="Alimentacao.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"></path></svg>Comida</a>
+<a class="on" href="Capoeira.dc.html" aria-current="page"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c8 5 8 15 0 20"></path><path d="M8 2v20"></path><circle cx="6" cy="16" r="3.5"></circle></svg>Capoeira</a>
+<a href="Surf.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2-1 3-5 6-8s8-4 11-1c2 2 1 5-2 5-2 0-3-2-1.5-3"></path><path d="M2 21c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"></path></svg>Surf</a>
+<a href="Berimbau.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Música</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1560}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this, st = this.state || {};
+    var CAP = {"p1": {"Mestre Pastinha": [["Ginga c/ afundo e toque no calcanhar", "Esquiva angola, resistência, esquiva angola", "Apoio na meia-lua 4x, queda de rim chutando 4x", "Negativa, cruza e gira, negativa, base lateral, mergulho, prancha c/ 1 mão e 1 pé"], ["Alongamento alto, alongamento baixo, guarda-baixa, 5 chutes c/ apoio de cabeça", "Cadeira (isometria), ginga, cocorinha recuada, corta-capim 5x", "Resistência, rasteira de chão, bananeira descendo, abre as pernas", "Aú sem tirar as mãos do chão 5x, meia-lua de compasso 5x, ponte alternando o braço 5x", "Cocorinha ponta dos pés, resistência 5x"], ["Chapéu de couro, abre e junta as pernas, finta a ponte", "Apoio diamante e pés abertos e fechados invertidos", "Ginga, esquiva lateral recuada, escorpião (passando)", "Cocorinha, pulando na bananeira e descendo devagar"], ["Ginga c/ mini-band", "Meia-lua de compasso, esquiva de angola, cruza, meia-lua de compasso", "Negativa, abre e carneirinho", "Guarda-baixa, cocorinha, finta chapéu de couro, aranha, esquiva lateral no apoio", "Rolê de angola, apoio na queda de rim só c/ 1 pé"]], "Mestre Bimba": [["Guarda-baixa, cai na negativa, troca de negativa, cocorinha", "Finta meia-lua de compasso, cai na negativa, troca de negativa, apoio", "Aú, queda de rim", "Chutes repetidos (bênção, martelo, chapa)"], ["Finta queixada, esquiva lateral, cai na negativa, rolê, apoio c/ um pé", "Negativa, rolê, queda de rim, aú c/ negativa", "Aú (cocorinha), bananeira junta as pernas, cai pro lado", "Chutes parados (bênção, martelo, chapa)"], ["Afundo, joelhada, martelo, cadeira, afundo na lateral, martelo", "Aú sem tirar as mãos do chão", "Negativa regional pros dois lados", "Parada de cabeça subindo e descendo as pernas"], ["Esquiva lateral, troca os pés, inverte o lado da esquiva, troca de negativa, volta na esquiva", "Guarda-baixa, negativa, avança na esquiva", "Troca de afundo", "Negativa, arrasta o pé pro lado, carneirinho", "Parada de cabeça, sobe, parada de mão, desce"]], "Mestre Suassuna": [["Finta meia-lua de compasso, negativa, joelhada no cotovelo, costura, queda de rim chutando", "Chapéu de couro, cocorinha, chapéu de couro, ponte, queda de rim (vai e volta)", "Esquiva de angola (lateral recuada), passo a frente, esquiva de angola", "Ponte, entrada de queda de rim, volta, apoio pro outro lado", "Afundo, perna de trás avança na negativa"], ["Negativa, cruza, gira, abre a negativa, vaza, rolê c/ joelhada, cai na queda de rim", "Aú c/ as pernas juntas e mão no chão", "Caminha e volta por cima", "Cocorinha e meia-lua de frente"], ["Rasteira, volta na ponte, sai do mesmo lado", "Apoio tesoura, invertendo os pés", "Negativa pulando na finta, corta-capim", "Aú pisa na frente, carneirinho"], ["Queda de rim, parada de cabeça, queda de rim", "Cocorinha pulando atrás na queda de rim", "Cocorinha, escorpião, cocorinha, escorpião", "Parada de cabeça, cai na ponte, sai por cima (lado)", "Aú parada de uma mão"]], "Mestre Diogo": [["Cocorinha, bênção, guarda-baixa", "Finta meia-lua de compasso, negativa, joelhada no cotovelo, costura, queda de rim chutando", "Esquiva de angola, esquiva de angola, apoio de cabeça, queda de quatro", "Mergulho, troca pra queda levanta um pé"], ["Esquiva lateral recuada, esquiva lateral, guarda-baixa", "Finta meia-lua de compasso, aú c/ pé na frente, beija-flor", "Aú pro mesmo lado, voltando o pé por baixo", "Deitado abdominal chutando e trocando os pés", "Queda de rim, ponte, queda de rim"], ["Deslocamento macaco (esquiva de angola, carneirinho, queda de rim)", "Esquiva lateral pra cada lado", "Resistência, passo a frente", "Esquiva lateral, esquiva de angola, cocorinha, finta de aú", "Cocorinha, aranha, valha-me Deus"], ["Ginga pulando", "Guarda-baixa, negativa, esquiva lateral", "Finta meia-lua de compasso, toque no calcanhar", "Negativa, finta de aú, fecha o aú", "Queda de rim, chapéu de couro, queda de quatro, queda de rim"]], "Mestre Dinho": [["Apoio c/ agachamento levanta uma mão e um pé", "Bênção desce e sobe na negativa", "Abdominal abre e fecha as pernas"], ["Apoio c/ as mãos no ombro", "Abdominal montanhista c/ apoio", "Agachamento pulando", "Aranha, queda de quatro, rasteira"], ["Burpee c/ meia-lua de compasso", "Ponte c/ apoio", "Corrida lateral parado", "Prancha alternando a altura", "Ajoelhado, estende as pernas"], ["Apoio de cabeça, escala, vaza, negativa, valha-me Deus", "Esquiva de angola, cruza, troca de esquiva, tesoura, meia-lua de compasso", "Burpee, troca de finta de meia-lua rápido", "Parada de cabeça, abrindo e fechando as pernas", "Mergulho, entrada de escorpião"]]}, "p2": [["Sequências 1", ["Meia-lua de compasso, fuga da rasteira", "Negativa de costas, aú trançado", "Armada caindo na queda de rim (aú-cdo), hélice, meia-lua de compasso", "Armada (meia-lua), currupio, meia-lua de compasso, passo a frente, aú fechado", "Meia-lua de compasso (resistência, chutado, valha-me Deus, meia-lua contra)", "Meia-lua de frente, armada passando, aú de frente", "Meia-lua de compasso, negativa atrás (carneirinho, ponte, pula na queda de rim, chapéu de couro)", "Troca de negativa pulando, aú cdo", "Finta aú, rasteira de chão, aú pesado", "Finta rasteira de chão, esquiva de angola pro outro lado, meia-lua de compasso", "Finta rasteira, finta armada, cai na esquiva lateral, balanço", "Balanço pra trás, cruza os pés e abre a base, finta meia-lua de frente e balanço", "Meia-lua de frente pulando e meia-lua de compasso"]], ["Sequências 2", ["Armada cai na negativa lateral, aú cdo, parada de mão girando", "Meia-lua de compasso, pé volta na frente, volta na queda de rim", "Meia-lua de compasso, queda de rim, negativa de costas, aú de coluna", "Guarda-baixa, queda de rim pulando, ponte c/ pé alto", "Meia-lua de compasso, negativa de costas, rolê c/ corta-capim, meia hélice, aú de coluna", "Finta meia-lua de compasso, cai na negativa, costura, cai na negativa atrás, carneirinho", "Troca de negativa pulando, corta-capim, aú de frente", "Queda de rim chutando, corta-capim girando, chapéu de couro", "Finta meia-lua de compasso, queda de 4 pra trás, aú de coluna, corrupio andando, aú"]], ["Sequências Chutes", ["Meia-lua de compasso, pisa a frente, chutado", "Esquiva no contra, armada (meia-lua) contra", "Finta armada, escorpião contra", "Meia-lua de frente, escorpião contra", "Meia-lua de compasso, rasteirão de chão (rápido)", "Recuo na entrada de queixada, chapéu de couro, guarda-baixa, meia-lua de compasso", "Finta meia-lua de frente, meia-lua de compasso", "Armada, chapa giratória", "Finta meia-lua de frente, chapa", "Finta bênção, martelo", "Finta queixada, bênção", "Armada, cai na negativa de costas, rolê, bênção no chão (meia-lua de compasso)", "Armada pulando o pé de trás, esquiva, meia-lua de compasso contra"]], ["Sequências Combate", ["Galopante e travando o braço", "Galopante e martelo", "Galopante e coice contra", "Chapa e paulistinha", "Meia-lua de frente e chapa", "Martelo, trava o braço e crucifixo", "Meia-lua de compasso contra levantando o pé", "Finta martelo e bloqueia rasteira", "Finta rasteira e cabeçada", "Finta meia-lua de compasso, finta cabeçada, rasteira", "Finta queixada, armada contra", "Finta meia-lua de compasso passando, meia-lua de compasso contra", "Finta armada, coice", "Finta armada, negativa (vingativa)", "Finta armada, martelo", "Armada, martelo, esquiva, martelo de chão", "Bênção (meia-lua), escorpião", "Finta armada, escorpião", "Cocorinha, finta galopante, banda"]], ["Sequências Velocidade", ["Armada, paralela, armada contra", "Armada, troca, meia-lua de compasso", "Meia-lua de compasso, troca, meia-lua de compasso", "Esquiva lateral, armada, aú", "Finta armada, meia-lua de compasso", "Meia-lua de compasso, pé na frente, chutado", "Armada girando, aú pra trás", "Meia-lua de compasso, finta vingativa pulando, meia-lua de compasso pro outro lado", "Finta meia armada, troca de pé, meia-lua pro outro lado de compasso"]], ["Sequências Floreios", ["Armada, beija-flor, aú sem mão", "Compasso, finta de compasso, aú de coluna", "Meia-lua de frente, aú de coluna", "Negativa, rolê, aú sem mão"]], ["Sequências Ponte", ["Caindo de cima", "Volta por cima", "Passando, flexão de costas", "Passo a frente, joelho no chão e volta", "Apenas uma mão, apenas um pé", "Resistência e queda de rim", "Ponte pulando", "Ponte c/ cabeça", "Ponte entrada de queda de rim pra cada lado", "Ponte saindo por cima (cabeça)"]], ["Sequências Queda de Rim", ["Queda de rim passando", "Queda de rim trocando", "Sentado no banco", "Pulando por cima do banco", "Queda, ponte, queda", "Corta-capim, trocando, cocorinha", "Negativa, cruza, gira, cocorinha, queda de rim", "Negativa, bate o joelho, costura", "Cocorinha, pulando de costas, queda de rim"]], ["Treinos de Aú", ["Aú baixo - volta aú grande", "Passo a frente - aú protegendo", "Aú c/ uma mão", "Aú juntando as pernas", "Aú de coluna (queixada, meia-lua de compasso)", "Aú c/ meio peão", "Aú c/ pé na frente", "Armada - aú", "Aú amazonas", "Aú pesado (vai e volta)", "Aú girando em torno de objeto"]], ["Sequências de Aú", ["Aú queda de rim, avança, guarda-baixa, aú de costas", "Aú peão uma volta", "Negativa atrás, aú de coluna (trançado)", "Aú baixo - aú alto", "Aú, volta na queda de rim, aú de coluna", "Aú passando o pé, volta carneirinho", "Aú pé na frente, abre, carneirinho", "Aú, cai na guarda-baixa, abre e fecha as pernas"]], ["Sequências Bananeira", ["Pernas abertas - movendo o quadril", "Alternando as pernas", "Bananeira c/ ante-braço", "Uma mão, rosto pra parede (pés abertos encostados)", "Flexão 90º c/ suporte", "Pula c/ as duas pernas pra bananeira", "Bico de papagaio na parede", "Afastando da parede", "Giro c/ auxílio da parede", "Trocando o ombro (frente/costas)", "Alternando as pernas (posição inicial: pernas abertas)", "Saída de cabeça no chão", "Inclinação lateral - pernas juntas", "Flexão bananeira", "Balanço no escorpião / afastando no escorpião", "Quebrada lateral c/ as costas no chão", "Inclinação lateral (uma perna esticada)", "Quebrada lateral c/ a cabeça no chão", "Quebrada lateral c/ o rosto pra parede", "Galinha / galinha s/ apoio", "Pula e abre as pernas (boneco)", "Pegar um caxixi (Ivan)", "Duas cadeiras (Mussum)", "3 apoio saindo do chão", "Deitado equilibra"]], ["Sequências Aquecimento", ["Ginástica natural - ginga-finta", "Saudação ao sol", "Ginga", "Queixada direto", "Agachamento lateral (vira a perna)", "Valha-me Deus", "Prancha arrastando parada de cabeça", "Alongamento variados"]], ["Sequências Ginga", ["Aranha - esquiva de lado, esquiva de lado, esquiva atrás", "Mussum - esquiva lateral, pisadinha", "Mussum - esquiva lateral, finta meia-lua de frente pulando", "Cueca - rasteirinha em pé juntando os pés, pula finta o martelo", "Poncianinho - passa a mão no chão, pé cruzando", "Tico - segura na resistência, ginga recuada, volta passo a frente, abrindo esquiva lateral", "Tico - esquiva lateral, passo a frente", "Liara - pulandinho (aranha)", "Diogo - giro, joga a laranja", "Diogo - balanço", "Diogo - esquiva lateral (3x)", "Kibe - junta os pés atrás (esquiva lateral)", "Pelado - gira meia-lua c/ pés juntos", "Pelado - aranha pulando, aranha de chão"]], ["Sequências Angola", ["Armada, corta no meio e volta", "Guarda-baixa pra um lado, guarda-baixa pro outro lado, meia-lua de frente do chão", "Meia-lua de compasso, pé finaliza atrás, carneirinho", "Esquiva de angola, sai por cima (4 apoios), pé dobrado, esquiva recuada avança, resistência, meia-lua de compasso, ponte", "Negativa, rolê, negativa cruzando, chapa de chão de costas, base (pé voltando), armada de chão", "Esquiva de angola, queda de 4 pro outro lado, rolê, resistência, meia-lua de compasso", "Resistência, rasteira de chão, chapa de costas, queda de rim", "Rasteira, meia-lua de compasso pros dois lados", "Esquiva pra um lado, esquiva pro outro, tesoura, meia-lua de compasso", "Meia-lua de compasso baixando, cocorinha, queda de rim, negativa, rolê"]]]};
+    var DAYMS = 86400000, ANCHOR = Date.UTC(2026, 8, 23), START = Date.UTC(2026, 8, 22);
+    var WD = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    var MO = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    function set(o) { self.setState(o); }
+    var days = [];
+    for (var t = START; days.length < 400; t += DAYMS) days.push(t);
+    var now = new Date(), TODAY = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    var nextIdx = Math.max(0, Math.min(days.length - 1, Math.round((TODAY - START) / DAYMS)));
+    var ci = typeof st.di === 'number' ? st.di : nextIdx;
+    var view = st.view || 'treino';
+    var done = st.done || {};
+    var MESTRES = Object.keys(CAP.p1);
+    var SEQS = CAP.p2.filter(function (x) { return x[0] === 'Sequências 1' || x[0] === 'Sequências 2'; });
+    var TEMAS = CAP.p2.filter(function (x) { return x[0] !== 'Sequências 1' && x[0] !== 'Sequências 2'; });
+    var THEMES = TEMAS.filter(function (x) { return x[0] !== 'Sequências Aquecimento' && x[0] !== 'Sequências Ginga'; });
+    function theme(name) { return CAP.p2.filter(function (x) { return x[0] === name; })[0][1]; }
+    function slice(arr, start, n) { var out = []; for (var k = 0; k < Math.min(n, arr.length); k++) out.push(arr[(start + k) % arr.length]); return out; }
+    function nums(a) { var x = a.map(function (q) { return String(q + 1); }); return x.length > 1 ? x.slice(0, -1).join(', ') + ' e ' + x[x.length - 1] : x[0]; }
+    function rng(a, n, tot) { return n === 1 ? 'Movimento ' + (a + 1) + ' de ' + tot : 'Movimentos ' + (a + 1) + ' a ' + (a + n) + ' de ' + tot; }
+    function short(n) { var M = { 'Sequências 1': 'Sequências 1', 'Sequências 2': 'Sequências 2', 'Treinos de Aú': 'Aú (treinos)', 'Sequências de Aú': 'Aú (sequências)' }; return M[n] || n.replace('Sequências ', '').replace('Mestre ', 'M. '); }
+
+    var rows = [];
+    var B = { dSwap: 'none', dUndo: 'none', troca: function () {}, undo: function () {}, swLabel: '', open: false, hrad: '14px', chev: '', dHead: 'none', dSub: 'none', dItem: 'none', dNote: 'none', mt: '0px', color: '#4CC3B5', eyebrow: '', title: '', sub: '', right: '', act: function () {}, done: false, rad: '0', op: 1, ck: '', ckBc: '#5A6B65', ckBg: 'transparent', n: '', txt: '', deco: 'none', note: '' };
+    var folds = st.folds || {};
+    var lastOpen = true;
+    function head(color, eyebrow, title, sub, right, fid, swp) {
+      fid = fid || (eyebrow.split(' · ')[0] + '|' + (view === 'treino' ? '' : title));
+      var op = folds[fid] === undefined ? true : !!folds[fid];
+      rows.push(Object.assign({}, B, { dHead: 'flex', color: color, eyebrow: eyebrow, title: title, sub: sub || '', dSub: sub ? 'block' : 'none', right: right || '', mt: rows.length ? '12px' : '0px',
+        open: op, chev: op ? '–' : '+', hrad: op ? '14px 14px 0 0' : '14px', act: function () { var n = Object.assign({}, folds); n[fid] = !op; set({ folds: n }); },
+        dSwap: swp ? 'flex' : 'none', troca: swp ? swp.troca : function () {}, dUndo: swp && swp.n ? 'flex' : 'none', undo: swp ? swp.undo : function () {}, swLabel: swp && swp.n ? 'Trocado' : '' }));
+      lastOpen = op;
+      return op;
+    }
+    function items(color, list, keyBase, numbered, off) {
+      off = off || 0;
+      if (!lastOpen) return;
+      list.forEach(function (txt, k) {
+        var id = keyBase + '-' + k, dn = !!done[id], last = k === list.length - 1;
+        rows.push(Object.assign({}, B, { dItem: 'grid', color: color, txt: txt, n: Array.isArray(numbered) ? String(numbered[k]) : (numbered ? String(k + 1 + off) : '•'), done: dn, ck: dn ? '✓' : '', ckBc: dn ? '#4CC3B5' : '#5A6B65', ckBg: dn ? '#4CC3B5' : 'transparent', deco: dn ? 'line-through' : 'none', op: dn ? 0.6 : 1, rad: last ? '0 0 14px 14px' : '0',
+          act: function () { var n = Object.assign({}, done); n[id] = !dn; set({ done: n }); } }));
+      });
+    }
+    function note(t) { rows.push(Object.assign({}, B, { dNote: 'block', note: t, mt: '12px' })); }
+
+    var out = { views: [['treino', 'Treino do dia'], ['forca', 'Força'], ['seq', 'Sequências'], ['tema', 'Tema']].map(function (v) { var on = v[0] === view; return { label: v[1], on: on, bg: on ? '#F2A93B' : 'transparent', fg: on ? '#1A1205' : '#C9D3CF', pick: function () { set({ view: v[0] }); } }; }),
+      navDisp: view === 'treino' ? 'flex' : 'none', chipsDisp: view === 'treino' ? 'none' : 'flex', chips: [], navTitle: '', backDisp: 'none',
+      prev: function () { set({ di: Math.max(0, ci - 1) }); }, next: function () { set({ di: Math.min(days.length - 1, ci + 1) }); }, goNext: function () { set({ di: nextIdx }); } };
+
+    if (view === 'treino') {
+      var t0 = days[ci], d = new Date(t0), i = ci;
+      out.navTitle = WD[d.getUTCDay()] + ', ' + d.getUTCDate() + ' ' + MO[d.getUTCMonth()] + (t0 === TODAY ? ' · hoje' : '');
+      out.backDisp = t0 !== TODAY ? 'block' : 'none';
+      var key = 'd' + t0;
+      var swaps = st.swaps || {};
+      function sw(b) { return swaps[key + '-' + b] || 0; }
+      var fc = (i + sw('fo')) % 20, mestre = MESTRES[fc % MESTRES.length], sq = Math.floor(fc / MESTRES.length) % 4;
+      function rnd(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+      function pick(len, n, seed) { var r = rnd(seed), pool = []; for (var q = 0; q < len; q++) pool.push(q); for (var q2 = pool.length - 1; q2 > 0; q2--) { var j = Math.floor(r() * (q2 + 1)); var tmp = pool[q2]; pool[q2] = pool[j]; pool[j] = tmp; } return pool.slice(0, Math.min(n, len)); }
+      var sObj = SEQS[(i + sw('sq')) % 2], sItems = sObj[1], sIdx = pick(sItems.length, 2, t0 / DAYMS * 31 + sw('sq') * 977 + 1);
+      var ti = (i + sw('te')) % THEMES.length, th = THEMES[ti], thItems = th[1], tIdx = pick(thItems.length, 3, t0 / DAYMS * 37 + sw('te') * 983 + 2);
+      var aq = slice(theme('Sequências Aquecimento'), (i * 3 + sw('aq') * 3) % 8, 3);
+      var gi = slice(theme('Sequências Ginga'), (i * 3 + sw('gi') * 3) % 14, 3);
+      var forca = CAP.p1[mestre][sq];
+      var seqI = sIdx.map(function (q) { return sItems[q]; });
+      var tema = tIdx.map(function (q) { return thItems[q]; });
+      function swapper(b) { var n = sw(b); return { troca: function () { var o = Object.assign({}, swaps); o[key + '-' + b] = n + 1; set({ swaps: o }); }, undo: function () { var o = Object.assign({}, swaps); delete o[key + '-' + b]; set({ swaps: o }); }, n: n }; }
+      var total = aq.length + gi.length + forca.length + seqI.length + tema.length;
+      var nd = Object.keys(done).filter(function (k) { return done[k] && k.indexOf(key + '-') === 0; }).length;
+      note('Treino do dia · ' + nd + ' de ' + total + ' movimentos feitos. Todo dia muda o mestre da Força, a parte das Sequências e o Tema.');
+      head('#9DACA6', 'AQUECIMENTO · ~10 MIN', 'Aquecimento', 'Tema Aquecimento', '', null, swapper('aq'));
+      items('#9DACA6', aq, key + '-aq', false);
+      head('#E7766D', 'FORÇA · ~15 MIN', mestre, (sq + 1) + 'ª sequência · repita o circuito 2 a 3 vezes', '', null, swapper('fo'));
+      items('#E7766D', forca, key + '-fo', true);
+      head('#4CC3B5', 'GINGA · ~5 MIN', 'Ginga', 'Tema Ginga', '', null, swapper('gi'));
+      items('#4CC3B5', gi, key + '-gi', false);
+      head('#F2A93B', 'TEMA · ~10 MIN', short(th[0]), 'Sorteados: nº ' + nums(tIdx) + ' (de ' + thItems.length + ')', '', null, swapper('te'));
+      items('#F2A93B', tema, key + '-te', tIdx.map(function (q) { return q + 1; }));
+      head('#B58CFF', 'SEQUÊNCIA · ~10 MIN', sObj[0], 'Sorteados: nº ' + nums(sIdx) + ' (de ' + sItems.length + ')', '', null, swapper('sq'));
+      items('#B58CFF', seqI, key + '-sq', sIdx.map(function (q) { return q + 1; }));
+    } else if (view === 'forca') {
+      var ms = st.mestre || MESTRES[0];
+      out.chips = MESTRES.map(function (m) { var on = m === ms; return { label: short(m), on: on, bg: on ? '#2A1712' : 'transparent', fg: on ? '#E7766D' : '#9DACA6', bc: on ? '#E7766D' : '#2A3833', pick: function () { set({ mestre: m }); } }; });
+      note('1ª Parte · Força. Faça as sequências em circuito: cada movimento 30–40 s, 3 voltas, descanso curto entre as sequências.');
+      CAP.p1[ms].forEach(function (seq, k) { head('#E7766D', 'TREINO ' + ms.toUpperCase(), (k + 1) + 'ª Sequência', '', seq.length + ' mov.'); items('#E7766D', seq, 'lib-' + ms + '-' + k, true); });
+    } else if (view === 'seq') {
+      var sn = st.seqSel || SEQS[0][0];
+      out.chips = SEQS.map(function (x) { var on = x[0] === sn; return { label: x[0], on: on, bg: on ? '#1E1730' : 'transparent', fg: on ? '#B58CFF' : '#9DACA6', bc: on ? '#B58CFF' : '#2A3833', pick: function () { set({ seqSel: x[0] }); } }; });
+      var si2 = theme(sn);
+      head('#B58CFF', '2ª PARTE · SEQUÊNCIAS', sn, si2.length + ' movimentos', '');
+      items('#B58CFF', si2, 'lib-' + sn, true);
+    } else {
+      var tn = st.temaSel || TEMAS[0][0];
+      out.chips = TEMAS.map(function (x) { var on = x[0] === tn; return { label: short(x[0]), on: on, bg: on ? '#2A2110' : 'transparent', fg: on ? '#F2A93B' : '#9DACA6', bc: on ? '#F2A93B' : '#2A3833', pick: function () { set({ temaSel: x[0] }); } }; });
+      var it = theme(tn);
+      head('#F2A93B', '2ª PARTE · TEMA', short(tn), tn + ' · ' + it.length + ' movimentos', '');
+      items('#F2A93B', it, 'lib-' + tn, true);
+    }
+    var EV = Date.UTC(2026, 11, 12), left = Math.round((EV - TODAY) / DAYMS);
+    out.eventLeft = left > 1 ? 'Faltam ' + left + ' dias' : (left === 1 ? 'É amanhã!' : (left === 0 ? 'É hoje!' : 'Evento realizado'));
+    out.rows = rows;
+    return out;
+  }
+}
+</script>
+</body>
+</html>

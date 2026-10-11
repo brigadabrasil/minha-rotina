@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Hoje</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1513">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Minha Rotina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{background:#0E1513;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+x-dc{display:block;visibility:hidden}
+x-dc>div{width:100%!important;max-width:560px;margin:0 auto;height:auto!important;min-height:100vh;min-height:100dvh}
+x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.nav{position:fixed!important;left:0;right:0;bottom:0;z-index:50;max-width:560px;margin:0 auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+</style>
+<script src="dc-lite.js" defer></script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1513}
+a{color:#4CC3B5}a:hover{color:#7DD8CD}
+.nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #2A3833;background:#121B18;padding:8px 6px 18px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;color:#9DACA6;text-decoration:none;font-size:11px;font-weight:600;border-radius:12px}
+.nav a.on{color:#F2A93B}
+.nav a:hover{color:#EEF3F0}
+.seg{flex:1;min-height:40px;border:0;border-radius:10px;background:transparent;color:#9DACA6;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.seg.on{background:#F2A93B;color:#1A1205}
+.nb{min-height:44px;padding:0 14px;border-radius:12px;border:1px solid #2A3833;background:#16201D;color:#EEF3F0;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+.nb:hover{border-color:#F2A93B}
+.row{display:flex;gap:12px;align-items:stretch}
+.tm{width:44px;font-size:13px;font-weight:600;padding-top:12px;flex-shrink:0}
+.card{flex-grow:1;padding:10px 12px;border-radius:14px;background:#16201D;color:#EEF3F0;text-decoration:none;display:block}
+</style>
+</helmet>
+<div style="width: 390px; height: 1480px; display: flex; flex-direction: column; background: #0E1513; color: #EEF3F0; font-family: 'Figtree', sans-serif">
+<main style="flex-grow: 1; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+<header style="display: flex; justify-content: space-between; align-items: flex-start">
+<div>
+<div style="font-size: 14px; color: #9DACA6; font-weight: 500">{{dateLabel}}</div>
+<h1 style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">{{title}}</h1>
+</div>
+<sc-if value="{{notToday}}" hint-placeholder-val="{{false}}">
+<button class="nb" onClick="{{goToday}}">Hoje</button>
+</sc-if>
+</header>
+
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="width: 36px; height: 36px; border-radius: 12px; background: {{cycColor}}; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1205" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-8Z"></path></svg></div>
+<div>
+<div style="font-weight: 700; font-size: 16px">{{cycTitle}}</div>
+<div style="font-size: 13px; color: #9DACA6">{{cycSub}}</div>
+</div>
+</div>
+<div style="text-align: right; font-size: 12px; color: #9DACA6">Próximo plantão<br><span style="color: #EEF3F0; font-weight: 700; font-size: 14px">{{nextShift}}</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{cycle}}" as="c" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 6px; border-radius: 3px; background: {{c.bar}}"></div><span style="font-size: 11px; color: {{c.col}}; font-weight: {{c.fw}}">{{c.label}}</span></div>
+</sc-for>
+</div>
+</section>
+
+<div role="tablist" aria-label="Visualização" style="display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: #16201D; border: 1px solid #2A3833">
+<sc-for list="{{views}}" as="v" hint-placeholder-count="3">
+<button role="tab" class="{{v.cls}}" aria-selected="{{v.on}}" onClick="{{v.pick}}">{{v.label}}</button>
+</sc-for>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<button class="nb" onClick="{{prev}}" aria-label="{{prevLabel}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg>{{prevShort}}</button>
+<span style="font-size: 13px; color: #9DACA6; text-align: center">{{rangeLabel}}</span>
+<button class="nb" onClick="{{next}}" aria-label="{{nextLabel}}" style="background: #F2A93B; color: #1A1205; border-color: #F2A93B">{{nextLabel}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+
+<sc-if value="{{isDay}}" hint-placeholder-val="{{true}}">
+
+
+<section style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Agenda</h2>
+<span style="font-size: 13px; color: #9DACA6">{{agendaCount}}</span>
+</div>
+<sc-for list="{{agenda}}" as="e" hint-placeholder-count="8">
+<div class="row" style="opacity: {{e.op}}">
+<div class="tm" style="color: {{e.tc}}">{{e.t}}</div>
+<a class="card" href="{{e.href}}" style="border: 1px solid {{e.bc}}; text-decoration: {{e.deco}}">
+<div style="display: flex; justify-content: space-between; gap: 8px"><div style="font-weight: 600">{{e.title}}</div>
+<sc-if value="{{e.now}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; font-weight: 700; color: #1A1205; background: #F2A93B; padding: 2px 8px; border-radius: 99px; align-self: flex-start">AGORA</span></sc-if>
+</div>
+<div style="font-size: 12px; color: #9DACA6">{{e.sub}}</div>
+</a>
+</div>
+</sc-for>
+</section>
+</sc-if>
+
+<sc-if value="{{isWeek}}" hint-placeholder-val="{{false}}">
+<section style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+<sc-for list="{{week}}" as="w" hint-placeholder-count="7">
+<button onClick="{{w.open}}" aria-label="{{w.aria}}" style="display: flex; flex-direction: column; align-items: stretch; gap: 4px; min-height: 220px; padding: 6px 2px; border-radius: 12px; border: 1px solid {{w.bc}}; background: {{w.bg}}; color: #EEF3F0; font-family: inherit; cursor: pointer">
+<span style="font-size: 10px; color: #9DACA6; font-weight: 700; text-align: center">{{w.wd}}</span>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 800; text-align: center">{{w.dn}}</span>
+<span style="font-size: 9px; font-weight: 800; padding: 3px 0; border-radius: 6px; text-align: center; background: {{w.tbg}}; color: {{w.tfg}}">{{w.type}}</span>
+<sc-if value="{{w.hasGym}}" hint-placeholder-val="{{true}}"><span style="font-size: 9px; line-height: 1.25; padding: 4px 1px; overflow-wrap: anywhere; border-radius: 6px; background: #1D2925; text-align: center"><b>Academia</b><br>{{w.gym}}</span></sc-if>
+<sc-if value="{{w.hasMus}}" hint-placeholder-val="{{true}}"><span style="font-size: 9px; line-height: 1.25; padding: 4px 1px; overflow-wrap: anywhere; border-radius: 6px; border: 1px solid {{w.ic}}; color: {{w.ic}}; text-align: center"><b>{{w.inst}}</b><br>{{w.mt}}</span></sc-if>
+<sc-if value="{{w.hasCap}}" hint-placeholder-val="{{false}}"><span style="font-size: 9px; line-height: 1.25; padding: 4px 1px; overflow-wrap: anywhere; border-radius: 6px; background: #1D2925; text-align: center"><b>Capoeira</b><br>19:00</span></sc-if>
+<sc-if value="{{w.isP}}" hint-placeholder-val="{{false}}"><span style="font-size: 9px; line-height: 1.25; padding: 4px 1px; overflow-wrap: anywhere; border-radius: 6px; background: #3A2A2A; color: #FF9B9E; text-align: center"><b>Serviço</b><br>08:00</span></sc-if>
+</button>
+</sc-for>
+</section>
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #F2A93B">RESUMO DA SEMANA</div>
+<div style="font-size: 13px; color: #C9D3CF">{{weekSum}}</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{weekInst}}" as="q" hint-placeholder-count="5">
+<span style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 99px; border: 1px solid {{q.color}}; color: {{q.color}}">{{q.name}} · {{q.n}}</span>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isMonth}}" hint-placeholder-val="{{false}}">
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; font-size: 11px; font-weight: 700; color: #9DACA6">
+<span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+<sc-for list="{{month}}" as="m" hint-placeholder-count="35">
+<button onClick="{{m.open}}" aria-label="{{m.aria}}" style="height: 58px; padding: 4px 2px; border-radius: 10px; border: {{m.bd}}; background: {{m.bg}}; color: {{m.fg}}; font-family: inherit; display: flex; flex-direction: column; align-items: center; justify-content: space-between; cursor: pointer; visibility: {{m.vis}}">
+<span style="font-size: 14px; font-weight: 700">{{m.dn}}</span>
+<span style="font-size: 8px; font-weight: 800; color: {{m.ic}}">{{m.ab}}</span>
+</button>
+</sc-for>
+</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #9DACA6">ESCALA DO MÊS</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<span style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 99px; background: #3A2A2A; color: #FF9B9E">Plantão · {{monthShifts}}</span>
+</div>
+<div style="font-size: 13px; color: #9DACA6">{{monthSum}}</div>
+</section>
+</sc-if>
+
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Para resolver</h2>
+<span style="font-size: 13px; color: #9DACA6">{{openLabel}}</span>
+</div>
+<sc-for list="{{tasks}}" as="item" hint-placeholder-count="2">
+<button onClick="{{item.toggle}}" aria-pressed="{{item.checked}}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 10px 12px; border-radius: 14px; border: 1px solid #2A3833; background: #16201D; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<sc-if value="{{item.checked}}" hint-placeholder-val="{{false}}">
+<span style="width: 24px; height: 24px; flex-shrink: 0; border-radius: 8px; background: #4CC3B5; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E1513" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
+</sc-if>
+<sc-if value="{{item.unchecked}}" hint-placeholder-val="{{true}}">
+<span style="width: 24px; height: 24px; flex-shrink: 0; border-radius: 8px; border: 2px solid #5A6B65; box-sizing: border-box"></span>
+</sc-if>
+<span style="flex-grow: 1; display: flex; flex-direction: column">
+<span style="font-weight: 600">{{item.title}}</span>
+<span style="font-size: 12px; color: #9DACA6">{{item.sub}}</span>
+</span>
+</button>
+</sc-for>
+</section>
+</main>
+<nav class="nav" aria-label="Navegação principal">
+<a class="on" href="Main.dc.html" aria-current="page"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Hoje</a>
+<a href="Alimentacao.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"></path></svg>Comida</a>
+<a href="Capoeira.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c8 5 8 15 0 20"></path><path d="M8 2v20"></path><circle cx="6" cy="16" r="3.5"></circle></svg>Capoeira</a>
+<a href="Surf.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2-1 3-5 6-8s8-4 11-1c2 2 1 5-2 5-2 0-3-2-1.5-3"></path><path d="M2 21c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"></path></svg>Surf</a>
+<a href="Berimbau.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Música</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1480}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var DAYMS = 86400000;
+    var SHEET = [[2026, 9, 20, "F1", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 21, "F2", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["08:00", "Academia (08:00–09:00)"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["17:00", "Música"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 22, "F3", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["19:00", "Capoeira"], ["21:00", "Jantar"], ["22:30", "Dormir"]]], [2026, 9, 23, "P", [["05:30", "Acordar"], ["06:00", "Academia (06:00–07:00)"], ["08:00", "Café da manhã (início do plantão)"], ["11:30", "Almoço"], ["16:00", "Café da tarde"], ["20:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 24, "F1", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["19:00", "Capoeira"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 25, "F2", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 26, "F3", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["22:30", "Dormir"]]], [2026, 9, 27, "P", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["08:00", "Início do serviço"], ["11:30", "Almoço"], ["16:00", "Café da tarde"], ["20:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 28, "F1", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Academia (09:00–10:00)"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["17:00", "Música"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 29, "F2", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["19:00", "Capoeira"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 9, 30, "F3", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["22:30", "Dormir"]]], [2026, 10, 1, "P", [["05:30", "Acordar"], ["06:00", "Academia (06:00–07:00)"], ["08:00", "Café da manhã (início do plantão)"], ["11:30", "Almoço"], ["16:00", "Café da tarde"], ["20:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 2, "F1", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 3, "F2", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 4, "F3", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["22:30", "Dormir"]]], [2026, 10, 5, "P", [["05:30", "Acordar"], ["06:00", "Academia (06:00–07:00)"], ["08:00", "Café da manhã (início do plantão)"], ["11:30", "Almoço"], ["16:00", "Café da tarde"], ["20:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 6, "F1", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["19:00", "Capoeira"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 7, "F2", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 8, "F3", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["19:00", "Capoeira"], ["21:00", "Jantar"], ["22:30", "Dormir"]]], [2026, 10, 9, "P", [["05:30", "Acordar"], ["06:00", "Academia (06:00–07:00)"], ["08:00", "Café da manhã (início do plantão)"], ["11:30", "Almoço"], ["16:00", "Café da tarde"], ["20:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 10, "F1", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 11, "F2", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 12, "F3", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["22:30", "Dormir"]]], [2026, 10, 13, "P", [["05:30", "Acordar"], ["06:00", "Academia (06:00–07:00)"], ["08:00", "Café da manhã (início do plantão)"], ["11:30", "Almoço"], ["16:00", "Café da tarde"], ["20:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 14, "F1", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 15, "F2", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["09:00", "Música"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["19:00", "Capoeira"], ["21:00", "Jantar"], ["23:00", "Dormir"]]], [2026, 10, 16, "F3", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["08:00", "Academia (08:00–09:00)"], ["12:30", "Almoço"], ["16:00", "Café da tarde"], ["17:00", "Música"], ["21:00", "Jantar"], ["22:30", "Dormir"]]], [2026, 10, 17, "P", [["07:00", "Acordar"], ["07:30", "Café da manhã"], ["08:00", "Início do serviço"], ["11:30", "Almoço"], ["16:00", "Café da tarde"], ["20:00", "Jantar"], ["23:00", "Dormir"]]]];
+    var INST = [
+      { id: 'ber', name: 'Berimbau', ab: 'BER', color: '#F2A93B', bg: '#2A2110', href: 'Berimbau.dc.html' },
+      { id: 'pan', name: 'Pandeiro', ab: 'PAN', color: '#4CC3B5', bg: '#10251F', href: 'Pandeiro.dc.html' },
+      { id: 'ata', name: 'Atabaque', ab: 'ATA', color: '#FF8A65', bg: '#2A1712', href: 'Atabaque.dc.html' },
+      { id: 'vio', name: 'Violão', ab: 'VIO', color: '#B58CFF', bg: '#1E1730', href: 'Violao.dc.html' },
+      { id: 'har', name: 'Harmônica', ab: 'GAI', color: '#5AA9F2', bg: '#112033', href: 'Harmonica.dc.html' }
+    ];
+    var WD = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    var WD3 = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    var MO = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    function U(y, m, d) { return Date.UTC(y, m - 1, d); }
+    function dd(t) { var x = new Date(t); return { y: x.getUTCFullYear(), m: x.getUTCMonth() + 1, d: x.getUTCDate(), w: x.getUTCDay() }; }
+    var START = U(2026, 9, 20), ANCHOR = U(2026, 9, 23), END = U(2027, 6, 30);
+    var DAYS = {}; var list = [];
+    SHEET.forEach(function (s, n) { var t = U(s[0], s[1], s[2]); DAYS[t] = { t: t, type: s[3], ev: s[4], wk: Math.floor(n / 7) + 1 }; });
+    function typeOf(t) { var k = Math.round((t - ANCHOR) / DAYMS) % 4; if (k < 0) k += 4; return k === 0 ? 'P' : 'F' + k; }
+    for (var t = START; t <= END; t += DAYMS) {
+      if (!DAYS[t]) {
+        var src = DAYS[START + (Math.round((t - START) / DAYMS) % 28) * DAYMS];
+        DAYS[t] = { t: t, type: src.type, ev: src.ev.map(function (e) { return e.slice(); }), wk: src.wk };
+      }
+      list.push(DAYS[t]);
+    }
+    var cnt = {}, mi = 0;
+    list.forEach(function (D) {
+      var m = D.ev.filter(function (e) { return e[1] === 'Música'; })[0];
+      if (m) { D.inst = INST[mi % INST.length]; D.mt = m[0]; cnt[D.inst.id] = (cnt[D.inst.id] || 0) + 1; D.nth = cnt[D.inst.id]; mi++; }
+    });
+
+    var now = new Date();
+    var TODAY = U(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    if (TODAY < START) TODAY = START; if (TODAY > END) TODAY = END;
+    var sel = st.sel || TODAY; if (sel < START) sel = START; if (sel > END) sel = END;
+    var view = st.view || 'dia';
+    var S = dd(sel), D = DAYS[sel];
+    function go(t) { if (t < START) t = START; if (t > END) t = END; self.setState({ sel: t }); }
+    function addMonth(t, n) { var x = dd(t); var y = x.y, m = x.m + n; while (m > 12) { m -= 12; y++; } while (m < 1) { m += 12; y--; } return U(y, m, Math.min(x.d, 28)); }
+    function tl(ty) { return ty === 'P' ? 'Plantão' : 'Folga ' + ty.slice(1); }
+    function fmt(t) { var x = dd(t); return WD3[x.w] + ' ' + x.d + '/' + x.m; }
+
+    var views = [['dia', 'Dia'], ['semana', 'Semana'], ['mes', 'Mês']].map(function (v) {
+      return { label: v[1], on: view === v[0], cls: 'seg' + (view === v[0] ? ' on' : ''), pick: function () { self.setState({ view: v[0] }); } };
+    });
+
+    var out = { views: views, isDay: view === 'dia', isWeek: view === 'semana', isMonth: view === 'mes', notToday: sel !== TODAY,
+      goToday: function () { self.setState({ sel: TODAY }); } };
+
+    if (view === 'dia') {
+      out.title = sel === TODAY ? 'Seu dia' : (sel === TODAY + DAYMS ? 'Amanhã' : (sel === TODAY - DAYMS ? 'Ontem' : WD[S.w]));
+      out.dateLabel = WD[S.w] + ', ' + S.d + ' de ' + MO[S.m - 1];
+      out.prev = function () { go(sel - DAYMS); }; out.next = function () { go(sel + DAYMS); };
+      out.prevShort = 'Anterior'; out.prevLabel = 'Dia anterior'; out.nextLabel = 'Próximo dia';
+      out.rangeLabel = tl(D.type);
+    } else if (view === 'semana') {
+      var ws = sel - S.w * DAYMS;
+      out.title = 'Semana';
+      out.dateLabel = 'Rotina semanal · domingo a sábado';
+      out.prev = function () { go(sel - 7 * DAYMS); }; out.next = function () { go(sel + 7 * DAYMS); };
+      out.prevShort = 'Anterior'; out.prevLabel = 'Semana anterior'; out.nextLabel = 'Próxima semana';
+      out.rangeLabel = dd(ws).d + '/' + dd(ws).m + ' – ' + dd(ws + 6 * DAYMS).d + '/' + dd(ws + 6 * DAYMS).m + (DAYS[ws] ? ' · Semana ' + DAYS[ws].wk + ' da rotina' : '');
+    } else {
+      out.title = MO[S.m - 1].charAt(0).toUpperCase() + MO[S.m - 1].slice(1);
+      out.dateLabel = 'Rotina mensal · ' + S.y;
+      out.prev = function () { go(addMonth(sel, -1)); }; out.next = function () { go(addMonth(sel, 1)); };
+      out.prevShort = 'Anterior'; out.prevLabel = 'Mês anterior'; out.nextLabel = 'Próximo mês';
+      out.rangeLabel = 'Toque num dia para abrir';
+    }
+
+    // DAY
+    var cycStart = sel; while (DAYS[cycStart] && DAYS[cycStart].type !== 'P' && cycStart > START) cycStart -= DAYMS;
+    if (DAYS[cycStart].type !== 'P') cycStart = sel - ((parseInt(D.type.slice(1)) || 0) * DAYMS);
+    out.cycle = [0, 1, 2, 3].map(function (k) {
+      var t = cycStart + k * DAYMS, on = t === sel;
+      return { label: (k === 0 ? 'Plantão' : 'Folga ' + k) + (on && sel === TODAY ? ' · hoje' : ''), bar: on ? '#F2A93B' : (k === 0 ? '#3A4A44' : '#2A3833'), col: on ? '#F2A93B' : '#9DACA6', fw: on ? 700 : 500 };
+    });
+    var ns = sel + DAYMS; while (ns <= END && DAYS[ns].type !== 'P') ns += DAYMS;
+    out.nextShift = ns <= END ? fmt(ns) + ' · 08h' : '—';
+    out.cycColor = D.type === 'P' ? '#FF8A80' : '#F2A93B';
+    out.cycTitle = D.type === 'P' ? 'Plantão 24h' : 'Folga · dia ' + D.type.slice(1) + ' de 3';
+    out.cycSub = D.type === 'P' ? 'Entrada às 08:00 · saída amanhã às 08:00' : (D.type === 'F1' ? 'Pós-plantão · sem academia' : (D.type === 'F3' ? 'Véspera de plantão · dormir cedo' : 'Dia livre para treino'));
+    out.hasMusic = !!D.inst; out.noMusic = !D.inst;
+    var I = D.inst || INST[0];
+    out.inst = { name: I.name, ab: I.ab, color: I.color, bg: I.bg, href: I.href, nth: D.inst ? 'Sessão ' + D.nth + ' de ' + I.name + ' · 1 instrumento por dia · abrir treino' : '' };
+    out.musicTime = D.mt || '';
+    var nx = list.filter(function (x) { return x.t > sel && x.inst; })[0];
+    out.nextInst = nx ? nx.inst.name + ' (' + fmt(nx.t) + ')' : '—';
+    var nowMin = now.getHours() * 60 + now.getMinutes();
+    function mins(s) { return parseInt(s.slice(0, 2)) * 60 + parseInt(s.slice(3)); }
+    var curIdx = -1;
+    if (sel === TODAY) D.ev.forEach(function (e, i) { if (mins(e[0]) <= nowMin) curIdx = i; });
+    out.agenda = D.ev.map(function (e, i) {
+      var l = e[1], title = l, sub = '', href = 'Main.dc.html', bc = 'transparent', tc = '#EEF3F0';
+      if (l === 'Música') { title = 'Estudo musical · ' + I.name; sub = 'Ver treino'; href = I.href; bc = I.color; tc = I.color; }
+      else if (/^Academia/.test(l)) { title = 'Academia'; sub = l.replace('Academia ', '').replace(/[()]/g, '') + ' · 1h'; }
+      else if (l === 'Capoeira') { title = 'Capoeira · Grupo Angatu'; sub = '19:00–21:00 · prioridade máxima'; href = 'Capoeira.dc.html'; }
+      else if (/Café da manhã|Almoço|Café da tarde|Jantar/.test(l)) { title = l.replace(' (início do plantão)', ''); sub = (/plantão/.test(l) ? 'Início do plantão · ' : '') + 'ver cardápio'; href = 'Alimentacao.dc.html'; }
+      else if (l === 'Início do serviço') { title = 'Início do plantão'; sub = 'Serviço 24h'; }
+      else if (l === 'Dormir') { sub = D.type === 'F3' ? 'Amanhã é plantão' : 'Meta de 8h'; }
+      else if (l === 'Acordar') { sub = D.type === 'P' && e[0] === '05:30' ? 'Academia antes do plantão' : ''; }
+      var past = sel < TODAY || (sel === TODAY && i < curIdx);
+      return { t: e[0], title: title, sub: sub, href: href, bc: i === curIdx ? '#F2A93B' : bc, tc: i === curIdx ? '#F2A93B' : tc, now: i === curIdx, op: past ? 0.55 : 1, deco: 'none' };
+    });
+    out.agendaCount = D.ev.length + ' blocos';
+
+    // WEEK
+    var w0 = sel - S.w * DAYMS, wc = {}, wsum = { P: 0, gym: 0, cap: 0 };
+    out.week = [0, 1, 2, 3, 4, 5, 6].map(function (k) {
+      var t = w0 + k * DAYMS, X = DAYS[t], x = dd(t);
+      if (!X) return { wd: WD3[x.w].toUpperCase(), dn: x.d, type: '—', tbg: '#1D2925', tfg: '#9DACA6', hasGym: false, hasMus: false, hasCap: false, isP: false, inst: '', mt: '', gym: '', ic: '#5A6B65', aria: 'Fora do período', bc: '#2A3833', bg: '#121B18', open: function () {} };
+      var parts = [];
+      X.ev.forEach(function (e) { if (/^Academia/.test(e[1])) { parts.push('Academia ' + e[0]); wsum.gym++; } if (e[1] === 'Capoeira') { parts.push('Capoeira 19:00'); wsum.cap++; } });
+      if (X.type === 'P') { wsum.P++; parts.push('Plantão 08:00'); }
+      if (X.inst) { wc[X.inst.id] = (wc[X.inst.id] || 0) + 1; parts.unshift('Música ' + X.mt); }
+      var gym = X.ev.filter(function (e) { return /^Academia/.test(e[1]); })[0];
+      return { wd: WD3[x.w].toUpperCase(), dn: x.d, type: X.type === 'P' ? 'PLANTÃO' : 'FOLGA ' + X.type.slice(1), tbg: X.type === 'P' ? '#3A2A2A' : '#1D2925', tfg: X.type === 'P' ? '#FF9B9E' : '#C9D3CF',
+        hasGym: !!gym, gym: gym ? gym[0] : '', hasMus: !!X.inst, inst: X.inst ? (X.inst.id === 'har' ? 'Gaita' : X.inst.name) : '', mt: X.mt || '', ic: X.inst ? X.inst.color : '#5A6B65',
+        hasCap: X.ev.some(function (e) { return e[1] === 'Capoeira'; }), isP: X.type === 'P', aria: WD[x.w] + ' ' + x.d + ' · ' + tl(X.type) + (X.inst ? ' · ' + X.inst.name : ''),
+        bc: t === TODAY ? '#F2A93B' : '#2A3833', bg: t === sel ? '#1D2925' : '#16201D',
+        open: function () { self.setState({ sel: t, view: 'dia' }); } };
+    });
+    out.weekInst = INST.filter(function (i) { return wc[i.id]; }).map(function (i) { return { name: i.name, color: i.color, n: wc[i.id] + 'x' }; });
+    out.weekSum = wsum.P + ' plantão(ões) · ' + wsum.gym + ' academia · ' + wsum.cap + ' capoeira · ' + Object.keys(wc).reduce(function (a, k) { return a + wc[k]; }, 0) + ' dias de música';
+
+    // MONTH
+    var m1 = U(S.y, S.m, 1), lead = dd(m1).w, mc = {}, shifts = 0, cells = [];
+    for (var b = 0; b < lead; b++) cells.push({ dn: '', ab: '', vis: 'hidden', bg: 'transparent', fg: '#EEF3F0', bd: '0', ic: '', aria: '', open: function () {} });
+    for (var t2 = m1; dd(t2).m === S.m; t2 += DAYMS) (function (t) {
+      var X = DAYS[t], x = dd(t);
+      if (!X) { cells.push({ dn: x.d, ab: '', vis: 'visible', bg: '#121B18', fg: '#5A6B65', bd: '1px solid #1D2925', ic: '#5A6B65', aria: x.d + ' fora do período', open: function () {} }); return; }
+      if (X.type === 'P') shifts++;
+      if (X.inst) mc[X.inst.id] = (mc[X.inst.id] || 0) + 1;
+      cells.push({ dn: x.d, ab: X.type === 'P' ? 'PLANTÃO' : '', ic: '#FF9B9E',
+        vis: 'visible', bg: X.type === 'P' ? '#3A2A2A' : (t === sel ? '#1D2925' : '#121B18'), fg: '#EEF3F0',
+        bd: t === TODAY ? '2px solid #F2A93B' : (t === sel ? '1px solid #9DACA6' : '1px solid #1D2925'),
+        aria: x.d + ' de ' + MO[x.m - 1] + ' · ' + tl(X.type),
+        open: function () { self.setState({ sel: t, view: 'dia' }); } });
+    })(t2);
+    out.month = cells;
+    out.monthShifts = shifts;
+    out.monthInst = INST.map(function (i) { return { ab: i.ab, name: i.name, color: i.color, n: (mc[i.id] || 0) + 'x' }; });
+    out.monthSum = 'Plantões de 24h (08:00 → 08:00) no ciclo 24x72. Toque num dia para ver a agenda.';
+
+    // TASKS
+    var base = [
+      { id: 't1', title: 'Confirmar padrinhos do batizado', sub: 'Grupo Angatu · ligar para os mestres' },
+      { id: 't2', title: 'Reservar academia de quinta', sub: 'No app · entre 08h e 11h' }
+    ];
+    var done = st.done || { t2: true };
+    var open = 0;
+    out.tasks = base.map(function (tk) {
+      var c = !!done[tk.id]; if (!c) open++;
+      return Object.assign({}, tk, { checked: c, unchecked: !c, toggle: function () { var n = Object.assign({}, done); n[tk.id] = !c; self.setState({ done: n }); } });
+    });
+    out.openLabel = open + (open === 1 ? ' pendente' : ' pendentes');
+    return out;
+  }
+}
+</script>
+</body>
+</html>

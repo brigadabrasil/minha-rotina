@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Boletim de ondas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1513">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Minha Rotina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{background:#0E1513;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+x-dc{display:block;visibility:hidden}
+x-dc>div{width:100%!important;max-width:560px;margin:0 auto;height:auto!important;min-height:100vh;min-height:100dvh}
+x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.nav{position:fixed!important;left:0;right:0;bottom:0;z-index:50;max-width:560px;margin:0 auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+</style>
+<script src="dc-lite.js" defer></script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1513}
+a{color:#4CC3B5}a:hover{color:#7DD8CD}
+.nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #2A3833;background:#121B18;padding:8px 6px 18px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;color:#9DACA6;text-decoration:none;font-size:11px;font-weight:600;border-radius:12px}
+.nav a.on{color:#F2A93B}
+.nav a:hover{color:#EEF3F0}
+</style>
+</helmet>
+<div style="width: 390px; height: 1800px; display: flex; flex-direction: column; background: #0E1513; color: #EEF3F0; font-family: 'Figtree', sans-serif">
+<main style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+<header style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px">
+<div>
+<div style="font-size: 14px; color: #9DACA6; font-weight: 500">Florianópolis · {{dateLabel}}</div>
+<h1 style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">Boletim de ondas</h1>
+</div>
+<button onClick="{{refreshNow}}" aria-label="Atualizar previsão agora" style="font-family: inherit; font-size: 11px; font-weight: 700; padding: 6px 9px; border-radius: 8px; border: 1px {{badgeBorder}} {{badgeColor}}; background: transparent; color: {{badgeColor}}; white-space: nowrap; margin-top: 4px; cursor: pointer">{{badge}}</button>
+</header>
+
+<nav aria-label="Escolher dia" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); flex-shrink: 0; gap: 6px">
+<sc-for list="{{dayTabs}}" as="t" hint-placeholder-count="7">
+<button onClick="{{t.pick}}" style="min-width: 0; padding: 8px 2px; border-radius: 14px; border: 1px solid {{t.bd}}; background: {{t.bg}}; color: {{t.fg}}; font-family: 'Figtree', sans-serif; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1px"><span style="font-size: 13px; font-weight: 800">{{t.name}}</span><span style="font-size: 11px; font-weight: 600; opacity: 0.8">{{t.sub}}</span></button>
+</sc-for>
+</nav>
+
+<section style="background: #4CC3B5; color: #06201C; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end">
+<div>
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px">ONDAS</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 800; line-height: 1">{{waveRange}}</div>
+</div>
+<div style="text-align: right"><div style="font-size: 12px; font-weight: 700">Condição</div><div style="font-size: 18px; font-weight: 800">{{condition}}</div></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="background: rgba(6,32,28,0.12); border-radius: 12px; padding: 10px"><div style="font-size: 11px; font-weight: 700">SWELL</div><div style="font-weight: 800; font-size: 16px">{{swellTxt}}</div></div>
+<div style="background: rgba(6,32,28,0.12); border-radius: 12px; padding: 10px"><div style="font-size: 11px; font-weight: 700">VENTO</div><div style="font-weight: 800; font-size: 16px">{{windTxt}}</div></div>
+<div style="background: rgba(6,32,28,0.12); border-radius: 12px; padding: 10px"><div style="font-size: 11px; font-weight: 700">ÁGUA</div><div style="font-weight: 800; font-size: 16px">{{water}}</div></div>
+</div>
+<div style="font-size: 13px; font-weight: 600">{{summary}}</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{tiles}}" as="t" hint-placeholder-count="3">
+<div style="background: #16201D; border-radius: 14px; padding: 12px"><div style="font-size: 11px; color: #9DACA6; font-weight: 700">{{t.k}}</div><div style="font-weight: 800; font-size: 16px; margin-top: 2px">{{t.v}}</div><div style="font-size: 12px; color: #9DACA6">{{t.s}}</div></div>
+</sc-for>
+</section>
+
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">Swell ao longo do dia</span><span style="font-size: 12px; color: #9DACA6">altura (m) · direção</span></div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; height: 120px">
+<sc-for list="{{swellBars}}" as="b" hint-placeholder-count="7">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; justify-content: flex-end; height: 100%"><span style="font-size: 11px; font-weight: 700">{{b.v}}</span><div style="width: 100%; height: {{b.h}}px; border-radius: 8px; background: #4CC3B5"></div></div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; text-align: center">
+<sc-for list="{{swellBars}}" as="b" hint-placeholder-count="7">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px"><svg width="20" height="20" viewBox="0 0 24 24" style="transform: rotate({{b.rot}}deg)" aria-label="{{b.aria}}"><path d="M12 3l6 9h-4v9h-4v-9H6z" fill="#7DD8CD"></path></svg><span style="font-size: 11px; font-weight: 700; color: #C9D3CF">{{b.dir}}</span><span style="font-size: 10px; color: #9DACA6">{{b.per}}</span></div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; font-size: 11px; color: #9DACA6; text-align: center">
+<sc-for list="{{swellBars}}" as="b" hint-placeholder-count="7"><span>{{b.hr}}</span></sc-for>
+</div>
+<div style="font-size: 12px; color: #9DACA6">A seta aponta para onde o swell vai; a sigla diz de onde ele vem. Embaixo, o período em segundos.</div>
+</section>
+
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">Vento, chuva e nuvens</span><span style="font-size: 12px; color: #9DACA6">km/h · direção</span></div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; height: 110px">
+<sc-for list="{{windBars}}" as="b" hint-placeholder-count="7">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; justify-content: flex-end; height: 100%"><span style="font-size: 11px; font-weight: 700">{{b.v}}</span><div style="width: 100%; height: {{b.h}}px; border-radius: 8px; background: {{b.color}}"></div></div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; text-align: center">
+<sc-for list="{{windBars}}" as="b" hint-placeholder-count="7">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px"><svg width="20" height="20" viewBox="0 0 24 24" style="transform: rotate({{b.rot}}deg)" aria-label="{{b.aria}}"><path d="M12 3l6 9h-4v9h-4v-9H6z" fill="{{b.color}}"></path></svg><span style="font-size: 11px; font-weight: 700; color: #C9D3CF">{{b.dir}}</span><span style="font-size: 10px; color: #9DACA6">{{b.gust}}</span></div>
+</sc-for>
+</div>
+<div style="font-size: 11px; font-weight: 700; color: #9DACA6; margin-top: 2px">CHUVA (mm em 2 h)</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; height: 44px">
+<sc-for list="{{windBars}}" as="b" hint-placeholder-count="7"><div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; height: 100%"><span style="font-size: 11px; font-weight: 700; color: #9CC8FF">{{b.rain}}</span><div style="width: 60%; height: {{b.rainH}}px; border-radius: 4px 4px 0 0; background: #5AA0F0"></div></div></sc-for>
+</div>
+<div style="font-size: 11px; font-weight: 700; color: #9DACA6">NUVENS</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; text-align: center">
+<sc-for list="{{windBars}}" as="b" hint-placeholder-count="7"><div style="display: flex; flex-direction: column; align-items: center; gap: 1px"><svg width="30" height="30" viewBox="0 0 32 32" style="display: {{b.sun}}" aria-label="Céu limpo"><circle cx="16" cy="16" r="6" fill="#F2C94C"></circle><g stroke="#F2C94C" stroke-width="2" stroke-linecap="round"><line x1="16" y1="3" x2="16" y2="6"></line><line x1="16" y1="26" x2="16" y2="29"></line><line x1="3" y1="16" x2="6" y2="16"></line><line x1="26" y1="16" x2="29" y2="16"></line><line x1="6.8" y1="6.8" x2="8.9" y2="8.9"></line><line x1="23.1" y1="23.1" x2="25.2" y2="25.2"></line><line x1="6.8" y1="25.2" x2="8.9" y2="23.1"></line><line x1="23.1" y1="8.9" x2="25.2" y2="6.8"></line></g></svg><svg width="30" height="30" viewBox="0 0 32 32" style="display: {{b.part}}" aria-label="Parcialmente nublado"><circle cx="11" cy="11" r="5.5" fill="#F2C94C"></circle><path d="M9 25h15a5 5 0 0 0 0-10 7 7 0 0 0-13.4-1.6A5.5 5.5 0 0 0 9 25z" fill="#DDE3E0" transform="translate(1 1)"></path></svg><svg width="30" height="30" viewBox="0 0 32 32" style="display: {{b.cld}}" aria-label="Nublado"><path d="M9 25h15a5 5 0 0 0 0-10 7 7 0 0 0-13.4-1.6A5.5 5.5 0 0 0 9 25z" fill="#B9C3BF"></path></svg><svg width="30" height="30" viewBox="0 0 32 32" style="display: {{b.ovc}}" aria-label="Céu fechado"><path d="M9 25h15a5 5 0 0 0 0-10 7 7 0 0 0-13.4-1.6A5.5 5.5 0 0 0 9 25z" fill="#7E8B86" transform="translate(-4 -5) scale(0.9)"></path><path d="M9 25h15a5 5 0 0 0 0-10 7 7 0 0 0-13.4-1.6A5.5 5.5 0 0 0 9 25z" fill="#9AA6A1" transform="translate(2 2)"></path></svg><span style="font-size: 10px; color: #9DACA6">{{b.cloud}}</span></div></sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; font-size: 11px; color: #9DACA6; text-align: center">
+<sc-for list="{{windBars}}" as="b" hint-placeholder-count="7"><span>{{b.hr}}</span></sc-for>
+</div>
+<div style="display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: #9DACA6"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #4CC3B5"></span>Terral</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #5A6B65"></span>Maral</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #F2A93B"></span>Forte (25+ km/h)</span><span>· sob a seta: rajada </span></div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Melhores picos · {{dayName}}</h2>
+<sc-for list="{{picos}}" as="p" hint-placeholder-count="5">
+<article style="display: {{p.disp}}; padding: 14px; border-radius: 16px; background: #16201D; border: 1px solid {{p.bc}}; gap: 12px; align-items: center">
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 24px; font-weight: 800; color: {{p.nc}}; width: 24px">{{p.n}}</span>
+<div style="flex-grow: 1"><div style="display: flex; justify-content: space-between"><span style="font-weight: 700">{{p.name}}</span><span style="display: flex; align-items: center; gap: 6px"><span style="color: #4CC3B5; letter-spacing: 2px; font-size: 13px">{{p.dots}}</span><span style="font-size: 12px; font-weight: 700; color: #C9D3CF">{{p.grade}}</span></span></div><div style="font-size: 12px; color: #9DACA6; margin-top: 2px">{{p.note}}</div></div>
+</article>
+</sc-for>
+<button onClick="{{toggleMore}}" style="display: {{moreDisp}}; padding: 12px; border-radius: 14px; border: 1px solid #2A3833; background: transparent; color: #4CC3B5; font-family: 'Figtree', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer">{{moreLabel}}</button>
+</section>
+<div style="font-size: 11px; color: #5A6B65">{{source}}</div>
+</main>
+<nav class="nav" aria-label="Navegação principal">
+<a href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Hoje</a>
+<a href="Alimentacao.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"></path></svg>Comida</a>
+<a href="Capoeira.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c8 5 8 15 0 20"></path><path d="M8 2v20"></path><circle cx="6" cy="16" r="3.5"></circle></svg>Capoeira</a>
+<a class="on" href="Surf.dc.html" aria-current="page"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2-1 3-5 6-8s8-4 11-1c2 2 1 5-2 5-2 0-3-2-1.5-3"></path><path d="M2 21c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"></path></svg>Surf</a>
+<a href="Berimbau.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Música</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1800}}'>
+
+function buildDays(M, W) {
+  var CARD = ['N', 'NNE', 'NE', 'ENE', 'L', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
+  function cardOf(d) { return CARD[Math.round(((d % 360) + 360) % 360 / 22.5) % 16]; }
+  function f1(n) { return (Math.round(n * 10) / 10).toFixed(1).replace('.', ',').replace('-', '−'); }
+  function ang(a, b) { var d = Math.abs(((a - b) % 360 + 360) % 360); return d > 180 ? 360 - d : d; }
+  function avg(a, f) { return a.reduce(function (s, x) { return s + f(x); }, 0) / a.length; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  var SPOTS = [
+    { name: 'Joaquina', swell: 120, face: 100, note: 'aguenta tamanho' },
+    { name: 'Praia Mole', swell: 105, face: 95, note: 'ondas cavadas' },
+    { name: 'Campeche', swell: 150, face: 120, note: 'melhor com SE/S' },
+    { name: 'Santinho', swell: 65, face: 70, note: 'protegido do S, bom para longboard' },
+    { name: 'Moçambique', swell: 70, face: 80, note: 'exposto ao vento, melhor cedo' }
+  ];
+  var CONDS = ['Ruim', 'Ruim', 'Regular', 'Boa', 'Muito boa', 'Clássica'];
+  var mh = M.hourly, wh = W.hourly, dl = W.daily, now = new Date();
+  var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+  var nDays = Math.min(dl.time.length, Math.floor(mh.wave_height.length / 24));
+  function kind(x) { var d = ((x.windDir % 360) + 360) % 360; return d >= 200 && d <= 340 ? 'terral' : (ang(d, 90) <= 60 ? 'maral' : 'lateral'); }
+  var days = [];
+  for (var di = 0; di < nDays; di++) {
+    var base = di * 24, date = dl.time[di], isToday = date === today;
+    var hours = [6, 8, 10, 12, 14, 16, 18].map(function (h) {
+      var i = base + h;
+      return { h: pad(h) + 'h', swell: Math.round(mh.swell_wave_height[i] * 10) / 10, swellDir: mh.swell_wave_direction[i], swellPer: Math.round(mh.swell_wave_period[i] * 10) / 10, wind: Math.round(wh.wind_speed_10m[i]), gust: Math.round(wh.wind_gusts_10m[i]), windDir: wh.wind_direction_10m[i], rain: Math.round(((wh.precipitation[i] || 0) + (wh.precipitation[i + 1] || 0)) * 10) / 10, cloud: wh.cloud_cover[i] };
+    });
+    var waves = mh.wave_height.slice(base + 6, base + 19);
+    var wmin = Math.min.apply(null, waves), wmax = Math.max.apply(null, waves);
+    var start = base + Math.max(5, isToday ? now.getHours() : 0), sl = mh.sea_level_height_msl, tides = [];
+    for (var j = Math.max(1, start); j < sl.length - 1 && tides.length < 2; j++) {
+      var hh = pad(j % 24) + ':00' + (j >= base + 24 ? ' (+1)' : '');
+      if (sl[j] < sl[j - 1] && sl[j] <= sl[j + 1]) tides.push({ k: 'MARÉ BAIXA', v: hh, s: f1(sl[j]) + ' m' });
+      else if (sl[j] > sl[j - 1] && sl[j] >= sl[j + 1]) tides.push({ k: 'MARÉ ALTA', v: hh, s: f1(sl[j]) + ' m' });
+    }
+    var morning = hours.slice(0, 3), aft = hours.slice(4);
+    var mSw = avg(morning, function (x) { return x.swell; }), mPer = avg(morning, function (x) { return x.swellPer; }), mDir = morning[1].swellDir;
+    var picos = SPOTS.map(function (sp) {
+      var sc = 1, dd = ang(mDir, sp.swell);
+      sc += dd <= 35 ? 1.5 : (dd <= 70 ? 0.7 : 0);
+      sc += Math.min(1.5, mSw / 0.8 * 0.75) + (mPer >= 10 ? 1 : (mPer >= 8 ? 0.5 : 0));
+      sc += avg(morning, function (x) { var off = ang(x.windDir, (sp.face + 180) % 360); return x.wind < 8 ? 0.3 : (off <= 60 ? 0.6 : (ang(x.windDir, sp.face) <= 60 ? -0.8 : -0.2)); });
+      if (sp.name === 'Santinho' && ang(morning[1].windDir, 180) <= 40) sc += 0.4;
+      if (sp.name === 'Moçambique' && avg(morning, function (x) { return x.wind; }) > 15) sc -= 0.6;
+      if (sp.name === 'Campeche' && ang(morning[1].windDir, 45) <= 35) sc -= 0.5;
+      var why = 'Swell ' + cardOf(mDir) + (dd <= 35 ? ' entra bem' : (dd <= 70 ? ' entra de lado' : ' quase não entra')) + ' · ' + sp.note;
+      return { name: sp.name, score: Math.max(1, Math.min(5, Math.round(sc))), note: why, raw: sc };
+    }).sort(function (a, b) { return b.raw - a.raw; });
+    var mk = kind(morning[0]), ak = kind(aft[aft.length - 1]);
+    var dayRain = wh.precipitation.slice(base, base + 24).reduce(function (s, x) { return s + (x || 0); }, 0);
+    var summary = 'Manhã ' + mk + ' (' + cardOf(morning[0].windDir) + ' ' + morning[0].wind + ' km/h)' + (ak !== mk ? ' · à tarde vira ' + ak + ' (' + cardOf(aft[aft.length - 1].windDir) + ')' : ' · tarde parecida') + (dayRain >= 1 ? ' · chuva ' + f1(dayRain) + ' mm no dia' : ' · sem chuva');
+    var wi = isToday && W.current ? null : base + 8;
+    var windTxt = wi === null ? cardOf(W.current.wind_direction_10m) + ' ' + Math.round(W.current.wind_speed_10m) + ' km/h' : cardOf(wh.wind_direction_10m[wi]) + ' ' + Math.round(wh.wind_speed_10m[wi]) + ' km/h';
+    days.push({
+      date: date, waveRange: f1(wmin) + '–' + f1(wmax) + ' m', condition: CONDS[picos[0].score], swellTxt: cardOf(mDir) + ' · ' + Math.round(mPer) + ' s',
+      windTxt: windTxt, water: f1(mh.sea_surface_temperature[base + (isToday ? now.getHours() : 8)]) + ' °C', summary: summary, hours: hours, tides: tides,
+      sunrise: (dl.sunrise[di] || '').slice(11, 16), sunset: (dl.sunset[di] || '').slice(11, 16),
+      picos: picos.map(function (p) { return { name: p.name, score: p.score, note: p.note }; })
+    });
+  }
+  return { updated: pad(now.getDate()) + '/' + pad(now.getMonth() + 1) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()), days: days };
+}
+
+var CARD = ['N', 'NNE', 'NE', 'ENE', 'L', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
+function cardOf(d) { return CARD[Math.round(((d % 360) + 360) % 360 / 22.5) % 16]; }
+function angDiff(a, b) { var d = Math.abs(((a - b) % 360 + 360) % 360); return d > 180 ? 360 - d : d; }
+var SPOTS = [
+  { name: 'Joaquina', swell: 120, face: 100, note: 'aguenta tamanho' },
+  { name: 'Praia Mole', swell: 105, face: 95, note: 'ondas cavadas' },
+  { name: 'Campeche', swell: 150, face: 120, note: 'melhor com SE/S' },
+  { name: 'Santinho', swell: 65, face: 70, note: 'protegido do S, bom para longboard' },
+  { name: 'Moçambique', swell: 70, face: 80, note: 'exposto ao vento, melhor cedo' },
+  { name: 'Barra da Lagoa', swell: 100, face: 95, note: 'canto protegido' },
+  { name: 'Ingleses', swell: 55, face: 60, note: 'abrigada do vento sul' },
+  { name: 'Praia Brava', swell: 70, face: 65, note: 'ondas fortes' },
+  { name: 'Morro das Pedras', swell: 160, face: 130, note: 'pega muito swell de S' },
+  { name: 'Matadeiro', swell: 150, face: 115, note: 'bom com S/SE' }
+];
+var CONDS = ['Ruim', 'Ruim', 'Regular', 'Boa', 'Muito boa', 'Clássica'];
+function scoreDay(d) {
+  var hs = d.hours || []; if (hs.length < 3) return { picos: [], condition: '—' };
+  var m = hs.slice(0, 3);
+  function avg(a, f) { return a.reduce(function (s, x) { return s + f(x); }, 0) / a.length; }
+  var mSw = avg(m, function (x) { return x.swell; }), mPer = avg(m, function (x) { return x.swellPer; }), mDir = m[1].swellDir;
+  var mWind = avg(m, function (x) { return x.wind; });
+  var size = mSw < 0.5 ? 0 : (mSw < 0.8 ? 0.4 : (mSw < 1.2 ? 0.9 : (mSw < 1.8 ? 1.4 : 1.8)));
+  var per = mPer < 7 ? 0 : (mPer < 9 ? 0.5 : (mPer < 11 ? 1 : 1.4));
+  var picos = SPOTS.map(function (sp) {
+    var dd = angDiff(mDir, sp.swell);
+    var swF = dd <= 30 ? 1.2 : (dd <= 55 ? 0.6 : (dd <= 80 ? 0.1 : -0.5));
+    var wv = m.map(function (x) {
+      if (x.wind < 6) return 0.5;
+      var off = angDiff(x.windDir, (sp.face + 180) % 360), on = angDiff(x.windDir, sp.face), k = Math.min(1.5, x.wind / 12);
+      return off <= 45 ? 0.8 : (off <= 75 ? 0.4 : (on <= 45 ? -0.9 * k : (on <= 75 ? -0.5 * k : -0.15 * k)));
+    });
+    var wF = avg(wv, function (v) { return v; });
+    var sc = 1 + size + per + swF + wF;
+    if (sp.name === 'Joaquina' && mSw >= 1.2) sc += 0.3;
+    if (sp.name === 'Santinho' && mSw < 1) sc += 0.2;
+    if (sp.name === 'Moçambique') sc -= mWind > 15 ? 0.6 : 0;
+    if (sp.name === 'Barra da Lagoa' && mSw >= 1.4) sc += 0.3;
+    if (sp.name === 'Barra da Lagoa' && mSw < 0.8) sc -= 0.3;
+    if (sp.name === 'Morro das Pedras' && mSw >= 1.2) sc += 0.2;
+    var wTxt = wF >= 0.45 ? 'vento terral/fraco' : (wF >= 0 ? 'vento de lado' : (wF > -0.6 ? 'vento um pouco de frente' : 'vento de frente'));
+    var why = 'Swell ' + cardOf(mDir) + (dd <= 30 ? ' entra bem' : (dd <= 55 ? ' entra de lado' : ' quase não entra')) + ' · ' + wTxt;
+    return { name: sp.name, raw: sc, note: why };
+  }).sort(function (a, b) { return b.raw - a.raw; });
+  picos.forEach(function (p) { p.score = Math.max(1, Math.min(5, Math.round(p.raw))); });
+  var best = picos[0].raw;
+  if (mPer < 7) best = Math.min(best, 2.4);
+  if (mSw < 0.5) best = Math.min(best, 1.4);
+  return { picos: picos, condition: CONDS[Math.max(1, Math.min(5, Math.round(best)))] };
+}
+class Component extends DCLogic {
+  renderVals() {
+    var self = this, st = this.state || {};
+    function loadLive() {
+      var MU = 'https://marine-api.open-meteo.com/v1/marine?latitude=-27.63&longitude=-48.40&hourly=wave_height,swell_wave_height,swell_wave_direction,swell_wave_period,sea_level_height_msl,sea_surface_temperature&timezone=America%2FSao_Paulo&forecast_days=7';
+      var WU = 'https://api.open-meteo.com/v1/forecast?latitude=-27.60&longitude=-48.47&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,cloud_cover&current=wind_speed_10m,wind_direction_10m&daily=sunrise,sunset&timezone=America%2FSao_Paulo&forecast_days=7';
+      Promise.all([fetch(MU).then(function (r) { return r.json(); }), fetch(WU).then(function (r) { return r.json(); })])
+        .then(function (res) { var d = buildDays(res[0], res[1]); if (d && d.days.length) self.setState({ live: d, liveFail: false, refreshing: false }); else self.setState({ refreshing: false, liveFail: true }); })
+        .catch(function () { self.setState({ liveFail: true, refreshing: false }); });
+    }
+    if (!this._liveStarted) { this._liveStarted = true; loadLive(); }
+    var DATA = {"updated":"10/10 20:42","days":[{"date":"2026-10-10","waveRange":"0,9–1,1 m","swellTxt":"ESE · 7 s","windTxt":"SSE 8 km/h","water":"20,7 °C","summary":"Manhã terral (O 4 km/h) · à tarde vira lateral (NNO) · chuva 5,6 mm no dia","hours":[{"h":"06h","swell":1.1,"swellDir":102,"swellPer":7.2,"wind":4,"gust":8,"windDir":279,"rain":0,"cloud":89},{"h":"08h","swell":1.1,"swellDir":103,"swellPer":7.1,"wind":3,"gust":13,"windDir":24,"rain":0,"cloud":88},{"h":"10h","swell":1,"swellDir":103,"swellPer":7,"wind":4,"gust":14,"windDir":61,"rain":0,"cloud":99},{"h":"12h","swell":1,"swellDir":103,"swellPer":7,"wind":9,"gust":22,"windDir":125,"rain":0.2,"cloud":98},{"h":"14h","swell":1,"swellDir":103,"swellPer":6.9,"wind":17,"gust":44,"windDir":157,"rain":5.2,"cloud":100},{"h":"16h","swell":1,"swellDir":103,"swellPer":6.8,"wind":7,"gust":25,"windDir":138,"rain":0.2,"cloud":100},{"h":"18h","swell":0.9,"swellDir":102,"swellPer":6.7,"wind":3,"gust":7,"windDir":343,"rain":0,"cloud":100}],"tides":[{"k":"MARÉ ALTA","v":"01:00 (+1)","s":"0,5 m"},{"k":"MARÉ BAIXA","v":"08:00 (+1)","s":"−0,2 m"}],"sunrise":"05:43","sunset":"18:19"},{"date":"2026-10-11","waveRange":"1,2–1,3 m","swellTxt":"ESE · 7 s","windTxt":"SSE 17 km/h","water":"19,6 °C","summary":"Manhã lateral (SSE 17 km/h) · tarde parecida · chuva 1,6 mm no dia","hours":[{"h":"06h","swell":0.7,"swellDir":96,"swellPer":6.3,"wind":17,"gust":35,"windDir":158,"rain":0,"cloud":100},{"h":"08h","swell":0.6,"swellDir":117,"swellPer":6.5,"wind":17,"gust":37,"windDir":163,"rain":0,"cloud":100},{"h":"10h","swell":0.6,"swellDir":143,"swellPer":7.3,"wind":16,"gust":36,"windDir":162,"rain":0,"cloud":100},{"h":"12h","swell":0.5,"swellDir":174,"swellPer":8.4,"wind":16,"gust":36,"windDir":161,"rain":0,"cloud":100},{"h":"14h","swell":0.6,"swellDir":141,"swellPer":7.8,"wind":16,"gust":35,"windDir":146,"rain":0.3,"cloud":100},{"h":"16h","swell":0.6,"swellDir":140,"swellPer":7.6,"wind":17,"gust":37,"windDir":164,"rain":0.2,"cloud":100},{"h":"18h","swell":0.6,"swellDir":173,"swellPer":8.1,"wind":13,"gust":34,"windDir":163,"rain":0.2,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"08:00","s":"−0,2 m"},{"k":"MARÉ ALTA","v":"13:00","s":"0,4 m"}],"sunrise":"05:42","sunset":"18:19"},{"date":"2026-10-12","waveRange":"0,9–1,0 m","swellTxt":"SSE · 5 s","windTxt":"S 8 km/h","water":"19,3 °C","summary":"Manhã lateral (S 8 km/h) · à tarde vira maral (ENE) · chuva 7,1 mm no dia","hours":[{"h":"06h","swell":0.7,"swellDir":166,"swellPer":5,"wind":8,"gust":12,"windDir":170,"rain":0.2,"cloud":100},{"h":"08h","swell":0.7,"swellDir":166,"swellPer":4.9,"wind":8,"gust":18,"windDir":169,"rain":0,"cloud":100},{"h":"10h","swell":0.7,"swellDir":168,"swellPer":4.9,"wind":4,"gust":16,"windDir":171,"rain":0,"cloud":100},{"h":"12h","swell":0.7,"swellDir":172,"swellPer":5,"wind":2,"gust":13,"windDir":119,"rain":0,"cloud":99},{"h":"14h","swell":0.6,"swellDir":171,"swellPer":6.3,"wind":6,"gust":18,"windDir":72,"rain":0,"cloud":100},{"h":"16h","swell":0.6,"swellDir":160,"swellPer":6.7,"wind":9,"gust":24,"windDir":102,"rain":0,"cloud":100},{"h":"18h","swell":0.6,"swellDir":138,"swellPer":6.2,"wind":2,"gust":10,"windDir":63,"rain":0.1,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"08:00","s":"−0,1 m"},{"k":"MARÉ ALTA","v":"14:00","s":"0,4 m"}],"sunrise":"05:41","sunset":"18:20"},{"date":"2026-10-13","waveRange":"0,9–1,0 m","swellTxt":"SSE · 7 s","windTxt":"N 7 km/h","water":"19,5 °C","summary":"Manhã lateral (NNO 3 km/h) · à tarde vira terral (ONO) · chuva 14,5 mm no dia","hours":[{"h":"06h","swell":0.6,"swellDir":139,"swellPer":6.3,"wind":3,"gust":17,"windDir":345,"rain":3.5,"cloud":91},{"h":"08h","swell":0.5,"swellDir":161,"swellPer":7.2,"wind":7,"gust":17,"windDir":354,"rain":0,"cloud":100},{"h":"10h","swell":0.5,"swellDir":170,"swellPer":7.8,"wind":12,"gust":30,"windDir":1,"rain":0.1,"cloud":100},{"h":"12h","swell":0.5,"swellDir":165,"swellPer":8,"wind":17,"gust":40,"windDir":9,"rain":0,"cloud":93},{"h":"14h","swell":0.5,"swellDir":167,"swellPer":7.8,"wind":17,"gust":43,"windDir":33,"rain":0.1,"cloud":100},{"h":"16h","swell":0.6,"swellDir":167,"swellPer":7.8,"wind":11,"gust":26,"windDir":7,"rain":1.3,"cloud":99},{"h":"18h","swell":0.6,"swellDir":166,"swellPer":8,"wind":2,"gust":12,"windDir":288,"rain":0,"cloud":99}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"−0,1 m"},{"k":"MARÉ ALTA","v":"14:00","s":"0,3 m"}],"sunrise":"05:40","sunset":"18:21"},{"date":"2026-10-14","waveRange":"1,1–1,3 m","swellTxt":"SSE · 6 s","windTxt":"S 4 km/h","water":"19,7 °C","summary":"Manhã maral (ESE 3 km/h) · à tarde vira lateral (SSE) · chuva 3,9 mm no dia","hours":[{"h":"06h","swell":0.9,"swellDir":160,"swellPer":6.4,"wind":3,"gust":11,"windDir":112,"rain":0,"cloud":95},{"h":"08h","swell":1,"swellDir":156,"swellPer":6.4,"wind":4,"gust":16,"windDir":183,"rain":0,"cloud":83},{"h":"10h","swell":1,"swellDir":153,"swellPer":6.5,"wind":8,"gust":23,"windDir":172,"rain":0,"cloud":59},{"h":"12h","swell":1,"swellDir":151,"swellPer":6.6,"wind":14,"gust":34,"windDir":150,"rain":0,"cloud":36},{"h":"14h","swell":1,"swellDir":148,"swellPer":6.6,"wind":23,"gust":51,"windDir":161,"rain":0,"cloud":69},{"h":"16h","swell":1.1,"swellDir":146,"swellPer":6.5,"wind":24,"gust":59,"windDir":164,"rain":0,"cloud":94},{"h":"18h","swell":1.2,"swellDir":143,"swellPer":6.2,"wind":18,"gust":57,"windDir":165,"rain":0,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"0,0 m"},{"k":"MARÉ ALTA","v":"14:00","s":"0,2 m"}],"sunrise":"05:39","sunset":"18:21"},{"date":"2026-10-15","waveRange":"1,5–1,8 m","swellTxt":"SE · 6 s","windTxt":"S 11 km/h","water":"19,7 °C","summary":"Manhã lateral (S 10 km/h) · à tarde vira maral (SE) · chuva 21,6 mm no dia","hours":[{"h":"06h","swell":1.4,"swellDir":134,"swellPer":6.2,"wind":10,"gust":28,"windDir":183,"rain":0.9,"cloud":73},{"h":"08h","swell":1.4,"swellDir":134,"swellPer":6.3,"wind":11,"gust":27,"windDir":172,"rain":0.6,"cloud":92},{"h":"10h","swell":1.4,"swellDir":133,"swellPer":6.3,"wind":13,"gust":31,"windDir":158,"rain":0,"cloud":99},{"h":"12h","swell":1.3,"swellDir":132,"swellPer":6.3,"wind":16,"gust":37,"windDir":147,"rain":0.1,"cloud":90},{"h":"14h","swell":1.4,"swellDir":132,"swellPer":6.3,"wind":20,"gust":43,"windDir":146,"rain":0.2,"cloud":97},{"h":"16h","swell":1.4,"swellDir":135,"swellPer":6.5,"wind":22,"gust":48,"windDir":142,"rain":1.6,"cloud":100},{"h":"18h","swell":1.4,"swellDir":140,"swellPer":6.9,"wind":23,"gust":51,"windDir":134,"rain":2.3,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"0,0 m"},{"k":"MARÉ ALTA","v":"15:00","s":"0,2 m"}],"sunrise":"05:38","sunset":"18:22"},{"date":"2026-10-16","waveRange":"2,0–2,2 m","swellTxt":"SE · 7 s","windTxt":"ESE 19 km/h","water":"19,9 °C","summary":"Manhã maral (SE 16 km/h) · tarde parecida · chuva 52,7 mm no dia","hours":[{"h":"06h","swell":1.9,"swellDir":121,"swellPer":7,"wind":16,"gust":37,"windDir":129,"rain":4.6,"cloud":100},{"h":"08h","swell":1.7,"swellDir":125,"swellPer":7,"wind":19,"gust":37,"windDir":122,"rain":0.8,"cloud":100},{"h":"10h","swell":1.6,"swellDir":121,"swellPer":6.9,"wind":19,"gust":38,"windDir":117,"rain":1,"cloud":100},{"h":"12h","swell":1.4,"swellDir":110,"swellPer":6.6,"wind":19,"gust":41,"windDir":117,"rain":1,"cloud":100},{"h":"14h","swell":1.6,"swellDir":113,"swellPer":6.6,"wind":19,"gust":43,"windDir":120,"rain":1,"cloud":100},{"h":"16h","swell":1.7,"swellDir":115,"swellPer":6.6,"wind":18,"gust":44,"windDir":121,"rain":2.2,"cloud":100},{"h":"18h","swell":1.7,"swellDir":116,"swellPer":6.6,"wind":18,"gust":42,"windDir":123,"rain":2.2,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"0,1 m"},{"k":"MARÉ ALTA","v":"15:00","s":"0,2 m"}],"sunrise":"05:37","sunset":"18:22"}]};
+    var SAMPLE_DAY = {
+      date: '', updated: '',
+      waveRange: '1,2–1,5 m', condition: 'Boa', swellTxt: 'SE · 10 s', windTxt: 'NO 10 km/h', water: '18 °C',
+      summary: 'Terral até 11h · vento vira NE à tarde e cai depois das 16h',
+      hours: [
+        { h: '06h', swell: 1.4, swellDir: 135, swellPer: 10, wind: 10, gust: 16, windDir: 315, rain: 0, cloud: 40 },
+        { h: '08h', swell: 1.5, swellDir: 135, swellPer: 10, wind: 9, gust: 15, windDir: 300, rain: 0, cloud: 30 },
+        { h: '10h', swell: 1.4, swellDir: 130, swellPer: 10, wind: 8, gust: 14, windDir: 290, rain: 0, cloud: 25 },
+        { h: '12h', swell: 1.3, swellDir: 130, swellPer: 9, wind: 12, gust: 18, windDir: 45, rain: 0.4, cloud: 35 },
+        { h: '14h', swell: 1.2, swellDir: 125, swellPer: 9, wind: 18, gust: 26, windDir: 45, rain: 1.2, cloud: 50 },
+        { h: '16h', swell: 1.2, swellDir: 125, swellPer: 9, wind: 26, gust: 34, windDir: 40, rain: 2.5, cloud: 70 },
+        { h: '18h', swell: 1.1, swellDir: 120, swellPer: 9, wind: 14, gust: 20, windDir: 40, rain: 3.1, cloud: 85 }
+      ],
+      tides: [{ k: 'MARÉ BAIXA', v: '07:10', s: '0,2 m' }, { k: 'MARÉ ALTA', v: '13:25', s: '0,9 m' }],
+      sunrise: '05:32', sunset: '18:14',
+      picos: [
+        { name: 'Joaquina', score: 4, note: 'Swell SE entra direto · fundo de areia · 1,3 m' },
+        { name: 'Praia Mole', score: 4, note: 'Ondas mais cavadas · cheio no fim da tarde' },
+        { name: 'Campeche', score: 3, note: 'Bom pela manhã · mexe com o NE à tarde' },
+        { name: 'Santinho', score: 3, note: 'Menor, mais organizado · bom para longboard' },
+        { name: 'Moçambique', score: 2, note: 'Exposto ao vento · só cedo' }
+      ]
+    };
+    var S = st.live || ((DATA && DATA.date) ? DATA : SAMPLE), live = !!(st.live || (DATA && DATA.date)), realtime = !!st.live;
+    var SAMPLE = { updated: '', days: [SAMPLE_DAY] };
+    var SRC = st.live || ((DATA && DATA.days && DATA.days.length) ? DATA : SAMPLE), live = SRC !== SAMPLE, realtime = !!st.live;
+    var pad2 = function (n) { return (n < 10 ? '0' : '') + n; }, nowD = new Date();
+    var todayIso = nowD.getFullYear() + '-' + pad2(nowD.getMonth() + 1) + '-' + pad2(nowD.getDate());
+    var allDays = SRC.days.filter(function (d) { return !d.date || d.date >= todayIso; }).slice(0, 5);
+    if (!allDays.length) allDays = SRC.days.slice(-1);
+    var di = Math.max(0, Math.min(allDays.length - 1, st.day || 0));
+    var S = allDays[di], SC = scoreDay(S);
+    S.updated = SRC.updated;
+    var WDL = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+    var dayTabs = allDays.map(function (d, i) {
+      var p = (d.date || todayIso).split('-'), dt = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+      var name = d.date === todayIso ? 'Hoje' : (i === 1 && allDays[0].date === todayIso ? 'Amanhã' : WDL[dt.getUTCDay()]);
+      var on = i === di;
+      return { name: name, sub: (+p[2]) + '/' + (+p[1]), bg: on ? '#4CC3B5' : '#16201D', fg: on ? '#06201C' : '#C9D3CF', bd: on ? '#4CC3B5' : '#2A3833', pick: function () { self.setState({ day: i }); } };
+    });
+    var DIRS = ['N', 'NNE', 'NE', 'ENE', 'L', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
+    function card(d) { return DIRS[Math.round(((d % 360) + 360) % 360 / 22.5) % 16]; }
+    function br(n, dig) { return (Math.round(n * Math.pow(10, dig)) / Math.pow(10, dig)).toFixed(dig).replace('.', ','); }
+    var hrs = (S.hours || []).slice(0, 7);
+    var maxSw = Math.max(1.5, Math.max.apply(null, hrs.map(function (x) { return x.swell || 0; })));
+    var maxW = Math.max(20, Math.max.apply(null, hrs.map(function (x) { return x.wind || 0; })));
+    function terral(d) { d = ((d % 360) + 360) % 360; return d >= 200 && d <= 340; }
+    var swellBars = hrs.map(function (x) {
+      return { hr: x.h, v: br(x.swell, 1), h: Math.max(6, Math.round(x.swell / maxSw * 96)), rot: (x.swellDir + 180) % 360, dir: card(x.swellDir), per: Math.round(x.swellPer) + ' s', aria: 'Swell de ' + card(x.swellDir) };
+    });
+    var windBars = hrs.map(function (x) {
+      var col = x.wind >= 25 ? '#F2A93B' : (terral(x.windDir) ? '#4CC3B5' : '#5A6B65');
+      return { hr: x.h, v: String(Math.round(x.wind)), h: Math.max(6, Math.round(x.wind / maxW * 86)), rot: (x.windDir + 180) % 360, dir: card(x.windDir), gust: Math.round(x.gust || x.wind) + ' raj.', color: col, aria: 'Vento de ' + card(x.windDir), rain: x.rain == null ? '–' : (x.rain > 0 ? String(x.rain).replace('.', ',') : '0'), rainH: x.rain == null ? 0 : (x.rain > 0 ? Math.max(3, Math.round(Math.min(x.rain, 6) / 6 * 26)) : 0), sun: x.cloud != null && x.cloud < 25 ? 'block' : 'none', part: x.cloud != null && x.cloud >= 25 && x.cloud < 65 ? 'block' : 'none', cld: x.cloud != null && x.cloud >= 65 && x.cloud < 90 ? 'block' : 'none', ovc: x.cloud != null && x.cloud >= 90 ? 'block' : 'none', cloud: x.cloud == null ? '–' : (x.cloud < 25 ? 'Limpo' : (x.cloud < 65 ? 'Parcial' : (x.cloud < 90 ? 'Nublado' : 'Fechado'))) };
+    });
+    var tiles = (S.tides || []).slice(0, 2).concat([{ k: 'PÔR DO SOL', v: S.sunset || '—', s: 'nasce ' + (S.sunrise || '—') }]);
+    var picos = (SC.picos || []).map(function (p, i) {
+      var sc = Math.max(0, Math.min(5, Math.round(p.score)));
+      return { disp: (i < 5 || st.morePicos) ? 'flex' : 'none', n: String(i + 1), name: p.name, note: p.note, grade: (Math.round(Math.max(1, Math.min(5, p.raw)) * 10) / 10).toFixed(1).replace('.', ','), dots: '●●●●●'.slice(0, sc) + '○○○○○'.slice(0, 5 - sc), bc: i === 0 ? '#4CC3B5' : 'transparent', nc: i === 0 ? '#4CC3B5' : '#9DACA6' };
+    });
+    var WD = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+    var dateLabel = 'hoje', dayName = dayTabs[di].name;
+    if (S.date) { var p = S.date.split('-'); var dt = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); dateLabel = WD[dt.getUTCDay()] + ', ' + (+p[2]) + '/' + (+p[1]); }
+    return {
+      dateLabel: dateLabel, badge: st.refreshing ? 'Atualizando…' : ((realtime ? 'Ao vivo · ' + (S.updated || '').slice(6) : (live ? 'Atualizado ' + (S.updated || '') : 'Dados de exemplo')) + ' ↻'), refreshNow: function () { if (st.refreshing) return; self.setState({ refreshing: true }); loadLive(); }, badgeColor: live ? '#4CC3B5' : '#9DACA6', badgeBorder: live ? 'solid' : 'dashed',
+      waveRange: S.waveRange, condition: SC.condition, dayTabs: dayTabs, dayName: dayName.toLowerCase() === 'hoje' || dayName === 'Amanhã' ? dayName.toLowerCase() : dateLabel, swellTxt: S.swellTxt, windTxt: S.windTxt, water: S.water, summary: S.summary,
+      swellBars: swellBars, windBars: windBars, tiles: tiles, picos: picos, moreDisp: picos.length > 5 ? 'block' : 'none', moreLabel: st.morePicos ? 'Ver menos' : 'Ver mais', toggleMore: function () { self.setState({ morePicos: !st.morePicos }); },
+      source: (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
+    };
+  }
+}
+</script>
+</body>
+</html>

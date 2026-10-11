@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Treino de berimbau</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1513">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Minha Rotina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{background:#0E1513;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+x-dc{display:block;visibility:hidden}
+x-dc>div{width:100%!important;max-width:560px;margin:0 auto;height:auto!important;min-height:100vh;min-height:100dvh}
+x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.nav{position:fixed!important;left:0;right:0;bottom:0;z-index:50;max-width:560px;margin:0 auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+</style>
+<script src="dc-lite.js" defer></script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1513}
+a{color:#4CC3B5}a:hover{color:#7DD8CD}
+.nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #2A3833;background:#121B18;padding:8px 6px 18px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;color:#9DACA6;text-decoration:none;font-size:11px;font-weight:600;border-radius:12px}
+.nav a.on{color:#F2A93B}
+.nav a:hover{color:#EEF3F0}
+.mt{min-width:0;min-height:44px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:99px;border:1px solid #2A3833;color:#EEF3F0;text-decoration:none;font-size:13px;font-weight:600;box-sizing:border-box}
+.mt:hover{color:#EEF3F0;border-color:#5A6B65}
+.mt.on{background:#F2A93B;color:#1A1205;border-color:#F2A93B}
+</style>
+</helmet>
+<div style="width: 390px; height: 4450px; display: flex; flex-direction: column; background: #0E1513; color: #EEF3F0; font-family: 'Figtree', sans-serif">
+<main style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 20px">
+<header>
+<div style="font-size: 14px; color: #9DACA6; font-weight: 500">30 min · nível avançado · 232 cantigas</div>
+<h1 style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">Berimbau</h1>
+</header>
+<nav aria-label="Instrumentos" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; flex-shrink: 0">
+<a class="mt on" href="Berimbau.dc.html" aria-current="page">Berimbau</a>
+<a class="mt" href="Pandeiro.dc.html">Pandeiro</a>
+<a class="mt" href="Atabaque.dc.html">Atabaque</a>
+<a class="mt" href="Violao.dc.html">Violão</a>
+<a class="mt" href="Harmonica.dc.html">Harmônica</a>
+</nav>
+
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">TOQUE DO DIA · {{sesTag}}</span><span style="font-size: 12px; color: #9DACA6">{{sesCount}}</span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><button onClick="{{sesPrev}}" aria-label="Estudo anterior" style="display: {{sesPrevDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">‹</button><div style="flex-grow: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{sesDate}}</span><button onClick="{{sesBack}}" style="display: {{sesBackDisp}}; padding: 0; border: 0; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">voltar ao próximo estudo</button></div><button onClick="{{sesNext}}" aria-label="Próximo estudo" style="display: {{sesNextDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">›</button></div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">{{sesName}}</div>
+<div style="display: {{cellsDisp}}; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{cells}}" as="c" hint-placeholder-count="4"><div style="height: 52px; border-radius: 12px; background: {{c.bg}}; color: {{c.fg}}; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-weight: 800">{{c.t}}</span><span style="font-size: 10px; color: {{c.sc}}">{{c.s}}</span></div></sc-for>
+</div>
+<div style="font-size: 13px; color: #9DACA6; line-height: 1.45">{{sesFoco}}</div>
+<div style="font-size: 13px; line-height: 1.45"><span style="color: #9DACA6">Ouvir antes:</span> {{sesOuvir}}</div>
+<div style="display: flex; align-items: center; justify-content: space-between; background: #121B18; border-radius: 14px; padding: 6px 6px 6px 14px">
+<span style="font-size: 13px; color: #9DACA6">Metrônomo</span>
+<div style="display: flex; align-items: center; gap: 8px">
+<button onClick="{{slower}}" aria-label="Diminuir andamento" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #2A3833; background: #16201D; color: #EEF3F0; font-size: 20px; cursor: pointer">−</button>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 20px; min-width: 78px; text-align: center">{{bpm}} bpm</span>
+<button onClick="{{faster}}" aria-label="Aumentar andamento" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #2A3833; background: #16201D; color: #EEF3F0; font-size: 20px; cursor: pointer">+</button>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">{{tdTitle}}</span><button onClick="{{tdSwap}}" aria-label="Trocar para outros mestres" style="display: {{tdSwapDisp}}; min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outros mestres</button></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{tdToques}}" as="x" hint-placeholder-count="2"><button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="min-height: 56px; padding: 8px 10px; border-radius: 12px; border: 1px solid {{x.bd}}; background: {{x.bg}}; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 8px"><span style="width: 30px; height: 30px; flex-shrink: 0; border-radius: 99px; background: #F2A93B; color: #1A1205; display: flex; align-items: center; justify-content: center; font-size: 12px">{{x.icon}}</span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 700; font-size: 13px">{{x.name}}</span><span style="font-size: 11px; color: #9DACA6">{{x.sub}}</span></span></button></sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">MÚSICAS COM ESTE TOQUE</span><button onClick="{{tdSongSwap}}" aria-label="Trocar músicas" style="min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outras músicas</button></div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{tdSongItems}}" as="it" hint-placeholder-count="2">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.lyr}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #F2A93B; color: #1A1205">{{it.lyrLabel}}</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<div style="display: {{tdDisp}}; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #121B18">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">{{tdName}}</span><span style="font-size: 12px; color: #9DACA6">{{tdWho}}</span></div>
+<audio controls autoplay dc-src="{{tdSrc}}" style="width: 100%; height: 44px"></audio>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Plano · 30 min</h2>
+<span style="font-size: 13px; color: #9DACA6">0 de 4</span>
+</div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">5'</span><div><div style="font-weight: 600">Praticar o toque</div><div style="font-size: 12px; color: #9DACA6">{{planToque}}</div></div></div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border-radius: 14px; background: #16201D">
+<div style="display: flex; gap: 12px"><span style="font-weight: 700; width: 32px; color: #F2A93B">10'</span><div style="flex-grow: 1"><div style="font-weight: 600">Treinar as viradas</div><div style="font-size: 12px; color: #9DACA6">Variações e viradas · sempre voltando à base do toque</div></div><button onClick="{{vrToggle}}" aria-expanded="{{vrOpen}}" aria-label="Abrir vídeos de viradas" style="flex-shrink: 0; align-self: center; width: 36px; height: 36px; border-radius: 10px; border: 1px solid #2A3833; background: #121B18; color: #F2A93B; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">{{vrChev}}</button></div>
+<div style="display: {{vrDisp}}; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{vrTqs}}" as="t" hint-placeholder-count="5"><button onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="min-height: 34px; padding: 0 11px; border-radius: 99px; border: 1px solid {{t.bd}}; background: {{t.bg}}; color: {{t.fg}}; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">{{t.label}} · {{t.n}}</button></sc-for></div>
+<div style="display: {{vrListDisp}}; flex-wrap: wrap; gap: 6px"><sc-for list="{{vrLinks}}" as="l" hint-placeholder-count="6"><a href="{{l.url}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border-radius: 10px; background: #E5484D; color: #FFFFFF; font-size: 12px; font-weight: 700; text-decoration: none">▶ {{l.t}}</a></sc-for></div>
+</div>
+</div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">5'</span><div><div style="font-weight: 600">{{planLadTitle}}</div><div style="font-size: 12px; color: #9DACA6">Sugestão de hoje: {{planLad}}</div></div></div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">10'</span><div><div style="font-weight: 600">Tocar e cantar as músicas</div><div style="font-size: 12px; color: #9DACA6">{{planSongs}}</div></div></div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Toques</h2><span style="font-size: 13px; color: #9DACA6">toque para ouvir</span></div>
+<sc-if value="{{toqueOn}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #1D2925">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">{{toqueName}}</span><span style="font-size: 12px; color: #9DACA6">{{toqueMestre}}</span></div>
+<audio controls autoplay dc-src="{{toqueSrc}}" style="width: 100%; height: 44px"></audio>
+<sc-if value="{{toqueMulti}}" hint-placeholder-val="{{true}}"><div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; color: #9DACA6">{{toqueCount}}</span><button onClick="{{toqueSwap}}" aria-label="Ouvir outro mestre" style="min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outro mestre</button></div></sc-if>
+</div>
+</sc-if>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{toques}}" as="tq" hint-placeholder-count="20">
+<button onClick="{{tq.pick}}" aria-pressed="{{tq.on}}" style="padding: 12px; min-height: 64px; border-radius: 14px; background: {{tq.bg}}; border: 1px solid {{tq.bd}}; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer; display: {{tq.disp}}; justify-content: space-between; align-items: center; gap: 8px"><span style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px">{{tq.name}}</span><span style="font-size: 12px; color: #9DACA6">{{tq.sub}}</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="10"></circle><path d="M10 8l6 4-6 4Z"></path></svg></button>
+</sc-for>
+</div>
+<button onClick="{{tqMoreToggle}}" style="padding: 12px; border-radius: 14px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{tqMoreLabel}}</button>
+
+</section>
+
+<section id="metodo" style="display: flex; flex-direction: column; gap: 10px">
+<button onClick="{{metToggle}}" aria-expanded="{{metOpen}}" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 0; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Método</span><span style="font-size: 13px; color: #9DACA6">O Berimbau da Bahia · Ramiro Musotto</span></span><span style="flex-shrink: 0; min-height: 36px; padding: 0 12px; border-radius: 99px; border: 1px solid #2A3833; color: #F2A93B; font-size: 12px; font-weight: 700; display: flex; align-items: center">{{metLabel}}</span></button>
+<div style="display: {{metDisp}}; flex-direction: column; gap: 10px">
+<sc-for list="{{chs}}" as="ch" hint-placeholder-count="4">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{ch.bd}}">
+<button onClick="{{ch.toggle}}" aria-expanded="{{ch.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 11px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; display: flex; flex-direction: column"><span style="font-weight: 600">{{ch.name}}</span><span style="font-size: 12px; color: #9DACA6; line-height: 1.4">{{ch.sub}}</span></span>
+<span style="flex-shrink: 0; display: flex; align-items: center; gap: 8px"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: #F2A93B">{{ch.tag}}</span><span style="width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{ch.chev}}</span></span>
+</button>
+<sc-if value="{{ch.open}}" hint-placeholder-val="{{false}}"><div style="padding: 0 14px 14px; font-size: 13px; line-height: 1.55; color: #C9D4CF; white-space: pre-line">{{ch.body}}</div></sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Meu acervo</h2>
+<span style="font-size: 13px; color: #9DACA6">{{total}}</span>
+</div>
+<div style="font-size: 12px; color: #9DACA6; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a5 5 0 1 1 1-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8Z"></path></svg>OneDrive › Berimbau › Apostila · letras + gravações · toque numa música para ouvir e ver a letra</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="min-height: 44px; padding: 0 12px; border-radius: 99px; border: 1px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px">{{c.label}}<span style="font-size: 11px; font-weight: 700; opacity: 0.8">{{c.n}}</span></button>
+</sc-for>
+</div>
+<sc-for list="{{items}}" as="it" hint-placeholder-count="7">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.lyr}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #F2A93B; color: #1A1205">{{it.lyrLabel}}</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<button onClick="{{moreToggle}}" style="display: {{moreDisp}}; padding: 12px; border-radius: 14px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{moreLabel}}</button>
+</section>
+</main>
+<nav class="nav" aria-label="Navegação principal">
+<a href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Hoje</a>
+<a href="Alimentacao.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"></path></svg>Comida</a>
+<a href="Capoeira.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c8 5 8 15 0 20"></path><path d="M8 2v20"></path><circle cx="6" cy="16" r="3.5"></circle></svg>Capoeira</a>
+<a href="Surf.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2-1 3-5 6-8s8-4 11-1c2 2 1 5-2 5-2 0-3-2-1.5-3"></path><path d="M2 21c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"></path></svg>Surf</a>
+<a class="on" href="Berimbau.dc.html" aria-current="page"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Música</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":4250}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var LYRQ = "letra";
+    var LYRL = "Ver letra";
+    var AUD = {"lad:soumandingueiro": "media/a/b00.mp4", "lad:voumeemboraprabahia": "media/a/b01.mp4", "lad:osenhordoengenho": "media/a/b02.mp4", "lad:tinhameudinheiro": "media/a/b03.mp4", "lad:anu": "media/a/b04.mp4", "lad:mamaequeroserbombeiro": "media/a/b05.mp4", "lad:eraeuerameumano": "media/a/b06.mp4", "qa:adeuscamaradaadeus": "media/a/b07.mp4", "qa:mamaeoxum": "media/a/b08.mp4", "qa:capoeiraquemmeensinou": "media/a/b09.mp4", "qa:botadende": "media/a/b10.mp4", "qa:maeafrica": "media/a/b11.mp4", "qa:lalaela": "media/a/b12.mp4", "qa:sobradodemamae": "media/a/b13.mp4", "ca:adeuscorina": "media/a/b14.mp4", "ca:soueumaita": "media/a/b15.mp4", "ca:paranae": "media/a/b16.mp4", "ca:ondevaicaiman": "media/a/b17.mp4", "ca:maresubiu": "media/a/b18.mp4", "ca:catarina": "media/a/b19.mp4", "ca:erabesouro": "media/a/b20.mp4", "ch:lembrancadomestre": "media/a/b21.mp4", "ch:quadras": "media/a/b22.mp4", "ch:eunascide7meses": "media/a/b23.mp4", "ch:saicatarina": "media/a/b24.mp4", "ch:eiparana": "media/a/b25.mp4", "ch:santoamaro": "media/a/b26.mp4", "qr:semprelembrado": "media/a/b27.mp4", "qr:besouromanganga": "media/a/b28.mp4", "qr:jogoarrepiado": "media/a/b29.mp4", "qr:jogoperigoso": "media/a/b30.mp4", "qr:aidenegaafricana": "media/a/b31.mp4", "qr:historiadepescador": "media/a/b32.mp4", "qr:africaseuniu": "media/a/b33.mp4", "cr:avisameumano": "media/a/b34.mp4", "cr:ouvifalar": "media/a/b35.mp4", "cr:leleleo": "media/a/b36.mp4", "cr:ventania": "media/a/b37.mp4", "cr:gungaemeu": "media/a/b38.mp4", "cr:sinhosaobento": "media/a/b39.mp4", "cr:catarinavemver": "media/a/b40.mp4", "sbg:acendealuz": "media/a/b41.mp4", "sbg:elalaelaela": "media/a/b42.mp4", "sbg:redenavaranda": "media/a/b43.mp4", "sbg:hojetemcapoeira": "media/a/b44.mp4", "sbg:maliciaemanha": "media/a/b45.mp4", "sbg:maranhao": "media/a/b46.mp4", "sbg:marecheia": "media/a/b47.mp4", "sr:areiadomar": "media/a/b48.mp4", "sr:pisanalinhalevantaoboi": "media/a/b49.mp4", "sr:alomangueira": "media/a/b50.mp4", "sr:notabuleirodabaiana": "media/a/b51.mp4", "sr:ojoaochofer": "media/a/b52.mp4", "sr:alobahia": "media/a/b53.mp4", "sr:queluzeaquela": "media/a/b54.mp4", "mac:maculelebarrao": "media/a/b55.mp4", "mac:maculelesuassuna": "media/a/b56.mp4", "mac:maculelesuassuna2": "media/a/b57.mp4", "mac:ocongochegou": "media/a/b58.mp4", "mac:maculelecarolinasoares": "media/a/b59.mp4", "mac:maculeleorixas": "media/a/b60.mp4", "mac:racas": "media/a/b61.mp4", "pr:puxadaderedesaopaulo": "media/a/b62.mp4", "pr:puxadaderedeburgues1": "media/a/b63.mp4", "pr:puxadaderedeburgues2": "media/a/b64.mp4", "pr:puxadaderedecarolinasoares": "media/a/b65.mp4", "pr:puxadaderedekenura": "media/a/b66.mp4", "folk:blowininthewind": "media/a/h67.mp4", "folk:dontthinktwiceitsallright": "media/a/h68.mp4", "folk:heartofgold": "media/a/h69.mp4", "folk:theriver": "media/a/h70.mp4", "folk:maryjaneslastdance": "media/a/h71.mp4", "rock:lovemedo": "media/a/h72.mp4", "rock:roadhouseblues": "media/a/h73.mp4", "rock:missyou": "media/a/h74.mp4", "rock:midnightrambler": "media/a/h75.mp4", "rock:houseoftherisingsun": "media/a/h76.mp4", "rock:cryin": "media/a/h77.mp4", "rock:redemptionsong": "media/a/h78.mp4", "folk:comesatime": "media/a/h79.mp4", "folk:atlanticcity": "media/a/h80.mp4", "lad:oexercitoedebatalha": "media/s/s000.mp4", "lad:eujavivoenjoado": "media/s/s001.mp4", "lad:maioredeus": "media/s/s002.mp4", "lad:cartaopostal": "media/s/s003.mp4", "lad:omundodedeusegrande": "media/s/s004.mp4", "lad:siridemangue": "media/s/s005.mp4", "lad:eunascide7meses": "media/s/s006.mp4", "lad:berimbaudeouro": "media/s/s007.mp4", "lad:camaleao": "media/s/s008.mp4", "lad:quemsoueu": "media/s/s009.mp4", "lad:torpedeiroencouracado": "media/s/s010.mp4", "lad:dentedeouro": "media/s/s011.mp4", "lad:eusaicedodecasa": "media/s/s012.mp4", "lad:3diasdenascido": "media/s/s013.mp4", "lad:meninoquemfoiteumestre": "media/s/s014.mp4", "lad:juradevinganca": "media/s/s015.mp4", "lad:notempoqueacapoeira": "media/s/s016.mp4", "qa:temareia": "media/s/s017.mp4", "qa:suacoroadeouroemario": "media/s/s018.mp4", "qa:valhamedeus": "media/s/s019.mp4", "qa:saidocongopasseiporangola": "media/s/s020.mp4", "qa:dendeodende": "media/s/s021.mp4", "qa:oareia": "media/s/s022.mp4", "qa:seufeitornaomaltrateonegroassim": "media/s/s023.mp4", "qa:adeuscorina": "media/s/s024.mp4", "qa:catarina": "media/s/s025.mp4", "qa:abraarodaminhagente": "media/s/s026.mp4", "qa:aemiremire": "media/s/s027.mp4", "qa:chamaele": "media/s/s028.mp4", "qa:odendeodende": "media/s/s029.mp4", "qa:venhaverangola": "media/s/s030.mp4", "qa:esimao": "media/s/s031.mp4", "qa:omaeamanhaeuvou": "media/s/s032.mp4", "qa:omeuboimorreu": "media/s/s033.mp4", "qa:vemjogarmaiseu": "media/s/s034.mp4", "qa:inae": "media/s/s035.mp4", "qa:euvimdeangola": "media/s/s036.mp4", "qa:lendaviva": "media/s/s037.mp4", "qa:grauna": "media/s/s038.mp4", "qa:historiaqueconto": "media/s/s039.mp4", "ca:eetumtumtum": "media/s/s040.mp4", "ca:oabcd": "media/s/s041.mp4", "ca:horagrande": "media/s/s042.mp4", "ca:bemtevibotougameleiranochao": "media/s/s043.mp4", "ca:aiaiaide": "media/s/s044.mp4", "ca:oareia": "media/s/s045.mp4", "ca:olhaohomemqueeumatei": "media/s/s046.mp4", "ca:marinheiroso": "media/s/s047.mp4", "ca:adaocadesalome": "media/s/s048.mp4", "ca:idalinatamechamando": "media/s/s049.mp4", "ca:lembaeulemba": "media/s/s050.mp4", "ca:meuatabaqueedecourodeboi": "media/s/s051.mp4", "ca:odoralice": "media/s/s052.mp4", "ca:tamandua": "media/s/s053.mp4", "ca:omeuboimorreu": "media/s/s054.mp4", "ca:camugere": "media/s/s055.mp4", "ca:agorasimquematarammeubesouro": "media/s/s056.mp4", "ca:aescultura": "media/s/s057.mp4", "ca:angolaeangola": "media/s/s058.mp4", "ca:travalinguas": "media/s/s059.mp4", "ca:noitesemlua": "media/s/s060.mp4", "ca:axedoterreiro": "media/s/s061.mp4", "ca:quandoeumorrer2": "media/s/s062.mp4", "ca:quandoeumorrer": "media/s/s063.mp4", "ca:ohinacio": "media/s/s064.mp4", "ca:obahia": "media/s/s065.mp4", "ca:angolae": "media/s/s066.mp4", "ca:bahiadetodosossantos": "media/s/s067.mp4", "ca:euviosolvialuaclarear": "media/s/s068.mp4", "ca:nabeiradomar": "media/s/s069.mp4", "ca:quandoeuvimladabahia": "media/s/s070.mp4", "ca:eoinganga": "media/s/s071.mp4", "ca:ventania": "media/s/s072.mp4", "ca:querovergiraralua": "media/s/s073.mp4", "ca:negronaoquermaiscorrer": "media/s/s074.mp4", "ca:pegadasnaareia": "media/s/s075.mp4", "ca:horaciodomato": "media/s/s076.mp4", "ca:beiramarioio": "media/s/s077.mp4", "qr:hojetemcapoeira": "media/s/s078.mp4", "qr:iaiaioio": "media/s/s079.mp4", "qr:lutaebrincadeira": "media/s/s080.mp4", "qr:meninonago": "media/s/s081.mp4", "qr:magalenha": "media/s/s082.mp4", "qr:notempodocativeiro": "media/s/s083.mp4", "cr:corridos": "media/s/s084.mp4", "cr:eiparana": "media/s/s085.mp4", "cr:saicatarina": "media/s/s086.mp4", "cr:santoamaro": "media/s/s087.mp4", "cr:ligeiros": "media/s/s088.mp4", "cr:naaruanda": "media/s/s089.mp4", "cr:navionegreiro": "media/s/s090.mp4", "sbg:lalaela": "media/s/s091.mp4", "sbg:minhavaranda": "media/s/s092.mp4", "sbg:vocedisseumdia": "media/s/s093.mp4", "sbg:omestreecomoareiadomar": "media/s/s094.mp4", "sbg:preparaoarame": "media/s/s095.mp4", "sbg:santoantonioqueroagua": "media/s/s096.mp4", "sbg:temqueteraxe": "media/s/s097.mp4", "sbg:saobentograndedeangola": "media/s/s098.mp4", "sbg:vimnobalancodomar": "media/s/s099.mp4", "sbg:vimnonaviodearuanda": "media/s/s100.mp4", "sbg:oareia": "media/s/s101.mp4", "sbg:lanabahia": "media/s/s102.mp4", "sbg:lanabahia2": "media/s/s103.mp4", "sbg:oqueseriadacapoeira": "media/s/s104.mp4", "sbg:artesecular": "media/s/s105.mp4", "sbg:lutaebrincadeira": "media/s/s106.mp4", "sbg:diadefesta": "media/s/s107.mp4", "sbg:madalena": "media/s/s108.mp4", "sbg:mercadomodelo2": "media/s/s109.mp4", "sbg:mercadomodelo3": "media/s/s110.mp4", "sbg:mercadomodelo": "media/s/s111.mp4", "sbg:edanossacor": "media/s/s112.mp4", "sbg:ahoraeessa": "media/s/s113.mp4", "sbg:saosalvador2": "media/s/s114.mp4", "sbg:saosalvador": "media/s/s115.mp4", "sbg:capoeiracantou": "media/s/s116.mp4", "sbg:lamento": "media/s/s117.mp4", "sbg:sabiacantou": "media/s/s118.mp4", "sbg:pisacaboclo": "media/s/s119.mp4", "sbg:forcabaiana": "media/s/s120.mp4", "sbg:pediroaxe": "media/s/s121.mp4", "sbg:facaamolada": "media/s/s122.mp4", "sbg:jogoperigoso": "media/s/s123.mp4", "sbg:capoeiraestadeluto": "media/s/s124.mp4", "sbg:ventania": "media/s/s125.mp4", "sbg:ohinacio": "media/s/s126.mp4", "sbg:vivaloremil": "media/s/s127.mp4", "sbg:seentregacorisco": "media/s/s128.mp4", "sbg:saculejodonavio": "media/s/s129.mp4", "sbg:nabeiradomar": "media/s/s130.mp4", "sbg:historiadepescador": "media/s/s131.mp4", "sbg:rainhadomar": "media/s/s132.mp4", "sbg:aidenegaafricana": "media/s/s133.mp4", "sbg:leleleo": "media/s/s134.mp4", "sbg:bandadebandalue": "media/s/s135.mp4", "sbg:chegapraca": "media/s/s136.mp4", "sbg:luanae": "media/s/s137.mp4", "sbg:enaaruanda": "media/s/s138.mp4", "sbg:africaseuniu": "media/s/s139.mp4", "sbg:quandomeumestresefoi": "media/s/s140.mp4", "sbg:asaboborasdocaldeiraodaserra": "media/s/s141.mp4", "sbg:naovicapoeiranascer": "media/s/s142.mp4", "sbg:mandaloia": "media/s/s143.mp4", "sbg:seucapoeiraoqueaconteceu": "media/s/s144.mp4", "sbg:comovaicomovaivoce": "media/s/s145.mp4", "sbg:noitedasaudade": "media/s/s146.mp4", "sr:sambaderodacaicara": "media/s/s147.mp4", "sr:sambaderodacurio": "media/s/s148.mp4", "sr:sambaderodaburgues": "media/s/s149.mp4", "sr:sambaderodakenura": "media/s/s150.mp4", "sr:sambaderodadeputado": "media/s/s151.mp4", "sr:sambaderodacarolinasoares": "media/s/s152.mp4", "sr:saisaisaiopiranha": "media/s/s153.mp4", "sr:senosdoismorassejunto": "media/s/s154.mp4", "sr:paiepaimaeemae": "media/s/s155.mp4"};
+    function nrm(t) { return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+    var LYRT = 'Letra';
+    var LYRPH = 'Cole aqui a letra da sua apostila';
+    var SUFFIX_UNUSED = "capoeira";
+    var CATS = [{"id": "lad", "label": "Ladainha", "n": 26, "items": [["Sou Mandingueiro", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Vou me Embora pra Bahia", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["O Senhor do Engenho", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Tinha Meu Dinheiro", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Anú", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Mamãe Quero Ser Bombeiro", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Era Eu, Era Meu Mano", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["O Exercito é de Batalha", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Eu Já Vivo Enjoado", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Maior é Deus", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Cartão Postal", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["O Mundo de Deus é Grande", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Siri de Mangue", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Eu Nasci de 7 Meses", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Berimbau de Ouro", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Camaleão", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Quem Sou Eu", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Torpedeiro Encouraçado", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Dente de Ouro", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Vou Contar Minha História", "Angola · abertura da roda", "só letra", "#9DACA6"], ["Eu Saí Cedo de Casa", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Capoeira Camará", "Angola · abertura da roda", "só letra", "#9DACA6"], ["3 Dias de Nascido", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Menino Quem foi teu Mestre", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["Jura de Vingança", "Angola · abertura da roda", "áudio", "#4CC3B5"], ["No Tempo Que A Capoeira", "Angola · abertura da roda", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Ladainha"}, {"id": "qa", "label": "Quadras Angola", "n": 31, "items": [["Adeus Camarada, Adeus", "Angola · quadra", "áudio", "#4CC3B5"], ["Mamãe Oxum", "Angola · quadra", "áudio", "#4CC3B5"], ["Capoeira Quem Me Ensinou", "Angola · quadra", "áudio", "#4CC3B5"], ["Bota Dendê", "Angola · quadra", "áudio", "#4CC3B5"], ["Mãe África", "Angola · quadra", "áudio", "#4CC3B5"], ["Lalae La", "Angola · quadra", "áudio", "#4CC3B5"], ["Sobrado de Mamãe", "Angola · quadra", "áudio", "#4CC3B5"], ["Tem Areia", "Angola · quadra", "áudio", "#4CC3B5"], ["Sua Coroa de Ouro Emariô", "Angola · quadra", "áudio", "#4CC3B5"], ["Valha me Deus", "Angola · quadra", "áudio", "#4CC3B5"], ["Sai do Congo, Passei por Angola", "Angola · quadra", "áudio", "#4CC3B5"], ["Dendê ó Dendê", "Angola · quadra", "áudio", "#4CC3B5"], ["Ô Areia", "Angola · quadra", "áudio", "#4CC3B5"], ["Seu Feitor, Não Maltrate o Negro Assim", "Angola · quadra", "áudio", "#4CC3B5"], ["Adeus Corina", "Angola · quadra", "áudio", "#4CC3B5"], ["Catarina", "Angola · quadra", "áudio", "#4CC3B5"], ["Abra a Roda Minha Gente", "Angola · quadra", "áudio", "#4CC3B5"], ["Aé Miré Miré", "Angola · quadra", "áudio", "#4CC3B5"], ["Chama Ele", "Angola · quadra", "áudio", "#4CC3B5"], ["Ô Dendê, ô Dendê", "Angola · quadra", "áudio", "#4CC3B5"], ["Venha Ver Angola", "Angola · quadra", "áudio", "#4CC3B5"], ["E Simão", "Angola · quadra", "áudio", "#4CC3B5"], ["O Mãe Amanhã Eu Vou", "Angola · quadra", "áudio", "#4CC3B5"], ["O Meu Boi Morreu", "Angola · quadra", "áudio", "#4CC3B5"], ["Vem Jogar Mais Eu", "Angola · quadra", "áudio", "#4CC3B5"], ["Inaê", "Angola · quadra", "áudio", "#4CC3B5"], ["Eu Vim de Angola", "Angola · quadra", "áudio", "#4CC3B5"], ["Lenda Viva", "Angola · quadra", "áudio", "#4CC3B5"], ["Graúna", "Angola · quadra", "áudio", "#4CC3B5"], ["A Roda Vai Começar", "Angola · quadra", "só letra", "#9DACA6"], ["Historia Que Conto", "Angola · quadra", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Angola - Quadras"}, {"id": "ca", "label": "Corridos Angola", "n": 46, "items": [["Adeus Corina", "Angola · corrido", "áudio", "#4CC3B5"], ["Sou Eu Maitá", "Angola · corrido", "áudio", "#4CC3B5"], ["Paranaê", "Angola · corrido", "áudio", "#4CC3B5"], ["Onde Vai Caiman", "Angola · corrido", "áudio", "#4CC3B5"], ["Ee Tum, tum, tum", "Angola · corrido", "áudio", "#4CC3B5"], ["Maré Subiu", "Angola · corrido", "áudio", "#4CC3B5"], ["O A, B, C, D", "Angola · corrido", "áudio", "#4CC3B5"], ["Hora Grande", "Angola · corrido", "áudio", "#4CC3B5"], ["Catarina", "Angola · corrido", "áudio", "#4CC3B5"], ["Bem-te-vi botou gameleira no chão", "Angola · corrido", "áudio", "#4CC3B5"], ["Era Besouro", "Angola · corrido", "áudio", "#4CC3B5"], ["Ai, ai, Aidê", "Angola · corrido", "áudio", "#4CC3B5"], ["Ô Areia", "Angola · corrido", "áudio", "#4CC3B5"], ["Olha o homem que eu matei", "Angola · corrido", "áudio", "#4CC3B5"], ["Marinheiro Só", "Angola · corrido", "áudio", "#4CC3B5"], ["Adão Cadê Salomé", "Angola · corrido", "áudio", "#4CC3B5"], ["Idalina Tá Me Chamando", "Angola · corrido", "áudio", "#4CC3B5"], ["Lemba eu Lemba", "Angola · corrido", "áudio", "#4CC3B5"], ["Meu Atabaque é de Couro de Boi", "Angola · corrido", "áudio", "#4CC3B5"], ["O Doralice", "Angola · corrido", "áudio", "#4CC3B5"], ["Tamanduá", "Angola · corrido", "áudio", "#4CC3B5"], ["O Meu Boi Morreu", "Angola · corrido", "áudio", "#4CC3B5"], ["Camugerê", "Angola · corrido", "áudio", "#4CC3B5"], ["Agora Sim que Mataram Meu Besouro", "Angola · corrido", "áudio", "#4CC3B5"], ["A Escultura", "Angola · corrido", "áudio", "#4CC3B5"], ["Angola ê Angola", "Angola · corrido", "áudio", "#4CC3B5"], ["Trava Línguas", "Angola · corrido", "áudio", "#4CC3B5"], ["Grão de Areia", "Angola · corrido", "só letra", "#9DACA6"], ["Noite Sem Lua", "Angola · corrido", "áudio", "#4CC3B5"], ["Axé do Terreiro", "Angola · corrido", "áudio", "#4CC3B5"], ["Quando Eu Morrer 2", "Angola · corrido", "áudio", "#4CC3B5"], ["Quando eu Morrer", "Angola · corrido", "áudio", "#4CC3B5"], ["Oh Inácio", "Angola · corrido", "áudio", "#4CC3B5"], ["Ô Bahia", "Angola · corrido", "áudio", "#4CC3B5"], ["Angola ê", "Angola · corrido", "áudio", "#4CC3B5"], ["Bahia de Todos os Santos", "Angola · corrido", "áudio", "#4CC3B5"], ["Eu Vi o Sol, Vi a Lua Clarear", "Angola · corrido", "áudio", "#4CC3B5"], ["Na Beira do Mar", "Angola · corrido", "áudio", "#4CC3B5"], ["Quando Eu Vim Lá da Bahia", "Angola · corrido", "áudio", "#4CC3B5"], ["E ô Inganga", "Angola · corrido", "áudio", "#4CC3B5"], ["Ventania", "Angola · corrido", "áudio", "#4CC3B5"], ["Quero ver girar a lua", "Angola · corrido", "áudio", "#4CC3B5"], ["Negro não quer mais correr", "Angola · corrido", "áudio", "#4CC3B5"], ["Pegadas na Areia", "Angola · corrido", "áudio", "#4CC3B5"], ["Horácio do Mato", "Angola · corrido", "áudio", "#4CC3B5"], ["Beiramar Ioio", "Angola · corrido", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Angola - Corridos"}, {"id": "ch", "label": "Chulas", "n": 6, "items": [["Lembrança do Mestre", "Regional · chula", "áudio", "#4CC3B5"], ["Quadras", "Regional · chula", "áudio", "#4CC3B5"], ["Eu Nasci de 7 Meses", "Regional · chula", "áudio", "#4CC3B5"], ["Sai Catarina", "Regional · chula", "áudio", "#4CC3B5"], ["Ei Paraná", "Regional · chula", "áudio", "#4CC3B5"], ["Santo Amaro", "Regional · chula", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Regional - Chulas"}, {"id": "qr", "label": "Quadras Regional", "n": 13, "items": [["Sempre Lembrado", "Regional · quadra", "áudio", "#4CC3B5"], ["Besouro Mangangá", "Regional · quadra", "áudio", "#4CC3B5"], ["Jogo Arrepiado", "Regional · quadra", "áudio", "#4CC3B5"], ["Jogo Perigoso", "Regional · quadra", "áudio", "#4CC3B5"], ["Aidê Nega Africana", "Regional · quadra", "áudio", "#4CC3B5"], ["História de Pescador", "Regional · quadra", "áudio", "#4CC3B5"], ["África Se Uniu", "Regional · quadra", "áudio", "#4CC3B5"], ["Hoje Tem Capoeira", "Regional · quadra", "áudio", "#4CC3B5"], ["Iaiá Ioiô", "Regional · quadra", "áudio", "#4CC3B5"], ["Luta e Brincadeira", "Regional · quadra", "áudio", "#4CC3B5"], ["Menino Nagô", "Regional · quadra", "áudio", "#4CC3B5"], ["Magalenha", "Regional · quadra", "áudio", "#4CC3B5"], ["No Tempo do Cativeiro", "Regional · quadra", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Regional - Quadras"}, {"id": "cr", "label": "Corridos Regional", "n": 14, "items": [["Avisa Meu Mano", "Regional · corrido", "áudio", "#4CC3B5"], ["Ouvi Falar", "Regional · corrido", "áudio", "#4CC3B5"], ["Corridos", "Regional · corrido", "áudio", "#4CC3B5"], ["Lê Lê Lê Ô", "Regional · corrido", "áudio", "#4CC3B5"], ["Ventania", "Regional · corrido", "áudio", "#4CC3B5"], ["Gunga é Meu", "Regional · corrido", "áudio", "#4CC3B5"], ["Sinhô São Bento", "Regional · corrido", "áudio", "#4CC3B5"], ["Catarina Vem Ver", "Regional · corrido", "áudio", "#4CC3B5"], ["Ei Paraná", "Regional · corrido", "áudio", "#4CC3B5"], ["Sai Catarina", "Regional · corrido", "áudio", "#4CC3B5"], ["Santo Amaro", "Regional · corrido", "áudio", "#4CC3B5"], ["Ligeiros", "Regional · corrido", "áudio", "#4CC3B5"], ["Na Aruanda", "Regional · corrido", "áudio", "#4CC3B5"], ["Navio Negreiro", "Regional · corrido", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Regional - Corridos"}, {"id": "sbg", "label": "São Bento Grande", "n": 67, "items": [["Acende a Luz", "São Bento Grande", "áudio", "#4CC3B5"], ["Ê, La Lae Lae La", "São Bento Grande", "áudio", "#4CC3B5"], ["Rede na Varanda", "São Bento Grande", "áudio", "#4CC3B5"], ["Hoje Tem Capoeira", "São Bento Grande", "áudio", "#4CC3B5"], ["Malícia e Manha", "São Bento Grande", "áudio", "#4CC3B5"], ["Maranhão", "São Bento Grande", "áudio", "#4CC3B5"], ["Maré Cheia", "São Bento Grande", "áudio", "#4CC3B5"], ["Lalaê Lá", "São Bento Grande", "áudio", "#4CC3B5"], ["Minha Varanda", "São Bento Grande", "áudio", "#4CC3B5"], ["Você Disse Um Dia", "São Bento Grande", "áudio", "#4CC3B5"], ["O Mestre é Como Areia do Mar", "São Bento Grande", "áudio", "#4CC3B5"], ["Prepara o Arame", "São Bento Grande", "áudio", "#4CC3B5"], ["Santo Antônio Quero Água", "São Bento Grande", "áudio", "#4CC3B5"], ["Tem Que Ter Axé", "São Bento Grande", "áudio", "#4CC3B5"], ["São Bento Grande de Angola", "São Bento Grande", "áudio", "#4CC3B5"], ["Vim no Balanço do Mar", "São Bento Grande", "áudio", "#4CC3B5"], ["Vim no Navio de Aruanda", "São Bento Grande", "áudio", "#4CC3B5"], ["Ô Areia", "São Bento Grande", "áudio", "#4CC3B5"], ["La na Bahia", "São Bento Grande", "áudio", "#4CC3B5"], ["Lá na Bahia 2", "São Bento Grande", "áudio", "#4CC3B5"], ["O Que Seria da Capoeira", "São Bento Grande", "áudio", "#4CC3B5"], ["Arte Secular", "São Bento Grande", "áudio", "#4CC3B5"], ["Luta e Brincadeira", "São Bento Grande", "áudio", "#4CC3B5"], ["Dia de Festa", "São Bento Grande", "áudio", "#4CC3B5"], ["Madalena", "São Bento Grande", "áudio", "#4CC3B5"], ["Mercado Modelo 2", "São Bento Grande", "áudio", "#4CC3B5"], ["Mercado Modelo 3", "São Bento Grande", "áudio", "#4CC3B5"], ["Mercado Modelo", "São Bento Grande", "áudio", "#4CC3B5"], ["É da Nossa Cor", "São Bento Grande", "áudio", "#4CC3B5"], ["A Hora é Essa", "São Bento Grande", "áudio", "#4CC3B5"], ["Chico Paraue", "São Bento Grande", "só letra", "#9DACA6"], ["São Salvador 2", "São Bento Grande", "áudio", "#4CC3B5"], ["São Salvador", "São Bento Grande", "áudio", "#4CC3B5"], ["Capoeira Cantou", "São Bento Grande", "áudio", "#4CC3B5"], ["Lamento", "São Bento Grande", "áudio", "#4CC3B5"], ["Sabiá Cantou", "São Bento Grande", "áudio", "#4CC3B5"], ["Pisa Caboclo", "São Bento Grande", "áudio", "#4CC3B5"], ["Força Baiana", "São Bento Grande", "áudio", "#4CC3B5"], ["Pedir o Axé", "São Bento Grande", "áudio", "#4CC3B5"], ["Faca Amolada", "São Bento Grande", "áudio", "#4CC3B5"], ["Jogo Perigoso", "São Bento Grande", "áudio", "#4CC3B5"], ["Capoeira Está de Luto", "São Bento Grande", "áudio", "#4CC3B5"], ["Ventania", "São Bento Grande", "áudio", "#4CC3B5"], ["Oh Inácio", "São Bento Grande", "áudio", "#4CC3B5"], ["Viva Loremil", "São Bento Grande", "áudio", "#4CC3B5"], ["Se Entrega Corisco", "São Bento Grande", "áudio", "#4CC3B5"], ["Saculejo do Navio", "São Bento Grande", "áudio", "#4CC3B5"], ["Na Beira do Mar", "São Bento Grande", "áudio", "#4CC3B5"], ["Historia de Pescador", "São Bento Grande", "áudio", "#4CC3B5"], ["Rainha do Mar", "São Bento Grande", "áudio", "#4CC3B5"], ["Aidê Nega Africana", "São Bento Grande", "áudio", "#4CC3B5"], ["Lê lê lê o", "São Bento Grande", "áudio", "#4CC3B5"], ["Banda de bandaluê", "São Bento Grande", "áudio", "#4CC3B5"], ["Ai Meu Tempo", "São Bento Grande", "só letra", "#9DACA6"], ["Chega pra Cá", "São Bento Grande", "áudio", "#4CC3B5"], ["Luana É", "São Bento Grande", "áudio", "#4CC3B5"], ["Nêgo", "São Bento Grande", "só letra", "#9DACA6"], ["É na Aruanda", "São Bento Grande", "áudio", "#4CC3B5"], ["África Se Uniu", "São Bento Grande", "áudio", "#4CC3B5"], ["Quando Meu Mestre Se Foi", "São Bento Grande", "áudio", "#4CC3B5"], ["Nega Negá", "São Bento Grande", "só letra", "#9DACA6"], ["As Abóboras do Caldeirão da Serra", "São Bento Grande", "áudio", "#4CC3B5"], ["Não Vi Capoeira Nascer", "São Bento Grande", "áudio", "#4CC3B5"], ["Mandá Loiá", "São Bento Grande", "áudio", "#4CC3B5"], ["Seu Capoeira O Que Aconteceu", "São Bento Grande", "áudio", "#4CC3B5"], ["Como Vai Como Vai Você", "São Bento Grande", "áudio", "#4CC3B5"], ["Noite da Saudade", "São Bento Grande", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › São Bento Grande"}, {"id": "sr", "label": "Samba de Roda", "n": 17, "items": [["Areia do Mar", "Samba de roda", "áudio", "#4CC3B5"], ["Samba de Roda Suassuna", "Samba de roda", "só letra", "#9DACA6"], ["Samba de Roda Caiçara", "Samba de roda", "áudio", "#4CC3B5"], ["Samba de Roda Curió", "Samba de roda", "áudio", "#4CC3B5"], ["Samba de Roda Burguês", "Samba de roda", "áudio", "#4CC3B5"], ["Samba de Roda Kenura", "Samba de roda", "áudio", "#4CC3B5"], ["Samba de Roda Deputado", "Samba de roda", "áudio", "#4CC3B5"], ["Samba de Roda Carolina Soares", "Samba de roda", "áudio", "#4CC3B5"], ["Pisa na Linha Levanta o Boi", "Samba de roda", "áudio", "#4CC3B5"], ["Alô Mangueira", "Samba de roda", "áudio", "#4CC3B5"], ["No Tabuleiro da Baiana", "Samba de roda", "áudio", "#4CC3B5"], ["Ô João Chofer", "Samba de roda", "áudio", "#4CC3B5"], ["Alô Bahia", "Samba de roda", "áudio", "#4CC3B5"], ["Sai, Sai, Sai Ô Piranha", "Samba de roda", "áudio", "#4CC3B5"], ["Se Nós Dois Morasse Junto", "Samba de roda", "áudio", "#4CC3B5"], ["Pai é Pai, Mãe é Mãe", "Samba de roda", "áudio", "#4CC3B5"], ["Que Luz é Aquela", "Samba de roda", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Samba de Roda"}, {"id": "mac", "label": "Maculelê", "n": 7, "items": [["Maculelê (Barrão)", "Maculelê", "áudio", "#4CC3B5"], ["Maculelê (Suassuna)", "Maculelê", "áudio", "#4CC3B5"], ["Maculelê (Suassuna 2)", "Maculelê", "áudio", "#4CC3B5"], ["O Congo Chegou", "Maculelê", "áudio", "#4CC3B5"], ["Maculelê (Carolina Soares)", "Maculelê", "áudio", "#4CC3B5"], ["Maculelê Orixás", "Maculelê", "áudio", "#4CC3B5"], ["Raças", "Maculelê", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Maculele"}, {"id": "pr", "label": "Puxada de Rede", "n": 5, "items": [["Puxada de Rede São Paulo", "Puxada de rede", "áudio", "#4CC3B5"], ["Puxada de Rede Burguês 1", "Puxada de rede", "áudio", "#4CC3B5"], ["Puxada de Rede Burguês 2", "Puxada de rede", "áudio", "#4CC3B5"], ["Puxada de Rede Carolina Soares", "Puxada de rede", "áudio", "#4CC3B5"], ["Puxada de Rede Kenura", "Puxada de rede", "áudio", "#4CC3B5"]], "dir": "Berimbau › Apostila › Puxada de Rede"}];
+    var self = this;
+    var st = this.state || {};
+    var SESS = [[20260920, "09:00"], [20260926, "09:00"], [20261003, "09:00"], [20261010, "09:00"], [20261016, "17:00"], [20261023, "09:00"], [20261030, "09:00"], [20261105, "09:00"], [20261112, "09:00"], [20261119, "09:00"], [20261125, "09:00"], [20261202, "09:00"], [20261209, "09:00"], [20261215, "09:00"], [20261222, "09:00"], [20261229, "09:00"], [20270104, "09:00"], [20270111, "17:00"], [20270118, "17:00"], [20270124, "09:00"], [20270131, "09:00"], [20270207, "09:00"], [20270213, "09:00"], [20270220, "09:00"], [20270227, "09:00"], [20270305, "17:00"], [20270312, "09:00"], [20270319, "09:00"], [20270325, "09:00"], [20270401, "09:00"], [20270408, "09:00"], [20270414, "09:00"], [20270421, "09:00"], [20270428, "09:00"], [20270504, "09:00"], [20270511, "09:00"], [20270518, "09:00"], [20270524, "09:00"], [20270531, "17:00"], [20270607, "17:00"], [20270613, "09:00"], [20270620, "09:00"], [20270627, "09:00"]];
+    var ROT = [
+      { n: 'São Bento Pequeno', f: 'ang', cells: 'sbp', foco: 'Variações e viradas sem perder o pulso · comparar com o toque de Angola (TCHI TCHI DON DIN)' },
+      { n: 'Angola', f: 'ang', cells: 'ang', foco: 'Base lenta e cadenciada · DON e DIN bem definidos, o chiado segura o tempo' },
+      { n: 'São Bento Grande de Angola', f: 'ang', foco: 'Mais acelerado que o São Bento Pequeno · manter o chiado limpo na velocidade' },
+      { n: 'Jogo de Dentro', f: 'ang', foco: 'Andamento médio · muitas variações, sempre voltando à base' },
+      { n: 'São Bento Grande (Regional)', f: 'reg', foco: 'Toque principal da Regional · andamento rápido e constante' },
+      { n: 'Iúna', f: 'reg', foco: 'Toque sem canto · frases longas e floreios entre as voltas' },
+      { n: 'Santa Maria', f: 'reg', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Cavalaria', f: 'reg', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Idalina', f: 'reg', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Amazonas', f: 'reg', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Benguela', f: 'reg', foco: 'Andamento mais lento e cadenciado · frase-base limpa antes de variar' },
+      { n: 'Samba de Roda', f: 'samba', foco: 'Balanço do samba · acentos no DIN e chiado leve' },
+      { n: 'Muzenza', f: 'ang', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Apanha Laranja no Chão Tico-Tico', f: 'ang', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Jogo de Fora', f: 'ang', foco: 'Ouça a gravação, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Samango', f: 'ang', foco: 'Ouça a gravação, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Gegê (Jeje)', f: 'ang', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Barravento', f: 'ang', foco: 'Ouça os mestres, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Miudinho', f: 'ang', foco: 'Ouça a gravação, repita a frase-base e depois varie mantendo o pulso' },
+      { n: 'Aviso', f: 'ang', foco: 'Ouça a gravação, repita a frase-base e depois varie mantendo o pulso' }
+    ];
+    var nowS = new Date(), todayN = nowS.getFullYear() * 10000 + (nowS.getMonth() + 1) * 100 + nowS.getDate();
+    var defSi = SESS.length - 1;
+    for (var si0 = 0; si0 < SESS.length; si0++) { if (SESS[si0][0] >= todayN) { defSi = si0; break; } }
+    var si = st.si === undefined ? defSi : Math.max(0, Math.min(SESS.length - 1, st.si));
+    var SE = SESS[si], RT = ROT[((si - 3) % ROT.length + ROT.length) % ROT.length];
+    var WDS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    var sy = Math.floor(SE[0] / 10000), sm = Math.floor(SE[0] / 100) % 100, sd = SE[0] % 100;
+    var sdow = new Date(Date.UTC(sy, sm - 1, sd)).getUTCDay();
+    var sesTag = SE[0] === todayN ? 'Hoje' : (si === defSi ? 'Próximo' : (SE[0] < todayN ? 'Anterior' : 'Depois'));
+    var sesReset = { tdPick: null, sgPick: null, tdPlay: null, tdSong: null };
+    var sel = st.cat || CATS[0].id;
+    var cur = CATS[0];
+    var total = 0;
+    var cats = CATS.map(function (c) {
+      total += c.n;
+      var on = c.id === sel;
+      if (on) cur = c;
+      return {
+        label: c.label, n: c.n, on: on,
+        bg: on ? '#F2A93B' : '#16201D', fg: on ? '#1A1205' : '#EEF3F0', bd: on ? '#F2A93B' : '#2A3833',
+        pick: function () { self.setState({ cat: c.id, song: null, showAll: false }); }
+      };
+    });
+    var openSong = st.song;
+    var picsAll = st.pics || {};
+    function mkItem(cur, i, idx, open, toggleFn) {
+      var skey = cur.id + ':' + i[0];
+      var pics = picsAll[skey] || [];
+      var audio = AUD[cur.id + ':' + nrm(i[0])] || '';
+      return {
+        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio,
+        open: open, chev: open ? '−' : '+', bd: open ? '#F2A93B' : '#16201D',
+        toggle: toggleFn,
+        where: 'No seu OneDrive: ' + cur.dir + (cur.byItem ? ' › ' + i[1] : ''),
+        lyr: 'https://www.google.com/search?q=' + encodeURIComponent(LYRQ + ' ' + i[0] + ' ' + i[1]),
+        lyrLabel: LYRL,
+        pics: pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0] }; }), hasPics: pics.length > 0,
+        canUpload: !(i[5] && i[5].length), upLabel: pics.length ? 'Inserir outra imagem' : 'Inserir imagem da ' + LYRT.toLowerCase(),
+        lyrTitle: LYRT.toUpperCase(), tid: 'img-' + cur.id + '-' + idx,
+        onFile: function (e) {
+          var f = e.target.files && e.target.files[0];
+          if (!f) return;
+          var r = new FileReader();
+          r.onload = function () {
+            var all = Object.assign({}, (self.state || {}).pics || {});
+            all[skey] = (all[skey] || []).concat([r.result]);
+            self.setState({ pics: all });
+          };
+          r.readAsDataURL(f);
+        }
+      };
+    }
+    var items = cur.items.slice(0, st.showAll ? cur.items.length : 10).map(function (i, idx) {
+      var key = cur.id + ':' + idx, open = openSong === key;
+      return mkItem(cur, i, idx, open, function () { self.setState({ song: open ? null : key }); });
+    });
+    var SONG_POOL = [];
+    var FAMC = { ang: ['lad', 'qa', 'ca'], reg: ['ch', 'qr', 'cr', 'sbg'], samba: ['sr'] }[RT.f];
+    CATS.forEach(function (c) { if (FAMC.indexOf(c.id) >= 0) c.items.forEach(function (it) { if (it[2] === 'áudio') SONG_POOL.push([c.id, it[0]]); }); });
+    function pick2(n, avoid) {
+      var tries = 0, a, b;
+      do { a = Math.floor(Math.random() * n); b = Math.floor(Math.random() * (n - 1)); if (b >= a) b++; tries++; }
+      while (avoid && tries < 20 && (avoid.indexOf(a) >= 0 || avoid.indexOf(b) >= 0));
+      return [a, b];
+    }
+    var dseed = si * 13 + 7;
+    var sgPick = st.sgPick || [dseed % SONG_POOL.length, (dseed * 7 + 3) % SONG_POOL.length];
+    if (sgPick[0] === sgPick[1]) sgPick = [sgPick[0], (sgPick[0] + 1) % SONG_POOL.length];
+    var LADC = { ang: 'lad', reg: 'qr', samba: 'sr' }[RT.f];
+    var LADS = CATS.filter(function (c) { return c.id === LADC; })[0].items;
+    var planLad = LADS[(dseed * 3 + 1) % LADS.length][0];
+    var tdSongSwap = function () { self.setState({ sgPick: pick2(SONG_POOL.length, sgPick), tdSong: null }); };
+    var tdSongItems = sgPick.map(function (k) { return SONG_POOL[k]; }).map(function (p) {
+      var c = CATS.filter(function (x) { return x.id === p[0]; })[0];
+      var idx = c.items.map(function (x) { return x[0]; }).indexOf(p[1]);
+      var key = 'td:' + p[1], open = st.tdSong === key;
+      return mkItem(c, c.items[idx], idx, open, function () { self.setState({ tdSong: open ? null : key }); });
+    });
+    var more = cur.n - cur.items.length;
+    var sgNames = tdSongItems.map(function (x) { return x.t; });
+    var ladAudio = LADS.filter(function (x) { return x[2] === 'áudio'; });
+    planLad = ladAudio.length ? ladAudio[(dseed * 3 + 1) % ladAudio.length][0] : planLad;
+    for (var li = 0; li < LADS.length && sgNames.indexOf(planLad) >= 0; li++) planLad = LADS[(dseed * 3 + 2 + li) % LADS.length][0];
+    var out = {
+      cats: cats, items: items, planLad: '“' + planLad + '”', planSongs: tdSongItems.map(function (x) { return x.t; }).join(' + ') + ' · as músicas deste estudo', tdSongItems: tdSongItems, tdSongSwap: tdSongSwap, total: total + ' cantigas',
+      moreLabel: cur.items.length <= 10 ? '' : (st.showAll ? 'Mostrar menos' : 'Mostrar todas as ' + cur.items.length + ' músicas'), moreDisp: cur.items.length > 10 ? 'block' : 'none', moreToggle: function () { self.setState({ showAll: !st.showAll, song: null }); }
+    };
+    var bpm = st.bpm || 72;
+    out.bpm = bpm;
+    out.slower = function () { self.setState({ bpm: Math.max(40, bpm - 4) }); };
+    out.faster = function () { self.setState({ bpm: Math.min(200, bpm + 4) }); };
+    var CH = [{"id": "c1", "name": "Sons básicos", "sub": "DON · DIN · TCHI · DUN", "tag": "cap. 1", "body": "DON — grave solto: cabaça afastada da barriga, a baqueta bate logo acima do cordão da cabaça.\nDIN — agudo: a pedra (dobrão) pressiona a corda e a baqueta bate logo acima dela.\nTCHI — chiado: a pedra só encosta na corda, sem pressionar, com a cabaça fechada na barriga.\nDUN — grave abafado: o mesmo golpe do DON, com a cabaça fechando na barriga.\n\nCombinações que o livro treina: DON ligado ao TCHI, DUN ligado ao TCHI e DON ligado ao DUN (o efeito “wawa”, abrindo e fechando a cabaça).\n\nComo treinar: um som por vez, depois em pares, sempre com o metrônomo. Depois disso vêm os exercícios preparatórios e a seção sobre micro-ritmos."}, {"id": "c2", "name": "7 toques da Regional", "sub": "Os toques de Mestre Bimba", "tag": "cap. 2", "body": "São Bento Grande da Regional — o toque principal da roda, jogo rápido.\nBanguela — jogo mais cadenciado e próximo.\nSanta Maria — usado no jogo de apanhar o dinheiro.\nCavalaria — toque de aviso.\nIúna — toque para os formados, sem canto.\nIdalina — o livro traz só a partitura, sem texto.\nAmazonas — toque de recepção.\n\nNo seu acervo, compare com as gravações de Mestre Bimba (7 toques) e Mestre Tucano Preto."}, {"id": "c3", "name": "4 toques de Angola", "sub": "Inclui o toque de hoje: São Bento Pequeno", "tag": "hoje", "body": "Toque do dia: São Bento Pequeno.\n\nAngola — o mais lento, acompanha a ladainha e o jogo de dentro: TCHI TCHI DON DIN.\nSão Bento Pequeno — inverte o final do Angola: TCHI TCHI DIN DON. Acompanha o jogo de Angola um pouco mais solto.\nSão Bento Grande de Angola — mais rápido, para o jogo alto.\nSamba de Angola — variação com balanço de samba.\n\nDica do livro: quando há chiados seguidos, toque-os baixinho; se ficarem fortes, o toque fica agressivo.\nOuça antes de ler a partitura: no seu acervo, Mestre Caiçara, Mestre Morais e Mestre Paulo Lima gravaram os três primeiros."}, {"id": "c4", "name": "Outros 10 toques", "sub": "Toques de Angola e de mestres", "tag": "cap. 4", "body": "Tico-tico (Santa Maria de Angola), Samango, Muzenza, Dos Velhos, A Morte do Capoeirista, Ave Maria, Gêge, Jogo de Dentro, Angola Dobrada e Miudinho.\n\nSugestão: estude um por semana junto com a gravação. No seu acervo, Silvio Acarajé tem Angola Dobrada, Ave Maria, Gêge, Muzenza, Samango, Tico-tico e Jogo de Dentro; Mestre Suassuna tem Miudinho, Samango e A Morte do Capoeira."}, {"id": "c5", "name": "Técnica moderna", "sub": "Segunda e terceira partes do livro", "tag": "cap. 5", "body": "Afinação dos berimbaus e microfonação.\nDois blocos de exercícios de técnica moderna.\nRitmos fora da roda: Maracatu, Candombe, Barravento, Samba Angola moderno, Samba Angola com DUM e com DIN, 7/8 de Naná, Samba dos Animais, Tezcatlipoca, Raio e Cinquillos.\nTerceira parte: músicas gravadas com Lenine e Adriana Maciel.\n\nDeixe para depois de dominar os toques tradicionais."}];
+    var openCh = st.ch === undefined ? null : st.ch;
+    out.metOpen = !!st.metOpen; out.metDisp = st.metOpen ? 'flex' : 'none'; out.metLabel = st.metOpen ? 'Minimizar' : 'Expandir';
+    out.metToggle = function () { self.setState({ metOpen: !st.metOpen }); };
+    out.chs = CH.map(function (c) {
+      var o = openCh === c.id;
+      return { name: c.name, sub: c.sub, tag: c.tag, body: c.body, open: o, chev: o ? '−' : '+', bd: c.tag === 'hoje' ? '#F2A93B' : '#16201D',
+        toggle: function () { self.setState({ ch: o ? null : c.id }); } };
+    });
+    var TD_ALL = [];
+    ([{"name": "Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/t81.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq100.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq101.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq102.mp4"}, {"m": "Mestre Mão Branca · dobrado", "src": "media/a/tq103.mp4"}]}, {"name": "São Bento Pequeno", "recs": [{"m": "Mestre Caiçara", "src": "media/a/t82.mp4"}, {"m": "Mestre Morais", "src": "media/a/t89.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/t90.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/t91.mp4"}]}, {"name": "São Bento Grande de Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/tq104.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq105.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq106.mp4"}]}, {"name": "São Bento Grande (Regional)", "recs": [{"m": "Mestre Bimba", "src": "media/a/t83.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq107.mp4"}, {"m": "Mestre Deputado", "src": "media/a/tq108.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq109.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq110.mp4"}]}, {"name": "Iúna", "recs": [{"m": "Mestre Bimba", "src": "media/a/t84.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq111.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq112.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq113.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq114.mp4"}]}, {"name": "Santa Maria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t85.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq115.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq116.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq117.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq118.mp4"}]}, {"name": "Cavalaria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t86.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq119.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq120.mp4"}, {"m": "Silvio Acarajé · antiga", "src": "media/a/tq121.mp4"}]}, {"name": "Amazonas", "recs": [{"m": "Mestre Bimba", "src": "media/a/t87.mp4"}, {"m": "Mestre Barrão", "src": "media/a/tq122.mp4"}]}, {"name": "Benguela", "recs": [{"m": "Mestre Bimba", "src": "media/a/t88.mp4"}]}, {"name": "Idalina", "recs": [{"m": "Mestre Bimba", "src": "media/a/tq123.mp4"}, {"m": "Silvio Acarajé · de Angola", "src": "media/a/tq124.mp4"}]}, {"name": "Jogo de Dentro", "recs": [{"m": "Mestre Morais", "src": "media/a/tq125.mp4"}, {"m": "Mestre Jogo de Dentro", "src": "media/a/tq126.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq127.mp4"}]}, {"name": "Jogo de Fora", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq128.mp4"}]}, {"name": "Muzenza", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq129.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq130.mp4"}]}, {"name": "Samango", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq131.mp4"}]}, {"name": "Apanha Laranja no Chão Tico-Tico", "recs": [{"m": "Mestre Jogo de Dentro", "src": "media/a/tq132.mp4"}, {"m": "Mestre Limãozinho", "src": "media/a/tq133.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq134.mp4"}]}, {"name": "Samba de Roda", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq135.mp4"}, {"m": "Mestre Caiçara · samba de Angola", "src": "media/a/tq136.mp4"}, {"m": "Sorriso Bimbau · repicado", "src": "media/a/tq137.mp4"}]}, {"name": "Gegê (Jeje)", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq138.mp4"}, {"m": "Silvio Acarajé · toque de Gegy", "src": "media/a/tq139.mp4"}, {"m": "Mestre Limãozinho · São Bento Grande em Jeje", "src": "media/a/tq140.mp4"}]}, {"name": "Barravento", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq141.mp4"}, {"m": "Sorriso Bimbau", "src": "media/a/tq142.mp4"}]}, {"name": "Miudinho", "recs": [{"m": "Mestre Suassuna", "src": "media/a/tq143.mp4"}]}, {"name": "Aviso", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq144.mp4"}]}]).forEach(function (q) { if (q.name === RT.n) q.recs.forEach(function (r, ri) { TD_ALL.push({ k: 'tq-' + ri, name: r.m, sub: RT.n, who: r.m, src: r.src }); }); });
+    var tdPick = st.tdPick || (TD_ALL.length > 1 ? [0, 1] : [0]);
+    var TD = tdPick.map(function (k) { return TD_ALL[k]; }).filter(Boolean);
+    out.tdSwapDisp = TD_ALL.length > 2 ? 'block' : 'none';
+    out.tdTitle = TD_ALL.length > 1 ? 'OUVIR O TOQUE · DOIS MESTRES' : 'OUVIR O TOQUE';
+    out.tdSwap = function () {
+      var n = TD_ALL.length, p; if (n < 3) return;
+      do { p = [Math.floor(Math.random() * n), 0]; p[1] = Math.floor(Math.random() * (n - 1)); if (p[1] >= p[0]) p[1]++; }
+      while (p.indexOf(tdPick[0]) >= 0 && p.indexOf(tdPick[1]) >= 0);
+      self.setState({ tdPick: p, tdPlay: null });
+    };
+    var tdCur = null;
+    var tdItems = TD.map(function (q) {
+      var on = st.tdPlay === q.k; if (on) tdCur = q;
+      return { name: q.name, sub: q.sub, on: on, icon: on ? '■' : '▶', bg: on ? '#1D2925' : '#121B18', bd: on ? '#F2A93B' : '#2A3833', pick: function () { self.setState({ tdPlay: on ? null : q.k }); } };
+    });
+    out.tdToques = tdItems;
+    out.sesName = RT.n;
+    out.sesDate = WDS[sdow] + ' ' + sd + '/' + sm + ' · ' + SE[1];
+    out.sesTag = sesTag;
+    out.sesFoco = 'Foco: ' + RT.foco;
+    out.sesOuvir = TD_ALL.map(function (x) { return x.name.split(' · ')[0].replace('Mestre ', 'M. '); }).filter(function (v, i, arr) { return arr.indexOf(v) === i; }).join(', ');
+    out.sesPrevDisp = si > 0 ? 'flex' : 'none';
+    out.sesNextDisp = si < SESS.length - 1 ? 'flex' : 'none';
+    out.sesPrev = function () { self.setState(Object.assign({ si: si - 1 }, sesReset)); };
+    out.sesNext = function () { self.setState(Object.assign({ si: si + 1 }, sesReset)); };
+    out.sesBackDisp = si !== defSi ? 'inline-flex' : 'none';
+    out.sesBack = function () { self.setState(Object.assign({ si: defSi }, sesReset)); };
+    out.sesCount = 'Estudo ' + (si + 1) + ' de ' + SESS.length;
+    var CELLS = { sbp: [['TCHI', 'chiado', 0], ['TCHI', 'chiado', 0], ['DIN', 'agudo · preso', 1], ['DON', 'grave · solto', 2]], ang: [['TCHI', 'chiado', 0], ['TCHI', 'chiado', 0], ['DON', 'grave · solto', 2], ['DIN', 'agudo · preso', 1]] }[RT.cells];
+    out.cellsDisp = 'none';
+    out.cells = (CELLS || []).map(function (c) { return { t: c[0], s: c[1], bg: ['#1D2925', '#F2A93B', '#4CC3B5'][c[2]], fg: ['#EEF3F0', '#1A1205', '#06201C'][c[2]], sc: ['#9DACA6', '#1A1205', '#06201C'][c[2]] }; });
+    out.planToque = RT.n + ' no metrônomo · base limpa, sem acelerar';
+    out.planLadTitle = { ang: 'Cantar uma ladainha', reg: 'Cantar uma quadra', samba: 'Cantar um samba de roda' }[RT.f];
+    out.tdDisp = tdCur ? 'flex' : 'none';
+    out.tdName = tdCur ? 'Ouvindo: ' + RT.n : '';
+    out.tdWho = tdCur ? tdCur.who : '';
+    out.tdSrc = tdCur ? tdCur.src : '';
+    var TQ = [{"name": "Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/t81.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq100.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq101.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq102.mp4"}, {"m": "Mestre Mão Branca · dobrado", "src": "media/a/tq103.mp4"}]}, {"name": "São Bento Pequeno", "recs": [{"m": "Mestre Caiçara", "src": "media/a/t82.mp4"}, {"m": "Mestre Morais", "src": "media/a/t89.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/t90.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/t91.mp4"}]}, {"name": "São Bento Grande de Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/tq104.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq105.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq106.mp4"}]}, {"name": "São Bento Grande (Regional)", "recs": [{"m": "Mestre Bimba", "src": "media/a/t83.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq107.mp4"}, {"m": "Mestre Deputado", "src": "media/a/tq108.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq109.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq110.mp4"}]}, {"name": "Iúna", "recs": [{"m": "Mestre Bimba", "src": "media/a/t84.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq111.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq112.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq113.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq114.mp4"}]}, {"name": "Santa Maria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t85.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq115.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq116.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq117.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq118.mp4"}]}, {"name": "Cavalaria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t86.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq119.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq120.mp4"}, {"m": "Silvio Acarajé · antiga", "src": "media/a/tq121.mp4"}]}, {"name": "Amazonas", "recs": [{"m": "Mestre Bimba", "src": "media/a/t87.mp4"}, {"m": "Mestre Barrão", "src": "media/a/tq122.mp4"}]}, {"name": "Benguela", "recs": [{"m": "Mestre Bimba", "src": "media/a/t88.mp4"}]}, {"name": "Idalina", "recs": [{"m": "Mestre Bimba", "src": "media/a/tq123.mp4"}, {"m": "Silvio Acarajé · de Angola", "src": "media/a/tq124.mp4"}]}, {"name": "Jogo de Dentro", "recs": [{"m": "Mestre Morais", "src": "media/a/tq125.mp4"}, {"m": "Mestre Jogo de Dentro", "src": "media/a/tq126.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq127.mp4"}]}, {"name": "Jogo de Fora", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq128.mp4"}]}, {"name": "Muzenza", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq129.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq130.mp4"}]}, {"name": "Samango", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq131.mp4"}]}, {"name": "Apanha Laranja no Chão Tico-Tico", "recs": [{"m": "Mestre Jogo de Dentro", "src": "media/a/tq132.mp4"}, {"m": "Mestre Limãozinho", "src": "media/a/tq133.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq134.mp4"}]}, {"name": "Samba de Roda", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq135.mp4"}, {"m": "Mestre Caiçara · samba de Angola", "src": "media/a/tq136.mp4"}, {"m": "Sorriso Bimbau · repicado", "src": "media/a/tq137.mp4"}]}, {"name": "Gegê (Jeje)", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq138.mp4"}, {"m": "Silvio Acarajé · toque de Gegy", "src": "media/a/tq139.mp4"}, {"m": "Mestre Limãozinho · São Bento Grande em Jeje", "src": "media/a/tq140.mp4"}]}, {"name": "Barravento", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq141.mp4"}, {"m": "Sorriso Bimbau", "src": "media/a/tq142.mp4"}]}, {"name": "Miudinho", "recs": [{"m": "Mestre Suassuna", "src": "media/a/tq143.mp4"}]}, {"name": "Aviso", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq144.mp4"}]}];
+    var tsel = st.toque, tcur = null, recIdx = st.tqRec || 0;
+    out.toques = TQ.map(function (q, qi) {
+      var on = tsel === q.name;
+      if (on) tcur = q;
+      var n = q.recs.length;
+      return { disp: (qi < 8 || st.tqMore) ? 'flex' : 'none', name: q.name, sub: (q.name === RT.n ? 'Toque do estudo · ' : '') + n + (n > 1 ? ' mestres' : ' mestre'), on: on, bg: on ? '#1D2925' : '#16201D', bd: on ? '#F2A93B' : (q.name === RT.n ? '#5A6B65' : '#16201D'),
+        pick: function () { self.setState({ toque: on ? null : q.name, tqRec: 0 }); } };
+    });
+    var rec = tcur ? tcur.recs[recIdx % tcur.recs.length] : null;
+    out.tqMoreLabel = st.tqMore ? 'Ver menos' : 'Ver mais';
+    out.tqMoreToggle = function () { self.setState({ tqMore: !st.tqMore }); };
+    out.toqueOn = !!tcur;
+    out.toqueName = tcur ? 'Ouvindo: ' + tcur.name : '';
+    out.toqueMestre = rec ? rec.m : '';
+    out.toqueSrc = rec ? rec.src : '';
+    out.toqueMulti = !!(tcur && tcur.recs.length > 1);
+    out.toqueCount = tcur ? ((recIdx % tcur.recs.length) + 1) + ' de ' + tcur.recs.length + ' mestres' : '';
+    out.toqueSwap = function () { if (tcur) self.setState({ tqRec: (recIdx + 1) % tcur.recs.length }); };
+    var VIR = [["Angola", ["q_vAWACymZY", "SQ8gTxAY0NI", "gjQfnNCGVQQ", "tNUUJVA07Hw", "oUhDETDz3Io", "EeIbZhwZoq4", "PDU-x_N9hRo", "CAX3hzYkbYk", "M9nQqP2E-GU"]], ["São Bento Grande", ["Of7VIIkUdac", "CAX3hzYkbYk", "WgPNu3ffemY", "Z6Dv4TWJ-Jk", "3BSuSVSr0UA", "nFa3MTzPt3M", "BCsmMRMRevo", "epAD6Z1Wrhs", "kIr7dqm8BqI"]], ["São Bento Pequeno", ["NtxIWYlIC30"]], ["Outros toques", ["A3zSrckMT8U", "kzMvgk2kgc0", "kR-5D7yP5Wg", "v-8mi7a4Up8", "hWpLNNi6v-E", "8iKrKQTEW6I"]], ["Pandeiro", ["_ydAIAEEPrs", "cDTQOb1LjIM", "Em9k8mnJQ7k"]]];
+    var vrSel = st.vrTq === undefined || st.vrTq === null ? null : st.vrTq;
+    out.vrOpen = !!st.vrOpen; out.vrDisp = st.vrOpen ? 'flex' : 'none'; out.vrChev = st.vrOpen ? '▴' : '▾';
+    out.vrToggle = function () { self.setState({ vrOpen: !st.vrOpen }); };
+    out.vrTqs = VIR.map(function (v, i) { var on = i === vrSel; return { label: v[0], n: v[1].length, on: on, bg: on ? '#F2A93B' : '#1D2925', fg: on ? '#1A1205' : '#EEF3F0', bd: on ? '#F2A93B' : '#1D2925', pick: function () { self.setState({ vrTq: on ? null : i }); } }; });
+    out.vrListDisp = vrSel === null ? 'none' : 'flex';
+    out.vrLinks = vrSel === null ? [] : VIR[vrSel][1].map(function (id, k) { return { t: 'Vídeo ' + (k + 1), url: 'https://www.youtube.com/watch?v=' + id }; });
+    return out;
+  }
+}
+</script>
+</body>
+</html>

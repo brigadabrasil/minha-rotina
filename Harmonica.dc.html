@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Treino de harmônica</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1513">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Minha Rotina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{background:#0E1513;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+x-dc{display:block;visibility:hidden}
+x-dc>div{width:100%!important;max-width:560px;margin:0 auto;height:auto!important;min-height:100vh;min-height:100dvh}
+x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.nav{position:fixed!important;left:0;right:0;bottom:0;z-index:50;max-width:560px;margin:0 auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+</style>
+<script src="dc-lite.js" defer></script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1513}
+a{color:#4CC3B5}a:hover{color:#7DD8CD}
+.nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #2A3833;background:#121B18;padding:8px 6px 18px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;color:#9DACA6;text-decoration:none;font-size:11px;font-weight:600;border-radius:12px}
+.nav a.on{color:#F2A93B}
+.nav a:hover{color:#EEF3F0}
+.mt{min-width:0;min-height:44px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:99px;border:1px solid #2A3833;color:#EEF3F0;text-decoration:none;font-size:13px;font-weight:600;box-sizing:border-box}
+.mt:hover{color:#EEF3F0;border-color:#5A6B65}
+.mt.on{background:#F2A93B;color:#1A1205;border-color:#F2A93B}
+</style>
+</helmet>
+<div style="width: 390px; height: 5000px; display: flex; flex-direction: column; background: #0E1513; color: #EEF3F0; font-family: 'Figtree', sans-serif">
+<main style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 20px">
+<header>
+<div style="font-size: 14px; color: #9DACA6; font-weight: 500">30 min · diatônica em Dó (C) · 13 módulos</div>
+<h1 style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">Harmônica</h1>
+</header>
+<nav aria-label="Instrumentos" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; flex-shrink: 0">
+<a class="mt" href="Berimbau.dc.html">Berimbau</a>
+<a class="mt" href="Pandeiro.dc.html">Pandeiro</a>
+<a class="mt" href="Atabaque.dc.html">Atabaque</a>
+<a class="mt" href="Violao.dc.html">Violão</a>
+<a class="mt on" href="Harmonica.dc.html" aria-current="page">Harmônica</a>
+</nav>
+
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><button onClick="{{sesPrev}}" aria-label="Estudo anterior" style="display: {{sesPrevDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">‹</button><div style="flex-grow: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{sesDate}}</span><button onClick="{{sesBack}}" style="display: {{sesBackDisp}}; padding: 0; border: 0; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">voltar ao próximo estudo</button></div><button onClick="{{sesNext}}" aria-label="Próximo estudo" style="display: {{sesNextDisp}}; width: 40px; height: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #2A3833; background: #121B18; color: #EEF3F0; font-size: 20px; cursor: pointer">›</button></div>
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">MAPA DE NOTAS</span><span style="display: flex; align-items: center; gap: 6px"><span style="font-size: 13px; font-weight: 700">{{hkName}}</span><button onClick="{{hkNext}}" aria-label="Trocar o tom da gaita" style="min-height: 28px; padding: 0 9px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer">⇄ tom</button></span></div>
+<div style="display: grid; grid-template-columns: 52px repeat(10, minmax(0, 1fr)); gap: 3px; text-align: center; font-size: 13px">
+<span style="text-align: left; font-size: 11px; color: #9DACA6; align-self: center">Furo</span>
+<span style="color: #9DACA6">1</span><span style="color: #9DACA6">2</span><span style="color: #9DACA6">3</span><span style="color: #9DACA6">4</span><span style="color: #9DACA6">5</span><span style="color: #9DACA6">6</span><span style="color: #9DACA6">7</span><span style="color: #9DACA6">8</span><span style="color: #9DACA6">9</span><span style="color: #9DACA6">10</span>
+<span style="text-align: left; font-size: 11px; color: #4CC3B5; font-weight: 700; align-self: center">Sopro</span>
+<sc-for list="{{blowRow}}" as="x" hint-placeholder-count="10"><span style="padding: 8px 0; border-radius: 6px; background: {{x.bg}}; color: {{x.fg}}; font-weight: {{x.fw}}">{{x.n}}</span></sc-for>
+<span style="text-align: left; font-size: 11px; color: #F2A93B; font-weight: 700; align-self: center">Aspirar</span>
+<sc-for list="{{drawRow}}" as="x" hint-placeholder-count="10"><span style="padding: 8px 0; border-radius: 6px; background: {{x.bg}}; color: {{x.fg}}; font-weight: {{x.fw}}">{{x.n}}</span></sc-for>
+</div>
+<div style="font-size: 13px; color: #9DACA6; line-height: 1.45">{{mapNote}}</div>
+<div style="display: flex; align-items: center; gap: 4px; flex-wrap: nowrap"><span style="font-size: 10px; font-weight: 700; color: #9DACA6; letter-spacing: 0.5px; margin-right: 2px; flex-shrink: 0">ACORDES</span><sc-for list="{{hchords}}" as="c" hint-placeholder-count="6"><button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="flex-shrink: 0; min-height: 30px; padding: 0 8px; border-radius: 99px; border: 1px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 12px; font-weight: 800; cursor: pointer">{{c.name}}</button></sc-for></div>
+</section>
+
+<section style="background: #16201D; border: 1px solid #2A3833; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{sesLabel}}</span><span style="font-size: 12px; color: #9DACA6">{{sesCount}}</span></div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 800">{{sesName}}</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{holes}}" as="x" hint-placeholder-count="7"><span style="min-width: 40px; padding: 6px 4px; text-align: center; border-radius: 10px; background: #1D2925; display: flex; flex-direction: column"><span style="font-weight: 800; color: {{x.hc}}">{{x.h}}</span><span style="font-size: 10px; color: #9DACA6">{{x.n}}</span></span></sc-for>
+</div>
+<div style="font-size: 13px; color: #9DACA6; line-height: 1.45">{{sesNote}} <span style="color: #F2A93B; font-weight: 700">-</span> = aspirar · <span style="color: #F2A93B; font-weight: 700">'</span> = half bend · <span style="color: #F2A93B; font-weight: 700">"</span> = whole bend · <span style="color: #F2A93B; font-weight: 700">'"</span> = 1 tom e meio.</div>
+<button onClick="{{posToggle}}" aria-expanded="{{posOpen}}" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 12px; border: 0; background: #1D2925; color: #EEF3F0; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer">Todas as posições<span style="color: #F2A93B">{{posChev}}</span></button>
+<div style="display: {{posDisp}}; flex-direction: column; gap: 10px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px"><sc-for list="{{poss}}" as="p" hint-placeholder-count="6"><button onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="padding: 8px 6px; border-radius: 12px; border: 1px solid {{p.bd}}; background: {{p.bg}}; color: #EEF3F0; font-family: inherit; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center"><span style="font-weight: 800; color: {{p.fg}}">{{p.t}}</span><span style="font-size: 11px; color: #9DACA6">{{p.s}}</span></button></sc-for></div>
+<div style="display: {{pdDisp}}; flex-direction: column; gap: 8px; padding: 12px; border-radius: 12px; background: #121B18; border: 1px solid #2A3833">
+<span style="font-weight: 800; font-size: 15px">{{pdName}}</span>
+<span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">{{pdL1}}</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{pdLow}}" as="x" hint-placeholder-count="8"><span style="min-width: 36px; padding: 6px 4px; text-align: center; border-radius: 10px; background: #1D2925; border: 1px solid {{x.bd}}; opacity: {{x.op}}; display: flex; flex-direction: column"><span style="font-weight: 800; color: {{x.hc}}">{{x.h}}</span><span style="font-size: 10px; color: #9DACA6">{{x.n}}</span></span></sc-for></div>
+<span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">{{pdL2}}</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{pdHoles}}" as="x" hint-placeholder-count="8"><span style="min-width: 36px; padding: 6px 4px; text-align: center; border-radius: 10px; background: #1D2925; border: 1px solid {{x.bd}}; opacity: {{x.op}}; display: flex; flex-direction: column"><span style="font-weight: 800; color: {{x.hc}}">{{x.h}}</span><span style="font-size: 10px; color: #9DACA6">{{x.n}}</span></span></sc-for></div>
+<span style="display: {{pdTopDisp}}; font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">{{pdL3}}</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{pdTop}}" as="x" hint-placeholder-count="8"><span style="min-width: 36px; padding: 6px 4px; text-align: center; border-radius: 10px; background: #1D2925; border: 1px solid {{x.bd}}; opacity: {{x.op}}; display: flex; flex-direction: column"><span style="font-weight: 800; color: {{x.hc}}">{{x.h}}</span><span style="font-size: 10px; color: #9DACA6">{{x.n}}</span></span></sc-for></div>
+<span style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{pdDesc}}</span>
+<span style="font-size: 11px; color: #9DACA6; line-height: 1.45"><span style="color: #F2A93B; font-weight: 700">'</span> = half bend (½ tom) · <span style="color: #F2A93B; font-weight: 700">"</span> = whole bend (1 tom) · <span style="color: #F2A93B; font-weight: 700">'"</span> = 1 tom e meio. Contorno lilás = nota com bend.</span>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">EXERCÍCIOS DESTE ESTUDO</span><button onClick="{{tdSongSwap}}" aria-label="Trocar músicas" style="display: {{tdSwapDisp}}; min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outras músicas</button></div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{tdSongItems}}" as="it" hint-placeholder-count="2">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasImgs}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{it.imgs}}" as="im" hint-placeholder-count="2">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 4px">
+<figcaption style="font-size: 12px; font-weight: 700; color: #9DACA6">{{im.label}}</figcaption>
+<img dc-src="{{im.src}}" alt="{{im.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</figure>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.lyr}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #F2A93B; color: #1A1205">{{it.lyrLabel}}</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Plano · 30 min</h2>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">10'</span><div><div style="font-weight: 600">Praticar licks</div><div style="font-size: 12px; color: #9DACA6">Licks do acervo · devagar, depois no tempo</div></div></div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">5'</span><div><div style="font-weight: 600">Treinar improviso</div><div style="font-size: 12px; color: #9DACA6">{{planImp}}</div></div></div>
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #16201D"><span style="font-weight: 700; width: 32px; color: #F2A93B">15'</span><div><div style="font-weight: 600">Tocar as músicas</div><div style="font-size: 12px; color: #9DACA6">{{planSong}}</div></div></div>
+</section>
+
+<section id="metodo" style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Material de estudo</h2><span style="font-size: 13px; color: #9DACA6">Sua apostila de harmônica · toque para abrir</span></div>
+<sc-for list="{{chs}}" as="ch" hint-placeholder-count="4">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{ch.bd}}">
+<button onClick="{{ch.toggle}}" aria-expanded="{{ch.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 11px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; display: flex; flex-direction: column"><span style="font-weight: 600">{{ch.name}}</span><span style="font-size: 12px; color: #9DACA6; line-height: 1.4">{{ch.sub}}</span></span>
+<span style="flex-shrink: 0; display: flex; align-items: center; gap: 8px"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: #F2A93B">{{ch.tag}}</span><span style="width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{ch.chev}}</span></span>
+</button>
+<sc-if value="{{ch.open}}" hint-placeholder-val="{{false}}"><div style="padding: 0 14px 14px; font-size: 13px; line-height: 1.55; color: #C9D4CF; white-space: pre-line">{{ch.body}}</div></sc-if>
+</div>
+</sc-for>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Meu acervo</h2>
+<span style="font-size: 13px; color: #9DACA6">{{total}}</span>
+</div>
+<div style="font-size: 12px; color: #9DACA6; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a5 5 0 1 1 1-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8Z"></path></svg>OneDrive › Harmonica · licks, aquecimento, diversos e blues · toque numa música para ouvir e ver a tablatura</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="min-height: 44px; padding: 0 12px; border-radius: 99px; border: 1px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px">{{c.label}}<span style="font-size: 11px; font-weight: 700; opacity: 0.8">{{c.n}}</span></button>
+</sc-for>
+</div>
+<sc-if value="{{hasSubs}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; border-radius: 16px; background: #121B18">
+<sc-for list="{{subs}}" as="sc" hint-placeholder-count="7">
+<button onClick="{{sc.pick}}" aria-pressed="{{sc.on}}" style="min-height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid {{sc.bd}}; background: {{sc.bg}}; color: {{sc.fg}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px">{{sc.label}}<span style="font-size: 11px; font-weight: 700; opacity: 0.75">{{sc.n}}</span></button>
+</sc-for>
+</div>
+</sc-if>
+<sc-for list="{{items}}" as="it" hint-placeholder-count="7">
+<div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
+<button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
+<span style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column"><span style="font-weight: 600">{{it.t}}</span><span style="font-size: 12px; color: #9DACA6">{{it.s}}</span></span>
+<sc-if value="{{it.hasTag}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #1D2925; color: {{it.tc}}">{{it.tag}}</span></sc-if>
+<span style="flex-shrink: 0; width: 16px; text-align: center; font-size: 18px; font-weight: 700; color: #9DACA6">{{it.chev}}</span>
+</button>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{it.hasImgs}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{it.imgs}}" as="im" hint-placeholder-count="2">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 4px">
+<figcaption style="font-size: 12px; font-weight: 700; color: #9DACA6">{{im.label}}</figcaption>
+<img dc-src="{{im.src}}" alt="{{im.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</figure>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
+<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+</sc-if>
+<div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
+<sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
+<sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
+<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{it.canUpload}}" hint-placeholder-val="{{false}}">
+<label for="{{it.tid}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px dashed #5A6B65; background: #121B18; color: #EEF3F0; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>{{it.upLabel}}</label>
+<input id="{{it.tid}}" type="file" accept="image/*" onChange="{{it.onFile}}" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden">
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="{{it.lyr}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; background: #F2A93B; color: #1A1205">{{it.lyrLabel}}</a>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<div style="font-size: 13px; color: #9DACA6; padding: 2px 4px">{{moreLabel}}</div>
+</section>
+</main>
+<nav class="nav" aria-label="Navegação principal">
+<a href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Hoje</a>
+<a href="Alimentacao.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"></path></svg>Comida</a>
+<a href="Capoeira.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c8 5 8 15 0 20"></path><path d="M8 2v20"></path><circle cx="6" cy="16" r="3.5"></circle></svg>Capoeira</a>
+<a href="Surf.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2-1 3-5 6-8s8-4 11-1c2 2 1 5-2 5-2 0-3-2-1.5-3"></path><path d="M2 21c2.5 0 2.5-1.5 5-1.5s2.5 1.5 5 1.5 2.5-1.5 5-1.5 2.5 1.5 5 1.5"></path></svg>Surf</a>
+<a class="on" href="Berimbau.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Música</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":4650}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var LYRQ = "harmonica tab";
+    var LYRL = "Ver tablatura";
+    var AUD = {"lad:soumandingueiro": "media/a/b00.mp4", "lad:voumeemboraprabahia": "media/a/b01.mp4", "lad:osenhordoengenho": "media/a/b02.mp4", "lad:tinhameudinheiro": "media/a/b03.mp4", "lad:anu": "media/a/b04.mp4", "lad:mamaequeroserbombeiro": "media/a/b05.mp4", "lad:eraeuerameumano": "media/a/b06.mp4", "qa:adeuscamaradaadeus": "media/a/b07.mp4", "qa:mamaeoxum": "media/a/b08.mp4", "qa:capoeiraquemmeensinou": "media/a/b09.mp4", "qa:botadende": "media/a/b10.mp4", "qa:maeafrica": "media/a/b11.mp4", "qa:lalaela": "media/a/b12.mp4", "qa:sobradodemamae": "media/a/b13.mp4", "ca:adeuscorina": "media/a/b14.mp4", "ca:soueumaita": "media/a/b15.mp4", "ca:paranae": "media/a/b16.mp4", "ca:ondevaicaiman": "media/a/b17.mp4", "ca:maresubiu": "media/a/b18.mp4", "ca:catarina": "media/a/b19.mp4", "ca:erabesouro": "media/a/b20.mp4", "ch:lembrancadomestre": "media/a/b21.mp4", "ch:quadras": "media/a/b22.mp4", "ch:eunascide7meses": "media/a/b23.mp4", "ch:saicatarina": "media/a/b24.mp4", "ch:eiparana": "media/a/b25.mp4", "ch:santoamaro": "media/a/b26.mp4", "qr:semprelembrado": "media/a/b27.mp4", "qr:besouromanganga": "media/a/b28.mp4", "qr:jogoarrepiado": "media/a/b29.mp4", "qr:jogoperigoso": "media/a/b30.mp4", "qr:aidenegaafricana": "media/a/b31.mp4", "qr:historiadepescador": "media/a/b32.mp4", "qr:africaseuniu": "media/a/b33.mp4", "cr:avisameumano": "media/a/b34.mp4", "cr:ouvifalar": "media/a/b35.mp4", "cr:leleleo": "media/a/b36.mp4", "cr:ventania": "media/a/b37.mp4", "cr:gungaemeu": "media/a/b38.mp4", "cr:sinhosaobento": "media/a/b39.mp4", "cr:catarinavemver": "media/a/b40.mp4", "sbg:acendealuz": "media/a/b41.mp4", "sbg:elalaelaela": "media/a/b42.mp4", "sbg:redenavaranda": "media/a/b43.mp4", "sbg:hojetemcapoeira": "media/a/b44.mp4", "sbg:maliciaemanha": "media/a/b45.mp4", "sbg:maranhao": "media/a/b46.mp4", "sbg:marecheia": "media/a/b47.mp4", "sr:areiadomar": "media/a/b48.mp4", "sr:pisanalinhalevantaoboi": "media/a/b49.mp4", "sr:alomangueira": "media/a/b50.mp4", "sr:notabuleirodabaiana": "media/a/b51.mp4", "sr:ojoaochofer": "media/a/b52.mp4", "sr:alobahia": "media/a/b53.mp4", "sr:queluzeaquela": "media/a/b54.mp4", "mac:maculelebarrao": "media/a/b55.mp4", "mac:maculelesuassuna": "media/a/b56.mp4", "mac:maculelesuassuna2": "media/a/b57.mp4", "mac:ocongochegou": "media/a/b58.mp4", "mac:maculelecarolinasoares": "media/a/b59.mp4", "mac:maculeleorixas": "media/a/b60.mp4", "mac:racas": "media/a/b61.mp4", "pr:puxadaderedesaopaulo": "media/a/b62.mp4", "pr:puxadaderedeburgues1": "media/a/b63.mp4", "pr:puxadaderedeburgues2": "media/a/b64.mp4", "pr:puxadaderedecarolinasoares": "media/a/b65.mp4", "pr:puxadaderedekenura": "media/a/b66.mp4", "folk:blowininthewind": "media/a/h67.mp4", "folk:dontthinktwiceitsallright": "media/a/h68.mp4", "folk:heartofgold": "media/a/h69.mp4", "folk:theriver": "media/a/h70.mp4", "folk:maryjaneslastdance": "media/a/h71.mp4", "rock:lovemedo": "media/a/h72.mp4", "rock:roadhouseblues": "media/a/h73.mp4", "rock:missyou": "media/a/h74.mp4", "rock:midnightrambler": "media/a/h75.mp4", "rock:houseoftherisingsun": "media/a/h76.mp4", "rock:cryin": "media/a/h77.mp4", "rock:redemptionsong": "media/a/h78.mp4", "folk:comesatime": "media/a/h79.mp4", "folk:atlanticcity": "media/a/h80.mp4"};
+    function nrm(t) { return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+    var LYRT = 'Tablatura';
+    var LYRPH = 'Cole aqui a tablatura da sua apostila';
+    var SUFFIX_UNUSED = "harmonica";
+    var CATS = [{"id": "riffs", "label": "Riffs", "n": 17, "items": [["Riff 22", "Tablatura + áudio", "1", "#4CC3B5", "", [[22, "media/r/riff22.png"]], "media/a/r22.mp4"], ["Riff 23", "Tablatura + áudio", "1", "#4CC3B5", "", [[23, "media/r/riff23.png"]], "media/a/r23.mp4"], ["Riff 24", "Tablatura + áudio", "1", "#4CC3B5", "", [[24, "media/r/riff24.png"]], "media/a/r24.mp4"], ["Riffs 25 a 28", "4 riffs · tablatura + áudio", "4", "#4CC3B5", "", [[25, "media/r/riff25.png"], [26, "media/r/riff26.png"], [27, "media/r/riff27.png"], [28, "media/r/riff28.png"]], "media/a/r25.mp4"], ["Riffs 29 a 34", "6 riffs · tablatura + áudio", "6", "#4CC3B5", "", [[29, "media/r/riff29.png"], [30, "media/r/riff30.png"], [31, "media/r/riff31.png"], [32, "media/r/riff32.png"], [33, "media/r/riff33.png"], [34, "media/r/riff34.png"]], "media/a/r29.mp4"], ["Riffs 35 a 38", "4 riffs · tablatura + áudio", "4", "#4CC3B5", "", [[35, "media/r/riff35.png"], [36, "media/r/riff36.png"], [37, "media/r/riff37.png"], [38, "media/r/riff38.png"]], "media/a/r35.mp4"], ["Riffs 39 a 42", "4 riffs · tablatura + áudio", "4", "#4CC3B5", "", [[39, "media/r/riff39.png"], [40, "media/r/riff40.png"], [41, "media/r/riff41.png"], [42, "media/r/riff42.png"]], "media/a/r39.mp4"], ["Riffs 43 a 45", "3 riffs · tablatura + áudio", "3", "#4CC3B5", "", [[43, "media/r/riff43.png"], [44, "media/r/riff44.png"], [45, "media/r/riff45.png"]], "media/a/r43.mp4"], ["Riffs 46 a 53", "8 riffs · tablatura + áudio", "8", "#4CC3B5", "", [[46, "media/r/riff46.png"], [47, "media/r/riff47.png"], [48, "media/r/riff48.png"], [49, "media/r/riff49.png"], [50, "media/r/riff50.png"], [51, "media/r/riff51.png"], [52, "media/r/riff52.png"], [53, "media/r/riff53.png"]], "media/a/r46.mp4"], ["Riffs 54 e 55", "2 riffs · tablatura + áudio", "2", "#4CC3B5", "", [[54, "media/r/riff54.png"], [55, "media/r/riff55.png"]], "media/a/r54.mp4"], ["Riff 56", "Tablatura + áudio", "1", "#4CC3B5", "", [[56, "media/r/riff56.png"]], "media/a/r56.mp4"], ["Riff 57", "Tablatura + áudio", "1", "#4CC3B5", "", [[57, "media/r/riff57.png"]], "media/a/r57.mp4"], ["Riff 58", "Tablatura + áudio", "1", "#4CC3B5", "", [[58, "media/r/riff58.png"]], "media/a/r58.mp4"], ["Riff 59", "Tablatura + áudio", "1", "#4CC3B5", "", [[59, "media/r/riff59.png"]], "media/a/r59.mp4"], ["Riff 60", "Tablatura + áudio", "1", "#4CC3B5", "", [[60, "media/r/riff60.png"]], "media/a/r60.mp4"], ["Riffs 61 e 62", "2 riffs · tablatura + áudio", "2", "#4CC3B5", "", [[61, "media/r/riff61.png"], [62, "media/r/riff62.png"]], "media/a/r61.mp4"], ["Riffs 63 e 64", "2 riffs · tablatura + áudio", "2", "#4CC3B5", "", [[63, "media/r/riff63.png"], [64, "media/r/riff64.png"]], "media/a/r63.mp4"]], "dir": "Harmonica › Licks Blues › Riffs", "grp": "licks"}, {"id": "slow", "label": "Slow", "n": 8, "items": [["Lick 84", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 84", "media/l/slow_84.png"]], "media/a/slow_84.mp4"], ["Lick 85", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 85", "media/l/slow_85.png"]], "media/a/slow_85.mp4"], ["Lick 86", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 86", "media/l/slow_86.png"]], "media/a/slow_86.mp4"], ["Lick 87", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 87", "media/l/slow_87.png"]], "media/a/slow_87.mp4"], ["Lick 88", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 88", "media/l/slow_88.png"]], "media/a/slow_88.mp4"], ["Lick 89", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 89", "media/l/slow_89.png"]], "media/a/slow_89.mp4"], ["Lick 90", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 90", "media/l/slow_90.png"]], "media/a/slow_90.mp4"], ["Lick 91", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 91", "media/l/slow_91.png"]], "media/a/slow_91.mp4"]], "dir": "Harmonica › Licks Blues › Slow Licks", "grp": "licks"}, {"id": "fast", "label": "Fast", "n": 9, "items": [["Lick 92", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 92", "media/l/fast_92.png"]], "media/a/fast_92.mp4"], ["Licks 93 e 94", "2 licks · tablatura + áudio", "2", "#4CC3B5", "", [["Lick 93", "media/l/fast_93.png"], ["Lick 94", "media/l/fast_94.png"]], "media/a/fast_93.mp4"], ["Licks 95 a 97", "3 licks · tablatura + áudio", "3", "#4CC3B5", "", [["Lick 95", "media/l/fast_95.png"], ["Lick 96", "media/l/fast_96.png"], ["Lick 97", "media/l/fast_97.png"]], "media/a/fast_95.mp4"], ["Lick 98", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 98", "media/l/fast_98.png"]], "media/a/fast_98.mp4"], ["Lick 99", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 99", "media/l/fast_99.png"]], "media/a/fast_99.mp4"], ["Lick 100", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 100", "media/l/fast_100.png"]], "media/a/fast_100.mp4"], ["Lick 101", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 101", "media/l/fast_101.png"]], "media/a/fast_101.mp4"], ["Lick 102", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 102", "media/l/fast_102.png"]], "media/a/fast_102.mp4"], ["Licks 103 e 104", "2 licks · tablatura + áudio", "2", "#4CC3B5", "", [["Lick 103", "media/l/fast_103.png"], ["Lick 104", "media/l/fast_104.png"]], "media/a/fast_103.mp4"]], "dir": "Harmonica › Licks Blues › Fasten Licks", "grp": "licks"}, {"id": "end", "label": "Ending", "n": 8, "items": [["Lick 72", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 72", "media/l/end_72.png"]], "media/a/end_72.mp4"], ["Lick 73", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 73", "media/l/end_73.png"]], "media/a/end_73.mp4"], ["Lick 74", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 74", "media/l/end_74.png"]], "media/a/end_74.mp4"], ["Lick 75", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 75", "media/l/end_75.png"]], "media/a/end_75.mp4"], ["Lick 76", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 76", "media/l/end_76.png"]], "media/a/end_76.mp4"], ["Lick 77", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 77", "media/l/end_77.png"]], "media/a/end_77.mp4"], ["Lick 78", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 78", "media/l/end_78.png"]], "media/a/end_78.mp4"], ["Licks 79 a 83", "5 licks · tablatura + áudio", "5", "#4CC3B5", "", [["Lick 79", "media/l/end_79.png"], ["Lick 80", "media/l/end_80.png"], ["Lick 81", "media/l/end_81.png"], ["Lick 82", "media/l/end_82.png"], ["Lick 83", "media/l/end_83.png"]], "media/a/end_79.mp4"]], "dir": "Harmonica › Licks Blues › Endding Licks", "grp": "licks"}, {"id": "pos1", "label": "1ª posição", "n": 7, "items": [["Licks 116 a 119", "4 licks · tablatura + áudio", "4", "#4CC3B5", "", [["Lick 116", "media/l/pos1_116.png"], ["Lick 117", "media/l/pos1_117.png"], ["Lick 118", "media/l/pos1_118.png"], ["Lick 119", "media/l/pos1_119.png"]], "media/a/pos1_116.mp4"], ["Lick 120", "Tablatura · sem áudio na pasta", "", "#4CC3B5", "", [["Lick 120", "media/l/pos1_120.png"]], ""], ["Licks 121 a 127", "7 licks · tablatura + áudio", "7", "#4CC3B5", "", [["Lick 121", "media/l/pos1_121.png"], ["Lick 122", "media/l/pos1_122.png"], ["Lick 123", "media/l/pos1_123.png"], ["Lick 124", "media/l/pos1_124.png"], ["Lick 125", "media/l/pos1_125.png"], ["Lick 126", "media/l/pos1_126.png"], ["Lick 127", "media/l/pos1_127.png"]], "media/a/pos1_121.mp4"], ["Licks 128 a 135", "8 licks · tablatura + áudio", "8", "#4CC3B5", "", [["Lick 128", "media/l/pos1_128.png"], ["Lick 129", "media/l/pos1_129.png"], ["Lick 130", "media/l/pos1_130.png"], ["Lick 131", "media/l/pos1_131.png"], ["Lick 132", "media/l/pos1_132.png"], ["Lick 133", "media/l/pos1_133.png"], ["Lick 134", "media/l/pos1_134.png"], ["Lick 135", "media/l/pos1_135.png"]], "media/a/pos1_128.mp4"], ["Licks 132 a 140", "8 licks · tablatura + áudio", "8", "#4CC3B5", "", [["Lick 132", "media/l/pos1_132.png"], ["Lick 133", "media/l/pos1_133.png"], ["Lick 134", "media/l/pos1_134.png"], ["Lick 135", "media/l/pos1_135.png"], ["Lick 137", "media/l/pos1_137.png"], ["Lick 138", "media/l/pos1_138.png"], ["Lick 139", "media/l/pos1_139.png"], ["Lick 140", "media/l/pos1_140.png"]], "media/a/pos1_132.mp4"], ["Licks 141 a 144", "4 licks · tablatura + áudio", "4", "#4CC3B5", "", [["Lick 141", "media/l/pos1_141.png"], ["Lick 142", "media/l/pos1_142.png"], ["Lick 143", "media/l/pos1_143.png"], ["Lick 144", "media/l/pos1_144.png"]], "media/a/pos1_141.mp4"], ["Música 1", "Música de treino · 4 partes · áudio", "4", "#4CC3B5", "", [["Música 1 · parte 1", "media/l/pos1_s1.jpg"], ["Música 1 · parte 2", "media/l/pos1_s2.jpg"], ["Música 1 · parte 3", "media/l/pos1_s3.jpg"], ["Música 1 · parte 4", "media/l/pos1_s4.jpg"]], "media/a/pos1_song1.mp4"]], "dir": "Harmonica › Licks Blues › First Position", "grp": "licks"}, {"id": "pos3", "label": "3ª posição", "n": 17, "items": [["Licks 145 a 149", "5 licks · tablatura + áudio", "5", "#4CC3B5", "", [["Lick 145", "media/l/pos3_145.png"], ["Lick 146", "media/l/pos3_146.png"], ["Lick 147", "media/l/pos3_147.png"], ["Lick 148", "media/l/pos3_148.png"], ["Lick 149", "media/l/pos3_149.png"]], "media/a/pos3_145.mp4"], ["Lick 150", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 150", "media/l/pos3_150.jpg"]], "media/a/pos3_150.mp4"], ["Lick 151", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 151", "media/l/pos3_151.jpg"]], "media/a/pos3_151.mp4"], ["Lick 152", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 152", "media/l/pos3_152.jpg"]], "media/a/pos3_152.mp4"], ["Lick 153", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 153", "media/l/pos3_153.jpg"]], "media/a/pos3_153.mp4"], ["Lick 154", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 154", "media/l/pos3_154.jpg"]], "media/a/pos3_154.mp4"], ["Lick 155", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 155", "media/l/pos3_155.jpg"]], "media/a/pos3_155.mp4"], ["Lick 156", "Tablatura + áudio", "", "#4CC3B5", "", [["Lick 156", "media/l/pos3_156.jpg"]], "media/a/pos3_156.mp4"], ["Licks 157 a 165", "8 licks · tablatura + áudio", "8", "#4CC3B5", "", [["Lick 157", "media/l/pos3_157.jpg"], ["Lick 158", "media/l/pos3_158.jpg"], ["Lick 159", "media/l/pos3_159.jpg"], ["Lick 160", "media/l/pos3_160.jpg"], ["Lick 162", "media/l/pos3_162.jpg"], ["Lick 163", "media/l/pos3_163.jpg"], ["Lick 164", "media/l/pos3_164.jpg"], ["Lick 165", "media/l/pos3_165.jpg"]], "media/a/pos3_157.mp4"], ["Licks 166 a 177", "12 licks · tablatura + áudio", "12", "#4CC3B5", "", [["Lick 166", "media/l/pos3_166.jpg"], ["Lick 167", "media/l/pos3_167.jpg"], ["Lick 168", "media/l/pos3_168.jpg"], ["Lick 169", "media/l/pos3_169.jpg"], ["Lick 170", "media/l/pos3_170.jpg"], ["Lick 171", "media/l/pos3_171.jpg"], ["Lick 172", "media/l/pos3_172.jpg"], ["Lick 173", "media/l/pos3_173.jpg"], ["Lick 174", "media/l/pos3_174.jpg"], ["Lick 175", "media/l/pos3_175.jpg"], ["Lick 176", "media/l/pos3_176.jpg"], ["Lick 177", "media/l/pos3_177.jpg"]], "media/a/pos3_166.mp4"], ["Licks 178 a 189", "12 licks · tablatura + áudio", "12", "#4CC3B5", "", [["Lick 178", "media/l/pos3_178.jpg"], ["Lick 179", "media/l/pos3_179.jpg"], ["Lick 180", "media/l/pos3_180.jpg"], ["Lick 181", "media/l/pos3_181.jpg"], ["Lick 182", "media/l/pos3_182.jpg"], ["Lick 183", "media/l/pos3_183.jpg"], ["Lick 184", "media/l/pos3_184.jpg"], ["Lick 185", "media/l/pos3_185.jpg"], ["Lick 186", "media/l/pos3_186.jpg"], ["Lick 187", "media/l/pos3_187.jpg"], ["Lick 188", "media/l/pos3_188.jpg"], ["Lick 189", "media/l/pos3_189.jpg"]], "media/a/pos3_178.mp4"], ["Licks 190 a 194", "5 licks · tablatura + áudio", "5", "#4CC3B5", "", [["Lick 190", "media/l/pos3_190.jpg"], ["Lick 191", "media/l/pos3_191.jpg"], ["Lick 192", "media/l/pos3_192.jpg"], ["Lick 193", "media/l/pos3_193.jpg"], ["Lick 194", "media/l/pos3_194.jpg"]], "media/a/pos3_190.mp4"], ["Lick 195", "Tablatura · sem áudio na pasta", "", "#4CC3B5", "", [["Lick 195", "media/l/pos3_195.jpg"]], ""], ["Música 1", "Música de treino · áudio", "", "#4CC3B5", "", [["Música 1", "media/l/pos3_s1.jpg"]], "media/a/pos3_song1.mp4"], ["Música 2", "Música de treino · áudio", "", "#4CC3B5", "", [["Música 2", "media/l/pos3_s2.jpg"]], "media/a/pos3_song2.mp4"], ["Música 3", "Música de treino · áudio", "", "#4CC3B5", "", [["Música 3", "media/l/pos3_s3.jpg"]], "media/a/pos3_song3.mp4"], ["Música 4", "Música de treino · áudio", "", "#4CC3B5", "", [["Música 4", "media/l/pos3_s4.jpg"]], "media/a/pos3_song4.mp4"]], "dir": "Harmonica › Licks Blues › Third Position", "grp": "licks"}, {"id": "outros", "label": "Outros", "grp": "licks", "n": 13, "items": [["Lick 65", "Intro · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 65", "media/l/intro_65.png"]], "media/a/intro_65.mp4"], ["Lick 66", "Intro · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 66", "media/l/intro_66.png"]], "media/a/intro_66.mp4"], ["Lick 67", "Intro · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 67", "media/l/intro_67.png"]], "media/a/intro_67.mp4"], ["Lick 68", "Intro · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 68", "media/l/intro_68.png"]], "media/a/intro_68.mp4"], ["Lick 69", "Intro · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 69", "media/l/intro_69.png"]], "media/a/intro_69.mp4"], ["Licks 70 e 71", "Intro · 2 licks · tablatura + áudio", "2", "#4CC3B5", "", [["Lick 70", "media/l/intro_70.png"], ["Lick 71", "media/l/intro_71.png"]], "media/a/intro_70.mp4"], ["Lick 105", "Técnica · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 105", "media/l/tec_105.png"]], "media/a/tec_105.mp4"], ["Lick 106", "Técnica · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 106", "media/l/tec_106.png"]], "media/a/tec_106.mp4"], ["Lick 107", "Técnica · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 107", "media/l/tec_107.png"]], "media/a/tec_107.mp4"], ["Lick 108", "Técnica · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 108", "media/l/tec_108.png"]], "media/a/tec_108.mp4"], ["Lick 109", "Técnica · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 109", "media/l/tec_109.png"]], "media/a/tec_109.mp4"], ["Licks 110 a 114", "Técnica · 5 licks · tablatura + áudio", "5", "#4CC3B5", "", [["Lick 110", "media/l/tec_110.png"], ["Lick 111", "media/l/tec_111.png"], ["Lick 112", "media/l/tec_112.png"], ["Lick 113", "media/l/tec_113.png"], ["Lick 114", "media/l/tec_114.png"]], "media/a/tec_110.mp4"], ["Lick 115", "Técnica · Tablatura + áudio", "", "#4CC3B5", "", [["Lick 115", "media/l/tec_115.png"]], "media/a/tec_115.mp4"]], "dir": "Harmonica › Licks Blues › Intro Licks e Técnicas"}, {"id": "aq", "label": "Aquecimento", "grp": "aq", "n": 12, "items": [["Música 1 · Ben's Boogie", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_1_1.png"]], "media/a/aq_1.mp4"], ["Música 2", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_2_1.png"]], "media/a/aq_2.mp4"], ["Música 3 · Minor Key Blues", "Tablatura + áudio", "", "#EEF3F0", "", [["Parte 1", "media/m/aq_3_1.png"], ["Parte 2", "media/m/aq_3_2.png"]], "media/a/aq_3.mp4"], ["Música 4", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_4_1.png"]], "media/a/aq_4.mp4"], ["Música 5", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_5_1.png"]], "media/a/aq_5.mp4"], ["Música 6", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_6_1.png"]], "media/a/aq_6.mp4"], ["Música 7", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_7_1.png"]], "media/a/aq_7.mp4"], ["Música 8", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_8_1.png"]], "media/a/aq_8.mp4"], ["Música 9", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_9_1.png"]], "media/a/aq_9.mp4"], ["Música 10 · Solo 17", "Tablatura + áudio", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_10_1.png"]], "media/a/aq_10.mp4"], ["Música 11", "Tablatura · sem áudio na pasta", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_11_1.png"]], ""], ["Música 12", "Tablatura · sem áudio na pasta", "", "#EEF3F0", "", [["Tablatura", "media/m/aq_12_1.png"]], ""]], "dir": "Harmonica › Músicas Aquecimento"}, {"id": "dv", "label": "Diversos", "grp": "dv", "n": 7, "items": [["Peculiar Corners", "Áudio · tablatura na pasta", "", "#EEF3F0", "", [], "media/a/dv_1.mp4"], ["Edgy", "Áudio · tablatura na pasta", "", "#EEF3F0", "", [], "media/a/dv_2.mp4"], ["Blue Train", "Áudio · tablatura na pasta", "", "#EEF3F0", "", [], "media/a/dv_3.mp4"], ["Slow Emotion Replay", "Áudio · tablatura na pasta", "", "#EEF3F0", "", [], "media/a/dv_4.mp4"], ["Dirty Old Town", "Áudio · tablatura na pasta", "", "#EEF3F0", "", [], "media/a/dv_5.mp4"], ["Just a Boy", "Áudio · tablatura na pasta", "", "#EEF3F0", "", [], "media/a/dv_6.mp4"], ["Olhos Azuis", "Áudio · tablatura na pasta", "", "#EEF3F0", "", [], "media/a/dv_7.mp4"]], "dir": "Harmonica › Músicas Diversas"}, {"id": "bl", "label": "Blues", "grp": "bl", "n": 14, "items": [["Ah'w Baby", "Walter Jacobs", "", "#EEF3F0", "", [], "media/a/bl_1.mp4"], ["All My Love In Vain", "Sonny Boy Williamson", "", "#EEF3F0", "", [], "media/a/bl_2.mp4"], ["Blues With A Feeling", "Walter Jacobs", "", "#EEF3F0", "", [], "media/a/bl_3.mp4"], ["Boom, Boom Out Go The Lights", "Little Walter", "", "#EEF3F0", "", [], "media/a/bl_4.mp4"], ["Help Me", "Sonny Boy Williamson", "", "#EEF3F0", "", [], "media/a/bl_5.mp4"], ["Honest I Do", "Jimmy Reed", "", "#EEF3F0", "", [], "media/a/bl_6.mp4"], ["I Don't Know", "Sonny Boy Williamson", "", "#EEF3F0", "", [], "media/a/bl_7.mp4"], ["I'm A Man", "Bo Diddley", "", "#EEF3F0", "", [], "media/a/bl_8.mp4"], ["Keep It To Yourself", "Sonny Boy Williamson", "", "#EEF3F0", "", [], "media/a/bl_9.mp4"], ["Sitting On Top Of The World", "Howlin’ Wolf", "", "#EEF3F0", "", [], "media/a/bl_10.mp4"], ["Smokestack Lightning", "Howlin’ Wolf", "", "#EEF3F0", "", [], "media/a/bl_11.mp4"], ["Tell Me Baby", "Big Walter Horton", "", "#EEF3F0", "", [], "media/a/bl_12.mp4"], ["Thirteen Years In Prison", "Big Leon Brooks", "", "#EEF3F0", "", [], "media/a/bl_13.mp4"], ["Trouble In Mind", "Big Walter Horton", "", "#EEF3F0", "", [], "media/a/bl_14.mp4"]], "dir": "Harmonica › Músicas Treino"}];
+    var self = this;
+    var st = this.state || {};
+    var SESS = [[20260925, "09:00"], [20261002, "09:00"], [20261008, "09:00"], [20261015, "09:00"], [20261022, "09:00"], [20261028, "09:00"], [20261104, "09:00"], [20261111, "09:00"], [20261117, "09:00"], [20261124, "09:00"], [20261201, "09:00"], [20261207, "09:00"], [20261214, "17:00"], [20261221, "17:00"], [20261227, "09:00"], [20270103, "09:00"], [20270110, "09:00"], [20270116, "09:00"], [20270123, "09:00"], [20270130, "09:00"], [20270205, "17:00"], [20270212, "09:00"], [20270219, "09:00"], [20270225, "09:00"], [20270304, "09:00"], [20270311, "09:00"], [20270317, "09:00"], [20270324, "09:00"], [20270331, "09:00"], [20270406, "09:00"], [20270413, "09:00"], [20270420, "09:00"], [20270426, "09:00"], [20270503, "17:00"], [20270510, "17:00"], [20270516, "09:00"], [20270523, "09:00"], [20270530, "09:00"], [20270605, "09:00"], [20270612, "09:00"], [20270619, "09:00"], [20270625, "17:00"]];
+
+    var KEYS = ['G', 'A♭', 'A', 'B♭', 'B', 'C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯'];
+    var KPC = { 'C': 0, 'D♭': 1, 'D': 2, 'E♭': 3, 'E': 4, 'F': 5, 'F♯': 6, 'G': 7, 'A♭': 8, 'A': 9, 'B♭': 10, 'B': 11 };
+    var hk = KEYS.indexOf(st.hk) >= 0 ? st.hk : 'C', OFF = KPC[hk];
+    var SH = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'], FL = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'];
+    var PTN = { 'C': 'Dó', 'C♯': 'Dó♯', 'D♭': 'Ré♭', 'D': 'Ré', 'D♯': 'Ré♯', 'E♭': 'Mi♭', 'E': 'Mi', 'F': 'Fá', 'F♯': 'Fá♯', 'G♭': 'Sol♭', 'G': 'Sol', 'G♯': 'Sol♯', 'A♭': 'Lá♭', 'A': 'Lá', 'A♯': 'Lá♯', 'B♭': 'Si♭', 'B': 'Si' };
+    var useSharp = ['G', 'D', 'A', 'E', 'B', 'F♯'].indexOf(hk) >= 0;
+    function nm(pc) { return (useSharp ? SH : FL)[((pc % 12) + 12) % 12]; }
+    function pcN(n) { var b = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[n.charAt(0)]; if (n.indexOf('♭') > 0) b--; if (n.indexOf('♯') > 0) b++; return (b + 12) % 12; }
+    function tr(n) { return nm(pcN(n) + OFF); }
+    var BLOW = [0, 4, 7, 0, 4, 7, 0, 4, 7, 0], DRAW = [2, 7, 11, 2, 5, 9, 11, 2, 5, 9];
+    var ROT = [
+      { n: '2ª posição · Sol blues', sc: 'escala blues de Sol', h: [['-2','G'],["-3'",'B♭'],['4','C'],["-4'",'D♭'],['-4','D'],['-5','F'],['6','G']], t: 'Das suas anotações (gaita em Dó). A 2ª posição é uma quinta acima do tom da gaita: Sol.', c: ['bl', 'riffs', 'slow', 'fast', 'end'] },
+      { n: '1ª posição · Dó maior', sc: 'escala de Dó maior', h: [['4','C'],['-4','D'],['5','E'],['-5','F'],['6','G'],['-6','A'],['-7','B'],['7','C']], t: 'Gaita em Dó, furos 4 a 7: a escala maior completa no tom da gaita.', c: ['pos1', 'aq', 'dv'] },
+      { n: '3ª posição · Ré menor', sc: 'escala de Ré menor (dórica)', h: [['-4','D'],['5','E'],['-5','F'],['6','G'],['-6','A'],['-7','B'],['7','C'],['-8','D']], t: 'A 3ª posição é um tom acima do tom da gaita: Ré menor.', c: ['pos3', 'outros'] },
+      { n: 'Bends · furos 1 a 4', sc: 'notas com bend', h: [["-1'",'D♭'],["-2'",'F♯'],['-2"','F'],["-3'",'B♭'],['-3"','A'],["-3'\"",'A♭'],["-4'",'D♭']], t: "Half bend (') desce meio tom, whole bend (\") um tom e '\" um tom e meio. Afine devagar, sem forçar a palheta.", c: ['bl', 'riffs'] }
+    ];
+    var nowS = new Date(), todayN = nowS.getFullYear() * 10000 + (nowS.getMonth() + 1) * 100 + nowS.getDate();
+    var defSi = SESS.length - 1;
+    for (var si0 = 0; si0 < SESS.length; si0++) { if (SESS[si0][0] >= todayN) { defSi = si0; break; } }
+    var si = st.si === undefined ? defSi : Math.max(0, Math.min(SESS.length - 1, st.si));
+    var SE = SESS[si], RT0 = ROT[si % ROT.length];
+    var POSN = [[1, 0, 'maior'], [2, 7, 'blues'], [3, 2, 'menor']];
+    var RT = { n: RT0.n, sc: RT0.sc, t: RT0.t, c: RT0.c, h: RT0.h.map(function (x) { return [x[0], tr(x[1])]; }) };
+    (function () { var m = RT0.n.match(/^(\d)ª posição/); if (!m) return; var pn = +m[1], P = POSN[pn - 1], ton = nm(P[1] + OFF);
+      RT.n = pn + 'ª posição · ' + PTN[ton] + ' ' + P[2]; RT.sc = (pn === 2 ? 'escala blues de ' : pn === 1 ? 'escala de ' : 'escala de ') + PTN[ton] + (pn === 1 ? ' maior' : pn === 3 ? ' menor (dórica)' : '');
+      var hkPt = PTN[nm(OFF)];
+      RT.t = pn === 1 ? 'Gaita em ' + hkPt + ', furos 4 a 7: a escala maior completa no tom da gaita.' : pn === 2 ? 'A 2ª posição é uma quinta acima do tom da gaita: ' + PTN[ton] + '.' : 'A 3ª posição é um tom acima do tom da gaita: ' + PTN[ton] + ' menor.'; })();
+    var WDS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    var sy = Math.floor(SE[0] / 10000), sm = Math.floor(SE[0] / 100) % 100, sd = SE[0] % 100;
+    var sdow = new Date(Date.UTC(sy, sm - 1, sd)).getUTCDay();
+    var sesTag = SE[0] === todayN ? 'Hoje' : (si === defSi ? 'Próximo' : (SE[0] < todayN ? 'Anterior' : 'Depois'));
+    var sesReset = { sgPick: null, tdSong: null, posI: null };
+    var SES_OUT = {
+      holes: RT.h.map(function (x) { return { h: x[0], n: x[1], hc: x[0].charAt(0) === '-' ? '#F2A93B' : '#EEF3F0' }; }),
+      sesNote: RT.t, planImp: 'Improviso livre · base: ' + RT.sc + ' · frases curtas, respire entre elas', planScale: 'Escala: ' + RT.sc + ' subindo e descendo · 60 bpm, uma nota por tempo',
+      sesLabel: 'TEORIA DO DIA · ' + sesTag, sesName: RT.n, sesDate: WDS[sdow] + ' ' + sd + '/' + sm + ' · ' + SE[1], sesCount: 'Estudo ' + (si + 1) + ' de ' + SESS.length,
+      sesPrevDisp: si > 0 ? 'flex' : 'none', sesNextDisp: si < SESS.length - 1 ? 'flex' : 'none', sesBackDisp: si !== defSi ? 'inline-flex' : 'none',
+      sesPrev: function () { self.setState(Object.assign({ si: si - 1 }, sesReset)); },
+      sesNext: function () { self.setState(Object.assign({ si: si + 1 }, sesReset)); },
+      sesBack: function () { self.setState(Object.assign({ si: defSi }, sesReset)); }
+    };
+
+    var hkPt = PTN[nm(OFF)];
+    SES_OUT.hkName = 'Gaita em ' + hkPt + ' (' + nm(OFF) + ')';
+    SES_OUT.hkNext = function () { self.setState({ hk: KEYS[(KEYS.indexOf(hk) + 1) % KEYS.length], hch: null }); };
+    SES_OUT.hkeys = KEYS.map(function (k) { var on = k === hk; return { k: k, on: on, bg: on ? '#F2A93B' : '#1D2925', fg: on ? '#1A1205' : '#EEF3F0', bd: on ? '#F2A93B' : '#1D2925', pick: function () { self.setState({ hk: k }); } }; });
+    SES_OUT.blowRow = BLOW.map(function (p, i) { var hi = i >= 3 && i <= 6; return { n: nm(p + OFF), bg: hi ? '#4CC3B5' : '#1D2925', fg: hi ? '#06201C' : '#EEF3F0', fw: hi ? 800 : 700 }; });
+    SES_OUT.drawRow = DRAW.map(function (p, i) { var hi = i >= 3 && i <= 5; return { n: nm(p + OFF), bg: hi ? '#F2A93B' : '#1D2925', fg: hi ? '#1A1205' : '#EEF3F0', fw: hi ? 800 : 700 }; });
+    SES_OUT.mapNote = 'Destacado: a escala de ' + hkPt + ' maior completa entre os furos 4 e 7.';
+    function chn(p, q) { return nm(p + OFF) + q; }
+    var CHD = [[chn(0, ''), 'b', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]], [chn(7, ''), 'd', [1, 2, 3, 4]], [chn(7, '7'), 'd', [2, 3, 4, 5]], [chn(2, 'm'), 'd', [4, 5, 6, 8, 9, 10]], [chn(2, 'm6'), 'd', [4, 5, 6, 7]], [chn(11, '°'), 'd', [3, 4, 5]]];
+    var chSel = st.hch === undefined || st.hch === null ? null : st.hch;
+    SES_OUT.hchords = CHD.map(function (c, i) { var on = i === chSel, col = c[1] === 'b' ? '#4CC3B5' : '#F2A93B'; return { name: c[0], on: on, bg: on ? col : '#1D2925', fg: on ? '#06201C' : '#EEF3F0', bd: on ? col : '#1D2925', pick: function () { self.setState({ hch: on ? null : i }); } }; });
+    if (chSel !== null) { var CS = CHD[chSel];
+      SES_OUT.blowRow = BLOW.map(function (p, i) { var hi = CS[1] === 'b' && CS[2].indexOf(i + 1) >= 0; return { n: nm(p + OFF), bg: hi ? '#4CC3B5' : '#151E1B', fg: hi ? '#06201C' : '#5A6B65', fw: hi ? 800 : 600 }; });
+      SES_OUT.drawRow = DRAW.map(function (p, i) { var hi = CS[1] === 'd' && CS[2].indexOf(i + 1) >= 0; return { n: nm(p + OFF), bg: hi ? '#F2A93B' : '#151E1B', fg: hi ? '#1A1205' : '#5A6B65', fw: hi ? 800 : 600 }; });
+      SES_OUT.mapNote = 'Acorde ' + CS[0] + ': ' + (CS[1] === 'b' ? 'sopre' : 'aspire') + ' os furos destacados juntos.'; }
+    var SEQ = [['4', 0], ['-4', 2], ['5', 4], ['-5', 5], ['6', 7], ['-6', 9], ['-7', 11], ['7', 0], ['-8', 2], ['8', 4], ['-9', 5], ['9', 7], ['-10', 9], ['10', 0]];
+    var LOW = { 0: '1', 1: "-1'", 2: '-1', 4: '2', 5: '-2"', 6: "-2'", 7: '-2', 8: "-3'\"", 9: '-3"', 10: "-3'", 11: '-3', 12: '4', 13: "-4'", 14: '-4', 16: '5', 17: '-5', 19: '6', 21: '-6', 23: '-7', 24: '7' };
+    var POS = [[1, 0, 'jônio (maior)', 'Tom da própria gaita. Melodias, folk, músicas alegres.'], [2, 7, 'mixolídio · blues', 'Cross harp: a posição do blues, rock e country. Use o acorde aspirado como base.'], [3, 2, 'dórico (menor)', 'Menor com sexta maior: blues menor, funk, soul.'], [4, 9, 'eólio (menor natural)', 'Menor natural: melodias tristes e baladas.'], [5, 4, 'frígio', 'Menor sombrio com 2ª menor: sons flamencos e modais.'], [12, 5, 'lídio', 'Maior com 4ª aumentada: som aberto, sonhador.']];
+
+    var BLU = {
+      0: { n: 'blues · straight harp', d: 'Blues em 1ª posição. Só a oitava aguda é completa; na média faltam notas (sem overblow).', L: ['GRAVES · INCOMPLETA', 'MÉDIOS · NÃO DISPONÍVEL', 'AGUDOS · COMPLETA'],
+        r: [[[0, '1'], [3, null], [5, '-2"'], [6, "-2'"], [7, '-2'], [10, "-3'"], [0, '4']], [[0, '4'], [3, null], [5, '5'], [6, null], [7, '6'], [10, null], [0, '7']], [[0, '7'], [3, "8'"], [5, '-9'], [6, "9'"], [7, '9'], [10, '10"'], [0, '10']]] },
+      1: { n: 'blues · cross harp', d: 'Blues em 2ª posição, a mais usada no blues. A oitava média é completa (furos 2 a 6).', L: ['GRAVES · INCOMPLETA', 'MÉDIOS · COMPLETA', 'AGUDOS · INCOMPLETA'],
+        r: [[[7, null], [10, null], [0, '1'], [1, "-1'"], [2, '-1'], [5, '-2"'], [7, '-2']], [[7, '-2'], [10, "-3'"], [0, '4'], [1, "-4'"], [2, '-4'], [5, '-5'], [7, '6']], [[7, '6'], [10, null], [0, '7'], [1, null], [2, '-8'], [5, '-9'], [7, '9']]] },
+      2: { n: 'blues · draw harp', d: 'Blues em 3ª posição. As oitavas grave e média são completas; a aguda é incompleta.', L: ['GRAVES · COMPLETA', 'MÉDIOS · COMPLETA', 'AGUDOS · INCOMPLETA'],
+        r: [[[2, '-1'], [5, '-2"'], [7, '-2'], [8, "-3'\""], [9, '-3"'], [0, '4'], [2, '-4']], [[2, '-4'], [5, '-5'], [7, '6'], [8, "-6'"], [9, '-6'], [0, '7'], [2, '-8']], [[2, '-8'], [5, '-9'], [7, '9'], [8, null], [9, '-10'], [0, '10'], [2, null]]] }
+    };
+    function bluCell(x) { var h = x[1]; return { h: h || 'NA', n: nm(x[0] + OFF), hc: h ? (h.charAt(0) === '-' ? '#F2A93B' : '#EEF3F0') : '#9DACA6', bd: h && /['"]/.test(h) ? '#C49BFF' : '#1D2925', op: h ? 1 : 0.45 }; }
+    var posI = st.posI === undefined || st.posI === null ? null : st.posI;
+    SES_OUT.posOpen = !!st.posOpen; SES_OUT.posDisp = st.posOpen ? 'flex' : 'none'; SES_OUT.posChev = st.posOpen ? '−' : '+';
+    SES_OUT.posToggle = function () { self.setState({ posOpen: !st.posOpen }); };
+    SES_OUT.poss = POS.map(function (p, i) { var on = i === posI, ton = nm(p[1] + OFF); return { t: p[0] + 'ª · ' + ton, s: PTN[ton] + ' ' + (i < 3 ? 'blues' : p[2].split(' ')[0]), on: on, bg: on ? '#1D2925' : '#121B18', bd: on ? '#F2A93B' : '#2A3833', fg: on ? '#F2A93B' : '#EEF3F0', pick: function () { self.setState({ posI: on ? null : i }); } }; });
+    SES_OUT.pdDisp = posI === null ? 'none' : 'flex';
+    SES_OUT.pdHoles = []; SES_OUT.pdLow = []; SES_OUT.pdTop = []; SES_OUT.pdTopDisp = 'none'; SES_OUT.pdL1 = 'GRAVES · FUROS 1 A 4'; SES_OUT.pdL2 = 'MÉDIOS · FUROS 4 A 10'; SES_OUT.pdL3 = ''; SES_OUT.pdName = ''; SES_OUT.pdDesc = '';
+    if (posI !== null) { var P = POS[posI], st0 = 0; for (var q = 0; q < SEQ.length; q++) if (SEQ[q][1] === P[1]) { st0 = q; break; }
+      SES_OUT.pdHoles = SEQ.slice(st0, st0 + 8).map(function (x) { return { h: x[0], n: nm(x[1] + OFF), hc: x[0].charAt(0) === '-' ? '#F2A93B' : '#EEF3F0' }; });
+      var MJ = [0, 2, 4, 5, 7, 9, 11]; SES_OUT.pdLow = [];
+      for (var sm2 = P[1]; sm2 <= P[1] + 12; sm2++) { if (MJ.indexOf(sm2 % 12) < 0) continue; var hh = LOW[sm2]; if (!hh) continue; SES_OUT.pdLow.push({ h: hh, n: nm(sm2 + OFF), hc: hh.charAt(0) === '-' ? '#F2A93B' : '#EEF3F0', bd: /['"]/.test(hh) ? '#C49BFF' : '#1D2925' }); }
+      SES_OUT.pdName = P[0] + 'ª posição · ' + PTN[nm(P[1] + OFF)] + ' ' + P[2];
+      SES_OUT.pdDesc = P[3] + ' Na gaita em ' + hkPt + ', a tônica é ' + PTN[nm(P[1] + OFF)] + '.'; }
+      if (BLU[posI]) { var B = BLU[posI], ton = PTN[nm(P[1] + OFF)];
+        SES_OUT.pdName = P[0] + 'ª posição · ' + ton + ' ' + B.n; SES_OUT.pdDesc = B.d + ' Tônica: ' + ton + '.';
+        function nn(x) { return x[1]; } SES_OUT.pdLow = B.r[0].filter(nn).map(bluCell); SES_OUT.pdHoles = B.r[1].filter(nn).map(bluCell); SES_OUT.pdTop = B.r[2].filter(nn).map(bluCell); SES_OUT.pdTopDisp = 'block';
+        SES_OUT.pdL1 = B.L[0]; SES_OUT.pdL2 = B.L[1]; SES_OUT.pdL3 = B.L[2]; }
+      else { SES_OUT.pdLow.forEach(function (x) { x.op = 1; }); SES_OUT.pdHoles.forEach(function (x) { x.op = 1; x.bd = '#1D2925'; }); }
+    var GROUPS = [{"id": "aq", "label": "Aquecimento"}, {"id": "dv", "label": "Diversos"}, {"id": "bl", "label": "Blues"}, {"id": "licks", "label": "Licks"}];
+    var gsel = st.grp || GROUPS[0].id;
+    var total = 0;
+    var cats = GROUPS.map(function (g) {
+      var n = 0; CATS.forEach(function (c) { if (c.grp === g.id) n += c.n; });
+      total += n;
+      var on = g.id === gsel;
+      return { label: g.label, n: n, on: on,
+        bg: on ? '#F2A93B' : '#16201D', fg: on ? '#1A1205' : '#EEF3F0', bd: on ? '#F2A93B' : '#2A3833',
+        pick: function () { self.setState({ grp: g.id, cat: null, song: null }); } };
+    });
+    var inG = CATS.filter(function (c) { return c.grp === gsel; });
+    var cur = inG[0];
+    inG.forEach(function (c) { if (c.id === st.cat) cur = c; });
+    var subs = inG.map(function (c) {
+      var on = c.id === cur.id;
+      return { label: c.label, n: c.n, on: on,
+        bg: on ? '#1D2925' : 'transparent', fg: on ? '#F2A93B' : '#C9D4CF', bd: on ? '#F2A93B' : '#2A3833',
+        pick: function () { self.setState({ cat: c.id, song: null }); } };
+    });
+    var openSong = st.song;
+    var picsAll = st.pics || {};
+    function mkItem(cur, i, idx, open, toggleFn) {
+      var skey = cur.id + ':' + i[0];
+      var pics = picsAll[skey] || [];
+      var audio = i[6] || AUD[cur.id + ':' + nrm(i[0])] || '';
+      var imgs = (i[5] || []).map(function (x) { var lb = typeof x[0] === 'number' ? 'Riff ' + x[0] : x[0]; return { src: x[1], label: lb, alt: 'Tablatura · ' + lb }; });
+      return {
+        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio, imgs: imgs, hasImgs: imgs.length > 0,
+        open: open, chev: open ? '−' : '+', bd: open ? '#F2A93B' : '#16201D',
+        toggle: toggleFn,
+        where: 'No seu OneDrive: ' + cur.dir + (cur.byItem ? ' › ' + i[1] : ''),
+        lyr: 'https://www.google.com/search?q=' + encodeURIComponent(LYRQ + ' ' + i[0] + ' ' + i[1]),
+        lyrLabel: LYRL,
+        pics: pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0] }; }), hasPics: pics.length > 0,
+        canUpload: !(i[5] && i[5].length), upLabel: pics.length ? 'Inserir outra imagem' : 'Inserir imagem da ' + LYRT.toLowerCase(),
+        lyrTitle: LYRT.toUpperCase(), tid: 'img-' + cur.id + '-' + idx,
+        onFile: function (e) {
+          var f = e.target.files && e.target.files[0];
+          if (!f) return;
+          var r = new FileReader();
+          r.onload = function () {
+            var all = Object.assign({}, (self.state || {}).pics || {});
+            all[skey] = (all[skey] || []).concat([r.result]);
+            self.setState({ pics: all });
+          };
+          r.readAsDataURL(f);
+        }
+      };
+    }
+    var items = cur.items.map(function (i, idx) {
+      var key = cur.id + ':' + idx, open = openSong === key;
+      return mkItem(cur, i, idx, open, function () { self.setState({ song: open ? null : key }); });
+    });
+    var SONG_POOL = [];
+    CATS.forEach(function (c) { if ((function (c) { return RT.c.indexOf(c.id) >= 0; })(c)) c.items.forEach(function (it, ix) { SONG_POOL.push([c.id, ix]); }); });
+    var NS = Math.min(2, SONG_POOL.length);
+    function pickN(n, k, avoid) { var out = [], tries = 0; while (out.length < k && tries < 200) { var r = Math.floor(Math.random() * n); tries++; if (out.indexOf(r) < 0 && (!avoid || avoid.indexOf(r) < 0 || tries > 100)) out.push(r); } return out; }
+    var sgPick = st.sgPick || (function () { var o = []; for (var q = 0; q < NS; q++) { var v = (si * 7 + q * 5 + 3) % SONG_POOL.length; while (o.indexOf(v) >= 0) v = (v + 1) % SONG_POOL.length; o.push(v); } return o; })();
+    var tdSongItems = sgPick.map(function (k) { var p = SONG_POOL[k]; var c = CATS.filter(function (x) { return x.id === p[0]; })[0];
+      var key = 'td:' + p[0] + ':' + p[1], open = st.tdSong === key;
+      return mkItem(c, c.items[p[1]], p[1], open, function () { self.setState({ tdSong: open ? null : key }); }); });
+    SES_OUT.tdSongItems = tdSongItems;
+    SES_OUT.tdSongSwap = function () { self.setState({ sgPick: pickN(SONG_POOL.length, NS, sgPick), tdSong: null }); };
+    SES_OUT.tdSwapDisp = SONG_POOL.length > NS ? 'block' : 'none';
+    SES_OUT.songNames = tdSongItems.map(function (x) { return '“' + x.t + '”'; });
+    SES_OUT.planSong = SES_OUT.songNames.join(' e ') + ' da apostila';
+    var more = cur.n - cur.items.length;
+    var out = {
+      cats: cats, subs: subs, hasSubs: subs.length > 1, items: items, total: total + ' itens',
+      moreLabel: more > 0 ? '+ ' + more + ' em ' + cur.label + ' no acervo' : 'Todas as ' + cur.n + ' de ' + cur.label
+    };
+
+    var CH = [{"id": "teo", "name": "Escalas e teoria", "sub": "Apostila Escalas", "tag": "8 tópicos", "body": "Notas, círculo das quintas, 12 bar blues, tons e semitons, acordes do 12 bar blues, composição dos acordes, arpejos e acordes em graus.\nNa pasta Escalas também estão os diagramas das escalas cross harp, straight harp e blues, os modos (dórico, frígio, mixolídio) e a pentatônica."}, {"id": "pos", "name": "Posições na gaita em Dó", "sub": "Das suas anotações", "tag": "hoje", "body": "1ª posição — Dó maior.\n2ª posição — Sol blues (cross harp): -2, -3', 4, -4', -4, -5, 6.\n3ª posição — Ré menor blues: -4, -5, 6, -6', -6, 7, -8.\n4ª posição — Lá menor.\n5ª posição — Mi menor.\n\nRegra: a 3ª posição fica sempre um tom acima do tom da gaita. Gaita em Sol → 3ª posição em Lá menor.\nLegenda: - = aspirar · ' = bend de meio tom · \" = bend de um tom."}, {"id": "aco", "name": "Acompanhamentos", "sub": "Bases rítmicas", "tag": "21 bases", "body": "21 bases com imagem da tablatura e 10 faixas de áudio para tocar junto. Treine o ritmo antes dos licks: é o que segura a gaita numa banda."}, {"id": "lic", "name": "Licks de blues", "sub": "Riffs, intro, slow, fast e ending", "tag": "90 licks", "body": "Riffs — 17\nIntro Licks — 6\nSlow Licks — 8\nFast Licks — 9\nEnding Licks — 21\nFirst Position — 6\nThird Position — 16\n\nCada lick tem a imagem da tablatura e o áudio. Sugestão: um intro e um ending por semana, aplicados no 12 bar blues."}, {"id": "tec", "name": "Técnicas", "sub": "Exercícios com áudio", "tag": "7 faixas", "body": "7 exercícios de técnica com imagens e áudio, na pasta Licks Blues › Técnicas. Faça antes dos licks, como aquecimento."}];
+    var openCh = st.ch === undefined ? "pos" : st.ch;
+    out.chs = CH.map(function (c) {
+      var o = openCh === c.id;
+      return { name: c.name, sub: c.sub, tag: c.tag, body: c.body, open: o, chev: o ? '−' : '+', bd: c.tag === 'hoje' ? '#F2A93B' : '#16201D',
+        toggle: function () { self.setState({ ch: o ? null : c.id }); } };
+    });
+    Object.keys(SES_OUT).forEach(function (k) { out[k] = SES_OUT[k]; });
+    return out;
+  }
+}
+</script>
+</body>
+</html>
