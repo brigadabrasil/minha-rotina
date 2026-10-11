@@ -21,7 +21,7 @@ x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-are
 button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 </style>
 <script src="dc-lite.js" defer></script>
-<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(r){r.update()})})}</script>
 </head>
 <body>
 <x-dc>

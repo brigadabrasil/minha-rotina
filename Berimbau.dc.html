@@ -21,7 +21,7 @@ x-dc>div>main{overflow:visible!important;padding-bottom:calc(96px + env(safe-are
 button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 </style>
 <script src="dc-lite.js" defer></script>
-<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js')})}</script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(r){r.update()})})}</script>
 </head>
 <body>
 <x-dc>
@@ -111,7 +111,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </div>
 <div style="display: {{tdDisp}}; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #121B18">
 <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">{{tdName}}</span><span style="font-size: 12px; color: #9DACA6">{{tdWho}}</span></div>
-<audio controls autoplay dc-src="{{tdSrc}}" style="width: 100%; height: 44px"></audio>
+<sc-if value="{{tdOn}}" hint-placeholder-val="{{false}}"><audio controls autoplay dc-src="{{tdSrc}}" style="width: 100%; height: 44px"></audio></sc-if>
 </div>
 </section>
 
@@ -383,7 +383,7 @@ class Component extends DCLogic {
     var tdCur = null;
     var tdItems = TD.map(function (q) {
       var on = st.tdPlay === q.k; if (on) tdCur = q;
-      return { name: q.name, sub: q.sub, on: on, icon: on ? '■' : '▶', bg: on ? '#1D2925' : '#121B18', bd: on ? '#F2A93B' : '#2A3833', pick: function () { self.setState({ tdPlay: on ? null : q.k }); } };
+      return { name: q.name, sub: q.sub, on: on, icon: on ? '■' : '▶', bg: on ? '#1D2925' : '#121B18', bd: on ? '#F2A93B' : '#2A3833', pick: function () { self.setState({ tdPlay: on ? null : q.k, toque: null }); } };
     });
     out.tdToques = tdItems;
     out.sesName = RT.n;
@@ -407,6 +407,7 @@ class Component extends DCLogic {
     out.tdName = tdCur ? 'Ouvindo: ' + RT.n : '';
     out.tdWho = tdCur ? tdCur.who : '';
     out.tdSrc = tdCur ? tdCur.src : '';
+    out.tdOn = !!tdCur;
     var TQ = [{"name": "Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/t81.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq100.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq101.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq102.mp4"}, {"m": "Mestre Mão Branca · dobrado", "src": "media/a/tq103.mp4"}]}, {"name": "São Bento Pequeno", "recs": [{"m": "Mestre Caiçara", "src": "media/a/t82.mp4"}, {"m": "Mestre Morais", "src": "media/a/t89.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/t90.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/t91.mp4"}]}, {"name": "São Bento Grande de Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/tq104.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq105.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq106.mp4"}]}, {"name": "São Bento Grande (Regional)", "recs": [{"m": "Mestre Bimba", "src": "media/a/t83.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq107.mp4"}, {"m": "Mestre Deputado", "src": "media/a/tq108.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq109.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq110.mp4"}]}, {"name": "Iúna", "recs": [{"m": "Mestre Bimba", "src": "media/a/t84.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq111.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq112.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq113.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq114.mp4"}]}, {"name": "Santa Maria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t85.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq115.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq116.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq117.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq118.mp4"}]}, {"name": "Cavalaria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t86.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq119.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq120.mp4"}, {"m": "Silvio Acarajé · antiga", "src": "media/a/tq121.mp4"}]}, {"name": "Amazonas", "recs": [{"m": "Mestre Bimba", "src": "media/a/t87.mp4"}, {"m": "Mestre Barrão", "src": "media/a/tq122.mp4"}]}, {"name": "Benguela", "recs": [{"m": "Mestre Bimba", "src": "media/a/t88.mp4"}]}, {"name": "Idalina", "recs": [{"m": "Mestre Bimba", "src": "media/a/tq123.mp4"}, {"m": "Silvio Acarajé · de Angola", "src": "media/a/tq124.mp4"}]}, {"name": "Jogo de Dentro", "recs": [{"m": "Mestre Morais", "src": "media/a/tq125.mp4"}, {"m": "Mestre Jogo de Dentro", "src": "media/a/tq126.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq127.mp4"}]}, {"name": "Jogo de Fora", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq128.mp4"}]}, {"name": "Muzenza", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq129.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq130.mp4"}]}, {"name": "Samango", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq131.mp4"}]}, {"name": "Apanha Laranja no Chão Tico-Tico", "recs": [{"m": "Mestre Jogo de Dentro", "src": "media/a/tq132.mp4"}, {"m": "Mestre Limãozinho", "src": "media/a/tq133.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq134.mp4"}]}, {"name": "Samba de Roda", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq135.mp4"}, {"m": "Mestre Caiçara · samba de Angola", "src": "media/a/tq136.mp4"}, {"m": "Sorriso Bimbau · repicado", "src": "media/a/tq137.mp4"}]}, {"name": "Gegê (Jeje)", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq138.mp4"}, {"m": "Silvio Acarajé · toque de Gegy", "src": "media/a/tq139.mp4"}, {"m": "Mestre Limãozinho · São Bento Grande em Jeje", "src": "media/a/tq140.mp4"}]}, {"name": "Barravento", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq141.mp4"}, {"m": "Sorriso Bimbau", "src": "media/a/tq142.mp4"}]}, {"name": "Miudinho", "recs": [{"m": "Mestre Suassuna", "src": "media/a/tq143.mp4"}]}, {"name": "Aviso", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq144.mp4"}]}];
     var tsel = st.toque, tcur = null, recIdx = st.tqRec || 0;
     out.toques = TQ.map(function (q, qi) {
@@ -414,7 +415,7 @@ class Component extends DCLogic {
       if (on) tcur = q;
       var n = q.recs.length;
       return { disp: (qi < 8 || st.tqMore) ? 'flex' : 'none', name: q.name, sub: (q.name === RT.n ? 'Toque do estudo · ' : '') + n + (n > 1 ? ' mestres' : ' mestre'), on: on, bg: on ? '#1D2925' : '#16201D', bd: on ? '#F2A93B' : (q.name === RT.n ? '#5A6B65' : '#16201D'),
-        pick: function () { self.setState({ toque: on ? null : q.name, tqRec: 0 }); } };
+        pick: function () { self.setState({ toque: on ? null : q.name, tqRec: 0, tdPlay: null }); } };
     });
     var rec = tcur ? tcur.recs[recIdx % tcur.recs.length] : null;
     out.tqMoreLabel = st.tqMore ? 'Ver menos' : 'Ver mais';

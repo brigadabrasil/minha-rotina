@@ -7,6 +7,18 @@
   var PERSIST = ['pics', 'done', 'hk'];
   var KEY = 'mr:' + location.pathname.split('/').pop();
 
+  /* Um áudio por vez: tocar um pausa os outros; player escondido ou removido para de tocar. */
+(function () {
+  if (window.__mrMedia) return; window.__mrMedia = 1;
+  var playing = [];
+  function hidden(m) { return !m.isConnected || !m.getClientRects().length; }
+  function stopOthers(t) { Array.prototype.slice.call(document.querySelectorAll('audio,video')).concat(playing).forEach(function (m) { if (m !== t && !m.paused) try { m.pause(); } catch (e) {} }); }
+  document.addEventListener('play', function (e) { var t = e.target; if (!t || !/^(AUDIO|VIDEO)$/.test(t.tagName)) return; stopOthers(t); if (playing.indexOf(t) < 0) playing.push(t); }, true);
+  setInterval(function () {
+    playing = playing.filter(function (m) { if (m.paused) return false; if (hidden(m)) { try { m.pause(); } catch (e) {} return false; } return true; });
+  }, 250);
+})();
+
   function DCLogic(props) { this.props = props || {}; this.state = {}; }
   DCLogic.prototype.setState = function (p) {
     if (typeof p === 'function') p = p(this.state || {}, this.props);
