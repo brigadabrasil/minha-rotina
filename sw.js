@@ -1,4 +1,4 @@
-var V = 'mr-202610102059', CORE = ["./", "index.html", "dc-lite.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "Main.dc.html", "Alimentacao.dc.html", "Capoeira.dc.html", "Surf.dc.html", "Berimbau.dc.html", "Pandeiro.dc.html", "Atabaque.dc.html", "Violao.dc.html", "Harmonica.dc.html"];
+var V = 'mr-202610112013', CORE = ["./", "index.html", "dc-lite.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "Main.dc.html", "Alimentacao.dc.html", "Capoeira.dc.html", "Surf.dc.html", "Berimbau.dc.html", "Pandeiro.dc.html", "Atabaque.dc.html", "Violao.dc.html", "Harmonica.dc.html"];
 self.addEventListener('install', function (e) { e.waitUntil(caches.open(V).then(function (c) { return c.addAll(CORE); }).then(function () { return self.skipWaiting(); })); });
 self.addEventListener('activate', function (e) { e.waitUntil(caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k !== V && k !== 'mr-media'; }).map(function (k) { return caches.delete(k); })); }).then(function () { return self.clients.claim(); })); });
 self.addEventListener('fetch', function (e) {
@@ -13,5 +13,5 @@ self.addEventListener('fetch', function (e) {
     e.respondWith(caches.open('mr-media').then(function (c) { return c.match(r).then(function (hit) { return hit || fetch(r).then(function (res) { if (res.ok && res.status === 200 && !/\.mp4$/.test(u.pathname)) c.put(r, res.clone()); return res; }); }); }));
     return;
   }
-  e.respondWith(fetch(r).then(function (res) { var cp = res.clone(); caches.open(V).then(function (c) { c.put(r, cp); }); return res; }).catch(function () { return caches.match(r, { ignoreSearch: true }); }));
+  e.respondWith(fetch(u.href, { cache: 'no-cache', credentials: 'same-origin' }).then(function (res) { var cp = res.clone(); caches.open(V).then(function (c) { c.put(r, cp); }); return res; }).catch(function () { return caches.match(r, { ignoreSearch: true }); }));
 });
