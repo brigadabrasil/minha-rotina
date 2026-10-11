@@ -206,49 +206,70 @@ function buildDays(M, W) {
 var CARD = ['N', 'NNE', 'NE', 'ENE', 'L', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
 function cardOf(d) { return CARD[Math.round(((d % 360) + 360) % 360 / 22.5) % 16]; }
 function angDiff(a, b) { var d = Math.abs(((a - b) % 360 + 360) % 360); return d > 180 ? 360 - d : d; }
-// Picos e notas no estilo Waves (ajustado a 55 notas reais do Waves de 11/10): nota de 0 a 10 (passos de 0,5) por horário, conforme
-// tamanho, período, entrada do swell e tipo de vento (terral / lateral / maral) de cada praia.
-// face = de onde vem o vento que entra de frente (maral); swell = direção de swell que entra melhor.
-var SPOTS = [
-  { name: 'Joaquina', swell: 120, face: 150, note: 'aguenta tamanho' },
-  { name: 'Praia Mole', swell: 105, face: 110, note: 'ondas cavadas' },
-  { name: 'Mole (Gravatá)', swell: 100, face: 90, note: 'canto do Gravatá' },
-  { name: 'Novo Campeche', swell: 130, face: 100, note: 'bancadas de areia' },
-  { name: 'Campeche', swell: 150, face: 170, note: 'melhor com SE/S' },
-  { name: 'Morro das Pedras', swell: 130, face: 100, note: 'pega muito swell de S' },
-  { name: 'Caldeirão', swell: 150, face: 120, note: 'fundo misto' },
-  { name: 'Barra da Lagoa', swell: 100, face: 45, note: 'canto protegido' },
-  { name: 'Camping da Barra', swell: 100, face: 80, note: 'mais exposto que o canto' },
-  { name: 'Moçambique', swell: 90, face: 110, note: 'exposto, melhor cedo' },
-  { name: 'Moçambique Meio', swell: 90, face: 110, note: 'meio da praia, menos crowd' },
-  { name: 'Santinho', swell: 65, face: 70, note: 'protegido do S, bom para longboard' },
-  { name: 'Ingleses', swell: 55, face: 30, note: 'abrigada do vento sul' },
-  { name: 'Praia Brava', swell: 70, face: 60, note: 'ondas fortes' },
-  { name: 'Matadeiro', swell: 150, face: 130, note: 'bom com S/SE' }
+// Picos e notas pela "roda das praias" de Floripa: para cada swell (miolo da roda) e cada vento
+// (anel do meio), as praias que ficam boas (anel de fora). A nota (0 a 10, passos de 0,5) soma
+// tamanho + período + combinação swell/vento da roda.
+var WHEEL = [
+  // [swell, ventos, praias]
+  ['SE', ['S', 'SO'], ['Riozinho', 'Barra da Lagoa']],
+  ['SE', ['N', 'NE'], ['Morro das Pedras', 'Novo Campeche', 'Lomba do Sabão', 'Galheta', 'Galheta Norte', 'Joaquina', 'Moçambique', 'Mole', 'Pico da Cruz', 'Santinho', 'Igrejinha', 'Lagoinha do Leste']],
+  ['SE', ['SE'], ['Barra da Lagoa']],
+  ['SE', ['NO'], ['Morro das Pedras']],
+  ['S', ['O'], ['Riozinho']],
+  ['S', ['N', 'NNE', 'NE'], ['Açores', 'Joaquina', 'Moçambique', 'Santinho', 'Mole', 'Solidão', 'Naufragados', 'Galheta Norte', 'Lagoinha do Leste']],
+  ['S', ['SO', 'OSO', 'O'], ['Campeche']],
+  ['S', ['NE'], ['Morro das Pedras']],
+  ['L', ['SO'], ['Armação', 'Brava', 'Caldeirão', 'Riozinho', 'Ingleses', 'Matadeiro']],
+  ['L', ['NO'], ['Morro das Pedras']],
+  ['L', ['S'], ['Pico da Cruz', 'Matadeiro', 'Ingleses', 'Brava']],
+  ['L', ['N', 'NE'], ['Igrejinha', 'Novo Campeche', 'Lomba do Sabão', 'Santinho']],
+  ['NE', ['O'], ['Riozinho']],
+  ['NE', ['S'], ['Barra da Lagoa']],
+  ['NE', ['SE'], ['Barra da Lagoa']],
+  ['NE', ['SO'], ['Barra da Lagoa', 'Caldeirão', 'Santinho']],
+  ['NE', ['N', 'NNE', 'NE'], ['Lagoinha do Leste', 'Galheta', 'Galheta Norte', 'Joaquina', 'Moçambique', 'Mole', 'Santinho']]
 ];
-function windType(sp, dir) { var d = angDiff(dir, sp.face); return d <= 50 ? 'maral' : (d >= 120 ? 'terral' : 'lateral'); }
-function notaHora(sp, x) {
-  var alt = x.swell || 0, per = x.swellPer || 0, w = x.wind || 0, k = windType(sp, x.windDir);
-  var size = alt < 0.3 ? 0 : (alt < 0.5 ? (alt - 0.3) / 0.2 * 1 : (alt < 0.8 ? 1 + (alt - 0.5) / 0.3 : (alt < 1 ? 2 + (alt - 0.8) / 0.2 * 0.5 : (alt < 1.5 ? 2.5 + (alt - 1) * 2 : Math.min(4.5, 3.5 + (alt - 1.5) * 2)))));
+// Picos do Waves que seguem a regra de outra praia da roda
+var ALIAS = { 'Mole (Gravatá)': 'Mole', 'Camping da Barra': 'Barra da Lagoa', 'Moçambique Meio': 'Moçambique' };
+var SPOTS = (function () {
+  var seen = {}, out = [];
+  WHEEL.forEach(function (r) { r[2].forEach(function (n) { if (!seen[n]) { seen[n] = 1; out.push(n); } }); });
+  Object.keys(ALIAS).forEach(function (n) { out.push(n); });
+  return out;
+})();
+var DIRDEG = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, L: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSO: 202.5, SO: 225, OSO: 247.5, O: 270, ONO: 292.5, NO: 315, NNO: 337.5 };
+function swellSecs(deg) { return ['NE', 'L', 'SE', 'S'].filter(function (k) { return angDiff(deg, DIRDEG[k]) <= 30; }).concat(angDiff(deg, 45) > 30 && angDiff(deg, 90) > 30 && angDiff(deg, 135) > 30 && angDiff(deg, 180) > 30 ? [deg < 112.5 ? 'NE' : 'S'] : []); }
+function windIn(deg, list) { return list.some(function (k) { return angDiff(deg, DIRDEG[k]) <= 30; }); }
+function wheelCheck(name, x) {
+  var base = ALIAS[name] || name, ss = swellSecs(x.swellDir), swellOk = false, ideal = false;
+  WHEEL.forEach(function (r) {
+    if (ss.indexOf(r[0]) < 0 || r[2].indexOf(base) < 0) return;
+    swellOk = true; if (windIn(x.windDir, r[1])) ideal = true;
+  });
+  return { swellOk: swellOk, ideal: ideal, ss: ss };
+}
+function notaHora(name, x) {
+  var alt = x.swell || 0, per = x.swellPer || 0, w = x.wind || 0, c = wheelCheck(name, x);
+  var size = alt < 0.3 ? 0 : (alt < 0.5 ? (alt - 0.3) / 0.2 : (alt < 0.8 ? 1 + (alt - 0.5) / 0.3 : (alt < 1 ? 2 + (alt - 0.8) / 0.2 * 0.5 : (alt < 1.5 ? 2.5 + (alt - 1) * 2 : Math.min(4.5, 3.5 + (alt - 1.5) * 2)))));
   var pr = Math.max(0, Math.min(2.5, (per - 6) * 0.5));
-  var wind = w < 6 ? 2.5 : (k === 'terral' ? (w <= 25 ? 3.5 : Math.max(1, 3.5 - (w - 25) * 0.15)) : (k === 'lateral' ? 2.2 - 0.045 * w : -0.1 - 0.035 * w));
-  var dd = angDiff(x.swellDir, sp.swell), sw = dd <= 45 ? 0 : (dd <= 80 ? -0.5 : (dd <= 110 ? -1.5 : -3));
+  var wind = c.ideal ? (w <= 25 ? 3.5 : Math.max(1, 3.5 - (w - 25) * 0.15)) : (w < 6 ? 2.5 : 1.5 - 0.09 * w);
+  var sw = c.swellOk ? 0 : -2;
   var n = size + pr + wind + sw;
   if (alt < 0.4) n = Math.min(n, 1.5);
-  return { n: Math.max(0, Math.min(10, Math.round(n * 2) / 2)), k: k, dd: dd };
+  return { n: Math.max(0, Math.min(10, Math.round(n * 2) / 2)), ideal: c.ideal, swellOk: c.swellOk };
 }
 function notaCor(n) { return n < 2 ? '#94A3B8' : (n < 5 ? '#EF4444' : (n < 6.5 ? '#F2A93B' : (n < 8.5 ? '#22C55E' : '#38BDF8'))); }
 var CONDS10 = function (n) { return n < 2 ? 'Ruim' : (n < 5 ? 'Fraca' : (n < 6.5 ? 'Regular' : (n < 8.5 ? 'Boa' : 'Clássica'))); };
 function scoreDay(d) {
   var hs = d.hours || []; if (hs.length < 3) return { picos: [], condition: '—' };
   var m = hs.slice(0, 3);
-  var picos = SPOTS.map(function (sp) {
-    var ns = m.map(function (x) { return notaHora(sp, x); });
+  var picos = SPOTS.map(function (name) {
+    var ns = m.map(function (x) { return notaHora(name, x); });
     var nota = Math.round(ns.reduce(function (s, r) { return s + r.n; }, 0) / ns.length * 2) / 2;
-    var best = ns.reduce(function (b, r, i) { return r.n > b.n ? { n: r.n, i: i } : b; }, { n: -1, i: 0 });
-    var k = ns[1].k, dd = ns[1].dd;
-    var why = 'Swell ' + cardOf(m[1].swellDir) + (dd <= 45 ? ' entra bem' : (dd <= 80 ? ' entra de lado' : ' quase não entra')) + ' · vento ' + k + ' · melhor às ' + m[best.i].h + ' · ' + sp.note;
-    return { name: sp.name, nota: nota, oficial: true, color: notaCor(nota), note: why };
+    var bi = 0; ns.forEach(function (r, i) { if (r.n > ns[bi].n) bi = i; });
+    var r1 = ns[bi], x = m[bi];
+    var why = 'Swell ' + cardOf(x.swellDir) + ' + vento ' + cardOf(x.windDir) + ': ' + (r1.ideal ? 'combinação ideal' : (r1.swellOk ? (x.wind < 6 ? 'vento fraco, mar liso' : 'swell entra, vento não favorece') : 'swell não entra bem')) + ' · melhor às ' + x.h + (ALIAS[name] ? ' · segue a ' + ALIAS[name] : '');
+    return { name: name, nota: nota, oficial: true, color: notaCor(nota), note: why };
   }).sort(function (a, b) { return b.nota - a.nota; });
   return { picos: picos, condition: CONDS10(picos[0].nota) };
 }
@@ -334,7 +355,7 @@ class Component extends DCLogic {
       dateLabel: dateLabel, badge: st.refreshing ? 'Atualizando…' : ((realtime ? 'Ao vivo · ' + (S.updated || '').slice(6) : (live ? 'Atualizado ' + (S.updated || '') : 'Dados de exemplo')) + ' ↻'), refreshNow: function () { if (st.refreshing) return; self.setState({ refreshing: true }); loadLive(); }, badgeColor: live ? '#4CC3B5' : '#9DACA6', badgeBorder: live ? 'solid' : 'dashed',
       waveRange: S.waveRange, condition: SC.condition, dayTabs: dayTabs, dayName: dayName.toLowerCase() === 'hoje' || dayName === 'Amanhã' ? dayName.toLowerCase() : dateLabel, swellTxt: S.swellTxt, windTxt: S.windTxt, water: S.water, summary: S.summary,
       swellBars: swellBars, windBars: windBars, tiles: tiles, picos: picos, moreDisp: picos.length > 5 ? 'block' : 'none', moreLabel: st.morePicos ? 'Ver menos' : 'Ver mais', toggleMore: function () { self.setState({ morePicos: !st.morePicos }); },
-      source: 'Notas de 0 a 10 no estilo Waves (por pico, pela manhã), calculadas a partir da previsão. ' + (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
+      source: 'Notas de 0 a 10 pela roda das praias de Floripa (swell + vento ideal de cada praia), média da manhã. ' + (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
     };
   }
 }
