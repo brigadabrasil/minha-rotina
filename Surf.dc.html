@@ -365,7 +365,7 @@ class Component extends DCLogic {
     var S = st.live || ((DATA && DATA.date) ? DATA : SAMPLE), live = !!(st.live || (DATA && DATA.date)), realtime = !!st.live;
     var SAMPLE = { updated: '', days: [SAMPLE_DAY] };
     var SRC = st.live || ((DATA && DATA.days && DATA.days.length) ? DATA : SAMPLE), live = SRC !== SAMPLE, realtime = !!st.live;
-    var OM = SRC; var WVD = wavesDays(st.wv, (st.live || DATA || {}).days); if (WVD) { SRC = WVD; live = true; }
+    var OM = SRC; var WVD = wavesDays(st.wv, (st.live || DATA || {}).days); var tIso0 = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10); if (WVD && WVD.days.filter(function (d) { return d.date >= tIso0; }).length >= 2) { SRC = WVD; live = true; }
     var pad2 = function (n) { return (n < 10 ? '0' : '') + n; }, nowD = new Date();
     var todayIso = nowD.getFullYear() + '-' + pad2(nowD.getMonth() + 1) + '-' + pad2(nowD.getDate());
     var allDays = SRC.days.filter(function (d) { return !d.date || d.date >= todayIso; }).slice(0, 7);
