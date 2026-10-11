@@ -52,10 +52,11 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </sc-for>
 </nav>
 
+<div style="display: {{picoBarDisp}}; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-radius: 14px; background: #16201D; border: 1px solid #4CC3B5"><span style="font-size: 13px; font-weight: 700">📍 Mostrando: <span style="color: #4CC3B5">{{picoNome}}</span><span style="display: block; font-size: 11px; color: #9DACA6; font-weight: 600">{{picoFonte}}</span></span><button onClick="{{picoVoltar}}" style="flex-shrink: 0; padding: 8px 12px; border-radius: 10px; border: 1px solid #2A3833; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">↺ Voltar ao geral</button></div>
 <section style="background: #4CC3B5; color: #06201C; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; justify-content: space-between; align-items: flex-end">
 <div>
-<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px">ONDAS</div>
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px">{{ondasTitulo}}</div>
 <div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 800; line-height: 1">{{waveRange}}</div>
 </div>
 <div style="text-align: right"><div style="font-size: 12px; font-weight: 700">Condição</div><div style="font-size: 18px; font-weight: 800">{{condition}}</div></div>
@@ -120,8 +121,9 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 
 <section style="display: flex; flex-direction: column; gap: 10px">
 <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700">Melhores picos · {{dayName}}</h2>
+<div style="font-size: 12px; color: #9DACA6; margin-top: -4px">Toque numa praia para ver as condições dela no topo.</div>
 <sc-for list="{{picos}}" as="p" hint-placeholder-count="5">
-<article style="display: {{p.disp}}; padding: 14px; border-radius: 16px; background: #16201D; border: 1px solid {{p.bc}}; gap: 12px; align-items: center">
+<article onClick="{{p.pick}}" role="button" aria-pressed="{{p.on}}" style="display: {{p.disp}}; padding: 14px; border-radius: 16px; background: {{p.bg}}; border: 1px solid {{p.bc}}; gap: 12px; align-items: center; cursor: pointer">
 <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 24px; font-weight: 800; color: {{p.nc}}; width: 24px">{{p.n}}</span>
 <div style="flex-grow: 1"><div style="display: flex; justify-content: space-between"><span style="font-weight: 700">{{p.name}}</span><span style="display: flex; align-items: center; gap: 6px"><span style="color: #4CC3B5; letter-spacing: 2px; font-size: 13px">{{p.dots}}</span><span style="font-size: 12px; font-weight: 700; color: #C9D3CF">{{p.grade}}</span></span></div><div style="font-size: 12px; color: #9DACA6; margin-top: 2px">{{p.note}}</div></div>
 </article>
@@ -319,7 +321,8 @@ function wavesDays(WV, omDays) {
       date: iso, waveRange: f1(lo) + '–' + f1(hi) + ' m', swellTxt: r8 ? r8[2] + ' · ' + Math.round(r8[1]) + ' s' : '—',
       windTxt: r8 ? r8[4] + ' ' + r8[3] + ' km/h' : '—', water: o.water || '—',
       summary: 'Joaquina de manhã: vento ' + (r8 ? r8[4] + ' ' + r8[3] + ' km/h (' + wvWind('joaquina', r8[4], r8[3]) + ')' : '—') + ' · melhor pico: ' + picos[0].name + ' (' + String(picos[0].nota).replace('.', ',') + ')',
-      hours: hours, tides: tides, sunrise: o.sunrise, sunset: o.sunset, wvPicos: picos
+      hours: hours, tides: tides, sunrise: o.sunrise, sunset: o.sunset, wvPicos: picos,
+      byPico: WV.picos.reduce(function (acc, pc) { acc[pc.slug] = pc.rows.slice(di * 7, di * 7 + 7); return acc; }, {})
     });
   }
   return { updated: WV.updated, days: days, waves: true };
@@ -342,13 +345,46 @@ function wvTodayScore(WH, S, days) {
     if (oficial != null && dToday) { var e0 = est(pc.slug, dToday); if (e0 != null) off = 0.5 * Math.max(-3, Math.min(3, oficial - e0)); }
     if (S.date === WH.date && oficial != null) {
       var x = w[0];
-      return { name: pc.name, nota: oficial, oficial: true, note: (x[2] === x[3] ? f1(x[2]) : f1(x[2]) + '–' + f1(x[3])) + ' m · ' + x[4] + ' s ' + x[5] + ' · vento ' + x[7] + ' ' + x[6] + ' km/h (' + (WV_TIPO[x[8]] || x[8]) + ') · nota Waves' };
+      return { name: pc.name, slug: pc.slug, nota: oficial, oficial: true, note: (x[2] === x[3] ? f1(x[2]) : f1(x[2]) + '–' + f1(x[3])) + ' m · ' + x[4] + ' s ' + x[5] + ' · vento ' + x[7] + ' ' + x[6] + ' km/h (' + (WV_TIPO[x[8]] || x[8]) + ') · nota Waves' };
     }
     var e = est(pc.slug, S), h = S.hours[1] || S.hours[0];
     var nota = Math.max(0, Math.min(10, Math.round(((e || 0) + off) * 2) / 2));
-    return { name: pc.name, nota: nota, oficial: false, note: f1(h.swell) + ' m · ' + Math.round(h.swellPer) + ' s ' + cardOf(h.swellDir) + ' · vento ' + cardOf(h.windDir) + ' ' + Math.round(h.wind) + ' km/h (' + wvWind(pc.slug, cardOf(h.windDir), h.wind) + ') · estimativa' };
+    return { name: pc.name, slug: pc.slug, nota: nota, oficial: false, note: f1(h.swell) + ' m · ' + Math.round(h.swellPer) + ' s ' + cardOf(h.swellDir) + ' · vento ' + cardOf(h.windDir) + ' ' + Math.round(h.wind) + ' km/h (' + wvWind(pc.slug, cardOf(h.windDir), h.wind) + ') · estimativa' };
   }).sort(function (a, b) { return b.nota - a.nota; });
   return { picos: picos, condition: wvConds(picos[0].nota) };
+}
+// Condições de uma praia escolhida (dados do Waves quando houver; senão, as gerais)
+function picoView(S, key, WH, picos) {
+  var pc = (picos || []).filter(function (p) { return (p.slug || p.name) === key; })[0];
+  if (!key || !pc) return null;
+  var p2 = function (n) { return (n < 10 ? '0' : '') + n; }, f1 = function (n) { return (Math.round(n * 10) / 10).toFixed(1).replace('.', ','); };
+  var hours = (S.hours || []).map(function (x) { return Object.assign({}, x); }), fonte = '', ok = false;
+  var rows = S.byPico && pc.slug && S.byPico[pc.slug];
+  if (rows && rows.length) {
+    hours.forEach(function (x, i) { var r = rows[i]; if (!r) return; x.swell = r[0]; x.swellPer = r[1]; x.swellDir = wvDeg(r[2]); x.wind = r[3]; x.windDir = wvDeg(r[4]); });
+    ok = true; fonte = 'Ondas, swell e vento desta praia pelo Waves';
+  } else if (WH && WH.picos && WH.date === S.date && pc.slug) {
+    var wp = WH.picos.filter(function (q) { return q.slug === pc.slug; })[0];
+    if (wp && wp.today && wp.today.length) {
+      hours.forEach(function (x) {
+        var h = parseInt(x.h, 10), best = wp.today.reduce(function (b, w) { return Math.abs(w[0] - h) < Math.abs(b[0] - h) ? w : b; }, wp.today[0]);
+        x.swell = (best[2] + best[3]) / 2; x.swellPer = best[4]; x.swellDir = wvDeg(best[5]); x.wind = best[6]; x.windDir = wvDeg(best[7]);
+      });
+      ok = true; fonte = 'Ondas, swell e vento desta praia pelo Waves (hoje)';
+    }
+  }
+  if (!ok) fonte = 'Sem dados próprios desta praia neste dia · mostrando as condições gerais';
+  var m = hours.slice(0, 3), alts = m.map(function (x) { return x.swell; });
+  var lo = Math.min.apply(null, alts), hi = Math.max.apply(null, alts), h8 = hours[1] || hours[0];
+  var slug = pc.slug || '';
+  var S2 = Object.assign({}, S, {
+    hours: hours,
+    waveRange: ok ? (lo === hi ? f1(lo) : f1(lo) + '–' + f1(hi)) + ' m' : S.waveRange,
+    swellTxt: ok ? cardOf(h8.swellDir) + ' · ' + Math.round(h8.swellPer) + ' s' : S.swellTxt,
+    windTxt: ok ? cardOf(h8.windDir) + ' ' + Math.round(h8.wind) + ' km/h' : S.windTxt,
+    summary: 'Nota ' + String(pc.nota != null ? pc.nota : '').replace('.', ',') + (pc.oficial ? ' (Waves)' : ' (estimativa)') + ' · ' + (ok && slug ? 'vento de manhã ' + cardOf(h8.windDir) + ' ' + Math.round(h8.wind) + ' km/h (' + wvWind(slug, cardOf(h8.windDir), h8.wind) + ')' : (pc.note || ''))
+  });
+  return { S: S2, nome: pc.name, fonte: fonte, nota: pc.nota };
 }
 class Component extends DCLogic {
   renderVals() {
@@ -398,7 +434,7 @@ class Component extends DCLogic {
     var allDays = SRC.days.filter(function (d) { return !d.date || d.date >= todayIso; }).slice(0, 7);
     if (!allDays.length) allDays = SRC.days.slice(-1);
     var di = Math.max(0, Math.min(allDays.length - 1, st.day || 0));
-    var S = allDays[di], wvhToday = !!(st.wvh && st.wvh.picos && st.wvh.date === S.date), SC = (wvhToday && wvTodayScore(st.wvh, S, allDays)) || (S.wvPicos ? { picos: S.wvPicos, condition: wvConds(S.wvPicos[0].nota) } : (wvTodayScore(st.wvh, S, allDays) || scoreDay(S))); var wvhOn = wvhToday || (!S.wvPicos && !!(st.wvh && st.wvh.picos));
+    var S = allDays[di], wvhToday = !!(st.wvh && st.wvh.picos && st.wvh.date === S.date), SC = (wvhToday && wvTodayScore(st.wvh, S, allDays)) || (S.wvPicos ? { picos: S.wvPicos, condition: wvConds(S.wvPicos[0].nota) } : (wvTodayScore(st.wvh, S, allDays) || scoreDay(S))); var wvhOn = wvhToday || (!S.wvPicos && !!(st.wvh && st.wvh.picos)); var PV = picoView(S, st.pico, st.wvh, SC.picos); if (PV) S = PV.S;
     S.updated = SRC.updated;
     var WDL = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
     var dayTabs = allDays.map(function (d, i) {
@@ -425,7 +461,9 @@ class Component extends DCLogic {
     var picos = (SC.picos || []).map(function (p, i) {
       if (p.nota != null) {
         var n5 = Math.max(0, Math.min(5, Math.round(p.nota / 2)));
-        return { disp: (i < 5 || st.morePicos) ? 'flex' : 'none', n: String(i + 1), name: p.name, note: p.note, grade: String(p.nota).replace('.', ',') + (p.oficial ? '' : '*'), dots: '●●●●●'.slice(0, n5) + '○○○○○'.slice(0, 5 - n5), bc: i === 0 ? '#4CC3B5' : 'transparent', nc: i === 0 ? '#4CC3B5' : '#9DACA6' };
+        var pk = p.slug || p.name, on = st.pico === pk;
+        return { disp: (i < 5 || st.morePicos || on) ? 'flex' : 'none', n: String(i + 1), name: p.name, note: p.note, grade: String(p.nota).replace('.', ',') + (p.oficial ? '' : '*'), dots: '●●●●●'.slice(0, n5) + '○○○○○'.slice(0, 5 - n5), on: on, bg: on ? '#1D3330' : '#16201D', bc: on ? '#4CC3B5' : (i === 0 ? '#2A5A53' : 'transparent'), nc: i === 0 ? '#4CC3B5' : '#9DACA6',
+          pick: function () { self.setState({ pico: on ? null : pk }); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} } };
       }
       var sc = Math.max(0, Math.min(5, Math.round(p.score)));
       return { disp: (i < 5 || st.morePicos) ? 'flex' : 'none', n: String(i + 1), name: p.name, note: p.note, grade: (Math.round(Math.max(1, Math.min(5, p.raw)) * 10) / 10).toFixed(1).replace('.', ','), dots: '●●●●●'.slice(0, sc) + '○○○○○'.slice(0, 5 - sc), bc: i === 0 ? '#4CC3B5' : 'transparent', nc: i === 0 ? '#4CC3B5' : '#9DACA6' };
@@ -435,7 +473,8 @@ class Component extends DCLogic {
     if (S.date) { var p = S.date.split('-'); var dt = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); dateLabel = WD[dt.getUTCDay()] + ', ' + (+p[2]) + '/' + (+p[1]); }
     return {
       dateLabel: dateLabel, badge: st.refreshing ? 'Atualizando…' : ((realtime ? 'Ao vivo · ' + (S.updated || '').slice(6) : (live ? 'Atualizado ' + (S.updated || '') : 'Dados de exemplo')) + ' ↻'), refreshNow: function () { if (st.refreshing) return; self.setState({ refreshing: true }); loadLive(); }, badgeColor: live ? '#4CC3B5' : '#9DACA6', badgeBorder: live ? 'solid' : 'dashed',
-      waveRange: S.waveRange, condition: SC.condition, dayTabs: dayTabs, dayName: dayName.toLowerCase() === 'hoje' || dayName === 'Amanhã' ? dayName.toLowerCase() : dateLabel, swellTxt: S.swellTxt, windTxt: S.windTxt, water: S.water, summary: S.summary,
+      picoBarDisp: PV ? 'flex' : 'none', picoNome: PV ? PV.nome : '', picoFonte: PV ? PV.fonte : '', picoVoltar: function () { self.setState({ pico: null }); }, ondasTitulo: PV ? 'ONDAS · ' + PV.nome.toUpperCase() : 'ONDAS',
+      waveRange: S.waveRange, condition: PV && PV.nota != null ? wvConds(PV.nota) : SC.condition, dayTabs: dayTabs, dayName: dayName.toLowerCase() === 'hoje' || dayName === 'Amanhã' ? dayName.toLowerCase() : dateLabel, swellTxt: S.swellTxt, windTxt: S.windTxt, water: S.water, summary: S.summary,
       swellBars: swellBars, windBars: windBars, tiles: tiles, picos: picos, moreDisp: picos.length > 5 ? 'block' : 'none', moreLabel: st.morePicos ? 'Ver menos' : 'Ver mais', toggleMore: function () { self.setState({ morePicos: !st.morePicos }); },
       source: wvhOn ? 'Notas do Waves (oficiais hoje, atualizadas ' + st.wvh.updated + '; * = estimativa calibrada nos outros dias). Ondas, vento e maré: Open-Meteo.' : SRC.waves ? 'Fonte: Waves (picos, ondas, vento e maré · atualizado ' + SRC.updated + ') + Open-Meteo (chuva, nuvens, água e sol). Notas de 0 a 10: hoje é a nota oficial do Waves para a manhã; * = estimativa calibrada pela nota de hoje.' : (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
     };
