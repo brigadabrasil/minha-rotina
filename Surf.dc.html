@@ -324,6 +324,32 @@ function wavesDays(WV, omDays) {
   }
   return { updated: WV.updated, days: days, waves: true };
 }
+// Notas oficiais de hoje do Waves, lidas pelo Apps Script (link abaixo), + estimativa calibrada nos outros dias.
+var WAVES_LIVE_URL = '';
+var WV_TIPO = { onshore: 'maral', offshore: 'terral', cross: 'lateral', crossshore: 'lateral', 'cross-shore': 'lateral', sideshore: 'lateral' };
+function wvTodayScore(WH, S, days) {
+  if (!WH || !WH.picos || !WH.picos.length || !S || !(S.hours || []).length) return null;
+  function est(slug, d) {
+    var hs = (d.hours || []).slice(0, 3); if (!hs.length) return null;
+    return hs.reduce(function (s, x) { return s + wvEst(slug, [x.swell, x.swellPer, cardOf(x.swellDir), x.wind, cardOf(x.windDir)]); }, 0) / hs.length;
+  }
+  var dToday = (days || []).filter(function (d) { return d.date === WH.date; })[0];
+  var f1 = function (n) { return (Math.round(n * 10) / 10).toFixed(1).replace('.', ','); };
+  var picos = WH.picos.map(function (pc) {
+    var w = (pc.today || []).filter(function (x) { return x[0] === 6 || x[0] === 9; });
+    var oficial = w.length ? Math.round(w.reduce(function (s, x) { return s + x[1]; }, 0) / w.length * 2) / 2 : null;
+    var off = 0;
+    if (oficial != null && dToday) { var e0 = est(pc.slug, dToday); if (e0 != null) off = 0.5 * Math.max(-3, Math.min(3, oficial - e0)); }
+    if (S.date === WH.date && oficial != null) {
+      var x = w[0];
+      return { name: pc.name, nota: oficial, oficial: true, note: (x[2] === x[3] ? f1(x[2]) : f1(x[2]) + '–' + f1(x[3])) + ' m · ' + x[4] + ' s ' + x[5] + ' · vento ' + x[7] + ' ' + x[6] + ' km/h (' + (WV_TIPO[x[8]] || x[8]) + ') · nota Waves' };
+    }
+    var e = est(pc.slug, S), h = S.hours[1] || S.hours[0];
+    var nota = Math.max(0, Math.min(10, Math.round(((e || 0) + off) * 2) / 2));
+    return { name: pc.name, nota: nota, oficial: false, note: f1(h.swell) + ' m · ' + Math.round(h.swellPer) + ' s ' + cardOf(h.swellDir) + ' · vento ' + cardOf(h.windDir) + ' ' + Math.round(h.wind) + ' km/h (' + wvWind(pc.slug, cardOf(h.windDir), h.wind) + ') · estimativa' };
+  }).sort(function (a, b) { return b.nota - a.nota; });
+  return { picos: picos, condition: wvConds(picos[0].nota) };
+}
 class Component extends DCLogic {
   renderVals() {
     var self = this, st = this.state || {};
@@ -335,6 +361,7 @@ class Component extends DCLogic {
         .catch(function () { self.setState({ liveFail: true, refreshing: false }); });
     }
     function loadWaves() {
+      if (WAVES_LIVE_URL) fetch(WAVES_LIVE_URL).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j && j.picos) self.setState({ wvh: j }); }).catch(function () {});
       fetch('waves.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j) self.setState({ wv: j }); }).catch(function () {});
     }
     if (!this._liveStarted) { this._liveStarted = true; loadLive(); loadWaves(); }
@@ -371,7 +398,7 @@ class Component extends DCLogic {
     var allDays = SRC.days.filter(function (d) { return !d.date || d.date >= todayIso; }).slice(0, 7);
     if (!allDays.length) allDays = SRC.days.slice(-1);
     var di = Math.max(0, Math.min(allDays.length - 1, st.day || 0));
-    var S = allDays[di], SC = S.wvPicos ? { picos: S.wvPicos, condition: wvConds(S.wvPicos[0].nota) } : scoreDay(S);
+    var S = allDays[di], SC = S.wvPicos ? { picos: S.wvPicos, condition: wvConds(S.wvPicos[0].nota) } : (wvTodayScore(st.wvh, S, allDays) || scoreDay(S)); var wvhOn = !S.wvPicos && !!(st.wvh && st.wvh.picos);
     S.updated = SRC.updated;
     var WDL = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
     var dayTabs = allDays.map(function (d, i) {
@@ -410,7 +437,7 @@ class Component extends DCLogic {
       dateLabel: dateLabel, badge: st.refreshing ? 'Atualizando…' : ((realtime ? 'Ao vivo · ' + (S.updated || '').slice(6) : (live ? 'Atualizado ' + (S.updated || '') : 'Dados de exemplo')) + ' ↻'), refreshNow: function () { if (st.refreshing) return; self.setState({ refreshing: true }); loadLive(); }, badgeColor: live ? '#4CC3B5' : '#9DACA6', badgeBorder: live ? 'solid' : 'dashed',
       waveRange: S.waveRange, condition: SC.condition, dayTabs: dayTabs, dayName: dayName.toLowerCase() === 'hoje' || dayName === 'Amanhã' ? dayName.toLowerCase() : dateLabel, swellTxt: S.swellTxt, windTxt: S.windTxt, water: S.water, summary: S.summary,
       swellBars: swellBars, windBars: windBars, tiles: tiles, picos: picos, moreDisp: picos.length > 5 ? 'block' : 'none', moreLabel: st.morePicos ? 'Ver menos' : 'Ver mais', toggleMore: function () { self.setState({ morePicos: !st.morePicos }); },
-      source: SRC.waves ? 'Fonte: Waves (picos, ondas, vento e maré · atualizado ' + SRC.updated + ') + Open-Meteo (chuva, nuvens, água e sol). Notas de 0 a 10: hoje é a nota oficial do Waves para a manhã; * = estimativa calibrada pela nota de hoje.' : (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
+      source: wvhOn ? 'Notas do Waves (oficiais hoje, atualizadas ' + st.wvh.updated + '; * = estimativa calibrada nos outros dias). Ondas, vento e maré: Open-Meteo.' : SRC.waves ? 'Fonte: Waves (picos, ondas, vento e maré · atualizado ' + SRC.updated + ') + Open-Meteo (chuva, nuvens, água e sol). Notas de 0 a 10: hoje é a nota oficial do Waves para a manhã; * = estimativa calibrada pela nota de hoje.' : (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
     };
   }
 }
