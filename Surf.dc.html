@@ -325,7 +325,7 @@ function wavesDays(WV, omDays) {
   return { updated: WV.updated, days: days, waves: true };
 }
 // Notas oficiais de hoje do Waves, lidas pelo Apps Script (link abaixo), + estimativa calibrada nos outros dias.
-var WAVES_LIVE_URL = '';
+var WAVES_LIVE_URL = 'https://script.google.com/macros/s/AKfycbwzTgJHzs_V8J0VtKP-Lbca1QsZ5NDLhruDlsSIP_04pkHpqsG3EoO_kMlf46p2NaF7Cg/exec';
 var WV_TIPO = { onshore: 'maral', offshore: 'terral', cross: 'lateral', crossshore: 'lateral', 'cross-shore': 'lateral', sideshore: 'lateral' };
 function wvTodayScore(WH, S, days) {
   if (!WH || !WH.picos || !WH.picos.length || !S || !(S.hours || []).length) return null;
