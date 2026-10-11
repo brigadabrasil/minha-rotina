@@ -123,7 +123,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <sc-for list="{{picos}}" as="p" hint-placeholder-count="5">
 <article style="display: {{p.disp}}; padding: 14px; border-radius: 16px; background: #16201D; border: 1px solid {{p.bc}}; gap: 12px; align-items: center">
 <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 24px; font-weight: 800; color: {{p.nc}}; width: 24px">{{p.n}}</span>
-<div style="flex-grow: 1"><div style="display: flex; justify-content: space-between"><span style="font-weight: 700">{{p.name}}</span><span style="display: flex; align-items: center; gap: 6px"><span style="color: {{p.gc}}; letter-spacing: 2px; font-size: 13px">{{p.dots}}</span><span style="font-size: 13px; font-weight: 800; color: {{p.gc}}">{{p.grade}}</span></span></div><div style="font-size: 12px; color: #9DACA6; margin-top: 2px">{{p.note}}</div></div>
+<div style="flex-grow: 1"><div style="display: flex; justify-content: space-between"><span style="font-weight: 700">{{p.name}}</span><span style="display: flex; align-items: center; gap: 6px"><span style="color: #4CC3B5; letter-spacing: 2px; font-size: 13px">{{p.dots}}</span><span style="font-size: 12px; font-weight: 700; color: #C9D3CF">{{p.grade}}</span></span></div><div style="font-size: 12px; color: #9DACA6; margin-top: 2px">{{p.note}}</div></div>
 </article>
 </sc-for>
 <button onClick="{{toggleMore}}" style="display: {{moreDisp}}; padding: 12px; border-radius: 14px; border: 1px solid #2A3833; background: transparent; color: #4CC3B5; font-family: 'Figtree', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer">{{moreLabel}}</button>
@@ -206,49 +206,123 @@ function buildDays(M, W) {
 var CARD = ['N', 'NNE', 'NE', 'ENE', 'L', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
 function cardOf(d) { return CARD[Math.round(((d % 360) + 360) % 360 / 22.5) % 16]; }
 function angDiff(a, b) { var d = Math.abs(((a - b) % 360 + 360) % 360); return d > 180 ? 360 - d : d; }
-// Picos e condições ideais (dados passados pelo usuário em 11/10): swell que funciona,
-// vento ideal e faixa de tamanho de cada praia. Nota de 0 a 10 (passos de 0,5) por horário.
 var SPOTS = [
-  { name: 'Joaquina', reg: 'Leste', swell: ['L', 'S'], wind: ['NE'], max: 3, note: 'clássica e forte, intermediário a profissional' },
-  { name: 'Praia Mole', reg: 'Leste', swell: ['NE', 'L', 'SE'], wind: ['NE', 'NNE', 'N', 'NNO', 'NO', 'ONO', 'O'], max: 3, note: 'consistente, funciona com vários ventos' },
-  { name: 'Barra da Lagoa', reg: 'Leste', swell: ['L', 'ENE', 'NE'], wind: ['S'], max: 1, note: 'ondas amigáveis, longboard e iniciantes' },
-  { name: 'Moçambique', reg: 'Leste', swell: ['SE'], wind: ['O', 'NO'], max: 2, note: 'praia extensa, pouco crowd' },
-  { name: 'Campeche', reg: 'Sul', swell: ['S', 'SSE', 'SE'], wind: ['O'], max: 2, note: 'excelente formação, mar aberto' },
-  { name: 'Novo Campeche', reg: 'Sul', swell: ['S', 'SSE', 'SE'], wind: ['O'], max: 2, note: 'excelente formação, mar aberto' },
-  { name: 'Matadeiro', reg: 'Sul', swell: ['SE', 'ESE', 'L'], wind: ['SO'], max: 2, note: 'protegida, ondas de boa qualidade' },
-  { name: 'Lagoinha do Leste', reg: 'Sul', swell: ['S', 'SSE', 'SE', 'ESE', 'L'], wind: ['NE'], max: 2.5, note: 'acesso por trilha ou barco' },
-  { name: 'Praia Brava', reg: 'Norte', swell: ['L'], wind: ['O'], max: 2, note: 'mar forte, bastante volume' },
-  { name: 'Santinho', reg: 'Norte', swell: ['L'], wind: ['O', 'NO', 'SO'], max: 2, note: 'melhor no norte da praia' },
-  { name: 'Ingleses', reg: 'Norte', swell: ['SE', 'NE'], wind: ['SO', 'S'], max: 2, note: 'canto norte' }
+  { name: 'Joaquina', swell: 120, face: 100, note: 'aguenta tamanho' },
+  { name: 'Praia Mole', swell: 105, face: 95, note: 'ondas cavadas' },
+  { name: 'Campeche', swell: 150, face: 120, note: 'melhor com SE/S' },
+  { name: 'Santinho', swell: 65, face: 70, note: 'protegido do S, bom para longboard' },
+  { name: 'Moçambique', swell: 70, face: 80, note: 'exposto ao vento, melhor cedo' },
+  { name: 'Barra da Lagoa', swell: 100, face: 95, note: 'canto protegido' },
+  { name: 'Ingleses', swell: 55, face: 60, note: 'abrigada do vento sul' },
+  { name: 'Praia Brava', swell: 70, face: 65, note: 'ondas fortes' },
+  { name: 'Morro das Pedras', swell: 160, face: 130, note: 'pega muito swell de S' },
+  { name: 'Matadeiro', swell: 150, face: 115, note: 'bom com S/SE' }
 ];
-var DIRDEG = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, L: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSO: 202.5, SO: 225, OSO: 247.5, O: 270, ONO: 292.5, NO: 315, NNO: 337.5 };
-function nearDir(deg, list, tol) { return list.some(function (k) { return angDiff(deg, DIRDEG[k]) <= tol; }); }
-function notaHora(sp, x) {
-  var alt = x.swell || 0, per = x.swellPer || 0, w = x.wind || 0;
-  var swellOk = nearDir(x.swellDir, sp.swell, 25), windOk = nearDir(x.windDir, sp.wind, 25);
-  var against = sp.wind.every(function (k) { return angDiff(x.windDir, DIRDEG[k]) >= 135; });
-  var size = alt < 0.3 ? 0 : (alt < 0.5 ? (alt - 0.3) / 0.2 : (alt < 0.8 ? 1 + (alt - 0.5) / 0.3 : (alt < 1 ? 2 + (alt - 0.8) / 0.2 * 0.5 : (alt < 1.5 ? 2.5 + (alt - 1) * 2 : Math.min(4.5, 3.5 + (alt - 1.5) * 2)))));
-  if (alt > sp.max) size = Math.max(0, size - (alt - sp.max) * 5);
-  var pr = Math.max(0, Math.min(2.5, (per - 6) * 0.5));
-  var wind = windOk ? (w <= 25 ? 3 : Math.max(1, 3 - (w - 25) * 0.15)) : (w < 6 ? 2.5 : 1.5 - 0.09 * w - (against ? 1 : 0));
-  var n = size + pr + wind + (swellOk ? 1 : -2);
-  if (alt < 0.4) n = Math.min(n, 1.5);
-  return { n: Math.max(0, Math.min(10, Math.round(n * 2) / 2)), swellOk: swellOk, windOk: windOk, big: alt > sp.max };
-}
-function notaCor(n) { return n < 2 ? '#94A3B8' : (n < 5 ? '#EF4444' : (n < 6.5 ? '#F2A93B' : (n < 8.5 ? '#22C55E' : '#38BDF8'))); }
-var CONDS10 = function (n) { return n < 2 ? 'Ruim' : (n < 5 ? 'Fraca' : (n < 6.5 ? 'Regular' : (n < 8.5 ? 'Boa' : 'Clássica'))); };
+var CONDS = ['Ruim', 'Ruim', 'Regular', 'Boa', 'Muito boa', 'Clássica'];
 function scoreDay(d) {
   var hs = d.hours || []; if (hs.length < 3) return { picos: [], condition: '—' };
   var m = hs.slice(0, 3);
+  function avg(a, f) { return a.reduce(function (s, x) { return s + f(x); }, 0) / a.length; }
+  var mSw = avg(m, function (x) { return x.swell; }), mPer = avg(m, function (x) { return x.swellPer; }), mDir = m[1].swellDir;
+  var mWind = avg(m, function (x) { return x.wind; });
+  var size = mSw < 0.5 ? 0 : (mSw < 0.8 ? 0.4 : (mSw < 1.2 ? 0.9 : (mSw < 1.8 ? 1.4 : 1.8)));
+  var per = mPer < 7 ? 0 : (mPer < 9 ? 0.5 : (mPer < 11 ? 1 : 1.4));
   var picos = SPOTS.map(function (sp) {
-    var ns = m.map(function (x) { return notaHora(sp, x); });
-    var nota = Math.round(ns.reduce(function (s, r) { return s + r.n; }, 0) / ns.length * 2) / 2;
-    var bi = 0; ns.forEach(function (r, i) { if (r.n > ns[bi].n) bi = i; });
-    var r = ns[bi], x = m[bi];
-    var why = 'Swell ' + cardOf(x.swellDir) + (r.swellOk ? ' ✓' : ' ✗ (ideal ' + sp.swell.join('/') + ')') + ' · vento ' + cardOf(x.windDir) + (r.windOk ? ' ✓' : (x.wind < 6 ? ' fraco' : ' ✗ (ideal ' + sp.wind.join('/') + ')')) + (r.big ? ' · grande demais (até ' + String(sp.max).replace('.', ',') + ' m)' : '') + ' · melhor às ' + x.h + ' · ' + sp.reg + ', ' + sp.note;
-    return { name: sp.name, nota: nota, oficial: true, color: notaCor(nota), note: why };
-  }).sort(function (a, b) { return b.nota - a.nota; });
-  return { picos: picos, condition: CONDS10(picos[0].nota) };
+    var dd = angDiff(mDir, sp.swell);
+    var swF = dd <= 30 ? 1.2 : (dd <= 55 ? 0.6 : (dd <= 80 ? 0.1 : -0.5));
+    var wv = m.map(function (x) {
+      if (x.wind < 6) return 0.5;
+      var off = angDiff(x.windDir, (sp.face + 180) % 360), on = angDiff(x.windDir, sp.face), k = Math.min(1.5, x.wind / 12);
+      return off <= 45 ? 0.8 : (off <= 75 ? 0.4 : (on <= 45 ? -0.9 * k : (on <= 75 ? -0.5 * k : -0.15 * k)));
+    });
+    var wF = avg(wv, function (v) { return v; });
+    var sc = 1 + size + per + swF + wF;
+    if (sp.name === 'Joaquina' && mSw >= 1.2) sc += 0.3;
+    if (sp.name === 'Santinho' && mSw < 1) sc += 0.2;
+    if (sp.name === 'Moçambique') sc -= mWind > 15 ? 0.6 : 0;
+    if (sp.name === 'Barra da Lagoa' && mSw >= 1.4) sc += 0.3;
+    if (sp.name === 'Barra da Lagoa' && mSw < 0.8) sc -= 0.3;
+    if (sp.name === 'Morro das Pedras' && mSw >= 1.2) sc += 0.2;
+    var wTxt = wF >= 0.45 ? 'vento terral/fraco' : (wF >= 0 ? 'vento de lado' : (wF > -0.6 ? 'vento um pouco de frente' : 'vento de frente'));
+    var why = 'Swell ' + cardOf(mDir) + (dd <= 30 ? ' entra bem' : (dd <= 55 ? ' entra de lado' : ' quase não entra')) + ' · ' + wTxt;
+    return { name: sp.name, raw: sc, note: why };
+  }).sort(function (a, b) { return b.raw - a.raw; });
+  picos.forEach(function (p) { p.score = Math.max(1, Math.min(5, Math.round(p.raw))); });
+  var best = picos[0].raw;
+  if (mPer < 7) best = Math.min(best, 2.4);
+  if (mSw < 0.5) best = Math.min(best, 1.4);
+  return { picos: picos, condition: CONDS[Math.max(1, Math.min(5, Math.round(best)))] };
+}
+var WV_FACE = { 'joaquina': 150, 'mole-gravata': 90, 'mole': 110, 'novo-campeche': 120, 'barra-da-lagoa': 45, 'camping-da-barra': 45, 'campeche': 170, 'morro-das-pedras': 120, 'praia-do-caldeirao': 120, 'mocambique-meio': 110, 'mocambique': 110 };
+var WV_DEG = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, L: 90, E: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSO: 202.5, SO: 225, OSO: 247.5, O: 270, W: 270, ONO: 292.5, NO: 315, NNO: 337.5 };
+var WV_HRS = [6, 8, 10, 12, 14, 16, 18];
+function wvDeg(c) { return WV_DEG[c] != null ? WV_DEG[c] : 0; }
+function wvWind(slug, wdir, wind) {
+  var d = angDiff(wvDeg(wdir), WV_FACE[slug] || 120);
+  return d <= 50 ? 'maral' : (d >= 120 ? 'terral' : 'lateral');
+}
+function wvEst(slug, r) {
+  if (!r) return null;
+  var alt = r[0], per = r[1], wind = r[3], k = wvWind(slug, r[4], wind);
+  var size = alt < 0.3 ? 0 : (alt < 0.5 ? 1 : (alt < 0.8 ? 1 + (alt - 0.5) / 0.3 * 1.5 : (alt < 1.5 ? 2.5 + (alt - 0.8) / 0.7 * 2.5 : 5 + Math.min(1.5, (alt - 1.5) * 1.5))));
+  var pr = Math.max(0, Math.min(3, (per - 7) * 0.6));
+  var w = wind < 6 ? 0.5 : (k === 'terral' ? 1.5 : (k === 'lateral' ? -Math.min(1.5, wind / 15) : -(1 + Math.min(2.5, wind / 8))));
+  return Math.max(0, Math.min(10, size + pr + w));
+}
+function wvConds(n) { return n < 2 ? 'Ruim' : (n < 4 ? 'Regular' : (n < 6 ? 'Boa' : (n < 8 ? 'Muito boa' : 'Clássica'))); }
+function wavesDays(WV, omDays) {
+  if (!WV || !WV.picos || !WV.picos.length) return null;
+  var p2 = function (n) { return (n < 10 ? '0' : '') + n; };
+  var ref = WV.picos.filter(function (x) { return x.slug === 'joaquina'; })[0] || WV.picos[0];
+  var nDays = Math.floor(ref.rows.length / 7), base = new Date(Date.UTC(WV.year, WV.month - 1, WV.d0));
+  var om = {}; (omDays || []).forEach(function (d) { om[d.date] = d; });
+  var f1 = function (n) { return (Math.round(n * 10) / 10).toFixed(1).replace('.', ','); };
+  // calibração: diferença entre a nota oficial do Waves (manhã de hoje) e a estimativa
+  var off = {};
+  WV.picos.forEach(function (pc) {
+    var t = (pc.today || []).filter(function (x) { return x[0] === 6 || x[0] === 9; });
+    var e = [0, 1, 2].map(function (i) { return wvEst(pc.slug, pc.rows[i]); }).filter(function (v) { return v != null; });
+    if (t.length && e.length) off[pc.slug] = 0.5 * Math.max(-3, Math.min(3, t.reduce(function (s, x) { return s + x[1]; }, 0) / t.length - e.reduce(function (s, v) { return s + v; }, 0) / e.length));
+  });
+  var days = [];
+  for (var di = 0; di < nDays; di++) {
+    var dt = new Date(base.getTime() + di * 86400000), iso = dt.getUTCFullYear() + '-' + p2(dt.getUTCMonth() + 1) + '-' + p2(dt.getUTCDate());
+    var o = om[iso] || {}, oh = o.hours || [];
+    var hours = WV_HRS.map(function (h, hi) {
+      var r = ref.rows[di * 7 + hi] || ref.rows[di * 7] || [0, 0, 'L', 0, 'N'], x = oh[hi] || {};
+      return { h: p2(h) + 'h', swell: r[0], swellDir: wvDeg(r[2]), swellPer: r[1], wind: r[3], gust: x.gust != null ? x.gust : null, windDir: wvDeg(r[4]), rain: x.rain != null ? x.rain : null, cloud: x.cloud != null ? x.cloud : null };
+    });
+    var morning = [];
+    WV.picos.forEach(function (pc) { for (var i = 0; i < 3; i++) { var r = pc.rows[di * 7 + i]; if (r) morning.push(r[0]); } });
+    var lo = Math.min.apply(null, morning), hi = Math.max.apply(null, morning);
+    var picos = WV.picos.map(function (pc) {
+      var rs = [0, 1, 2].map(function (i) { return pc.rows[di * 7 + i]; }).filter(Boolean);
+      var r = rs[1] || rs[0];
+      var oficial = null;
+      if (di === 0) { var t = (pc.today || []).filter(function (x) { return x[0] === 6 || x[0] === 9; }); if (t.length) oficial = Math.round(t.reduce(function (s, x) { return s + x[1]; }, 0) / t.length * 2) / 2; }
+      var est = rs.map(function (x) { return wvEst(pc.slug, x); }).reduce(function (s, v) { return s + v; }, 0) / Math.max(1, rs.length) + (off[pc.slug] || 0);
+      var nota = oficial != null ? oficial : Math.max(0, Math.min(10, Math.round(est * 2) / 2));
+      var note = r ? f1(r[0]) + ' m · ' + Math.round(r[1]) + ' s ' + r[2] + ' · vento ' + r[4] + ' ' + r[3] + ' km/h (' + wvWind(pc.slug, r[4], r[3]) + ')' : '';
+      return { name: pc.name, slug: pc.slug, nota: nota, oficial: oficial != null, note: note + (oficial != null ? ' · nota Waves' : ' · estimativa') };
+    }).sort(function (a, b) { return b.nota - a.nota; });
+    var r8 = ref.rows[di * 7 + 1] || ref.rows[di * 7];
+    var tl = (WV.tides || {})[dt.getUTCDate()] || [], tides = [];
+    for (var k = 0; k < tl.length && tides.length < 2; k++) {
+      var hh = +tl[k][0].slice(0, 2), nowH = new Date().getHours();
+      if (di === 0 ? hh < nowH : hh < 5) continue;
+      var prev = tl[k - 1], next = tl[k + 1], v = tl[k][1];
+      var alta = (!prev || v > prev[1]) && (!next || v > next[1]);
+      tides.push({ k: alta ? 'MARÉ ALTA' : 'MARÉ BAIXA', v: tl[k][0], s: f1(v) + ' m' });
+    }
+    if (!tides.length && o.tides) tides = o.tides;
+    days.push({
+      date: iso, waveRange: f1(lo) + '–' + f1(hi) + ' m', swellTxt: r8 ? r8[2] + ' · ' + Math.round(r8[1]) + ' s' : '—',
+      windTxt: r8 ? r8[4] + ' ' + r8[3] + ' km/h' : '—', water: o.water || '—',
+      summary: 'Joaquina de manhã: vento ' + (r8 ? r8[4] + ' ' + r8[3] + ' km/h (' + wvWind('joaquina', r8[4], r8[3]) + ')' : '—') + ' · melhor pico: ' + picos[0].name + ' (' + String(picos[0].nota).replace('.', ',') + ')',
+      hours: hours, tides: tides, sunrise: o.sunrise, sunset: o.sunset, wvPicos: picos
+    });
+  }
+  return { updated: WV.updated, days: days, waves: true };
 }
 class Component extends DCLogic {
   renderVals() {
@@ -260,7 +334,10 @@ class Component extends DCLogic {
         .then(function (res) { var d = buildDays(res[0], res[1]); if (d && d.days.length) self.setState({ live: d, liveFail: false, refreshing: false }); else self.setState({ refreshing: false, liveFail: true }); })
         .catch(function () { self.setState({ liveFail: true, refreshing: false }); });
     }
-    if (!this._liveStarted) { this._liveStarted = true; loadLive(); }
+    function loadWaves() {
+      fetch('waves.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j) self.setState({ wv: j }); }).catch(function () {});
+    }
+    if (!this._liveStarted) { this._liveStarted = true; loadLive(); loadWaves(); }
     var DATA = {"updated":"10/10 20:42","days":[{"date":"2026-10-10","waveRange":"0,9–1,1 m","swellTxt":"ESE · 7 s","windTxt":"SSE 8 km/h","water":"20,7 °C","summary":"Manhã terral (O 4 km/h) · à tarde vira lateral (NNO) · chuva 5,6 mm no dia","hours":[{"h":"06h","swell":1.1,"swellDir":102,"swellPer":7.2,"wind":4,"gust":8,"windDir":279,"rain":0,"cloud":89},{"h":"08h","swell":1.1,"swellDir":103,"swellPer":7.1,"wind":3,"gust":13,"windDir":24,"rain":0,"cloud":88},{"h":"10h","swell":1,"swellDir":103,"swellPer":7,"wind":4,"gust":14,"windDir":61,"rain":0,"cloud":99},{"h":"12h","swell":1,"swellDir":103,"swellPer":7,"wind":9,"gust":22,"windDir":125,"rain":0.2,"cloud":98},{"h":"14h","swell":1,"swellDir":103,"swellPer":6.9,"wind":17,"gust":44,"windDir":157,"rain":5.2,"cloud":100},{"h":"16h","swell":1,"swellDir":103,"swellPer":6.8,"wind":7,"gust":25,"windDir":138,"rain":0.2,"cloud":100},{"h":"18h","swell":0.9,"swellDir":102,"swellPer":6.7,"wind":3,"gust":7,"windDir":343,"rain":0,"cloud":100}],"tides":[{"k":"MARÉ ALTA","v":"01:00 (+1)","s":"0,5 m"},{"k":"MARÉ BAIXA","v":"08:00 (+1)","s":"−0,2 m"}],"sunrise":"05:43","sunset":"18:19"},{"date":"2026-10-11","waveRange":"1,2–1,3 m","swellTxt":"ESE · 7 s","windTxt":"SSE 17 km/h","water":"19,6 °C","summary":"Manhã lateral (SSE 17 km/h) · tarde parecida · chuva 1,6 mm no dia","hours":[{"h":"06h","swell":0.7,"swellDir":96,"swellPer":6.3,"wind":17,"gust":35,"windDir":158,"rain":0,"cloud":100},{"h":"08h","swell":0.6,"swellDir":117,"swellPer":6.5,"wind":17,"gust":37,"windDir":163,"rain":0,"cloud":100},{"h":"10h","swell":0.6,"swellDir":143,"swellPer":7.3,"wind":16,"gust":36,"windDir":162,"rain":0,"cloud":100},{"h":"12h","swell":0.5,"swellDir":174,"swellPer":8.4,"wind":16,"gust":36,"windDir":161,"rain":0,"cloud":100},{"h":"14h","swell":0.6,"swellDir":141,"swellPer":7.8,"wind":16,"gust":35,"windDir":146,"rain":0.3,"cloud":100},{"h":"16h","swell":0.6,"swellDir":140,"swellPer":7.6,"wind":17,"gust":37,"windDir":164,"rain":0.2,"cloud":100},{"h":"18h","swell":0.6,"swellDir":173,"swellPer":8.1,"wind":13,"gust":34,"windDir":163,"rain":0.2,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"08:00","s":"−0,2 m"},{"k":"MARÉ ALTA","v":"13:00","s":"0,4 m"}],"sunrise":"05:42","sunset":"18:19"},{"date":"2026-10-12","waveRange":"0,9–1,0 m","swellTxt":"SSE · 5 s","windTxt":"S 8 km/h","water":"19,3 °C","summary":"Manhã lateral (S 8 km/h) · à tarde vira maral (ENE) · chuva 7,1 mm no dia","hours":[{"h":"06h","swell":0.7,"swellDir":166,"swellPer":5,"wind":8,"gust":12,"windDir":170,"rain":0.2,"cloud":100},{"h":"08h","swell":0.7,"swellDir":166,"swellPer":4.9,"wind":8,"gust":18,"windDir":169,"rain":0,"cloud":100},{"h":"10h","swell":0.7,"swellDir":168,"swellPer":4.9,"wind":4,"gust":16,"windDir":171,"rain":0,"cloud":100},{"h":"12h","swell":0.7,"swellDir":172,"swellPer":5,"wind":2,"gust":13,"windDir":119,"rain":0,"cloud":99},{"h":"14h","swell":0.6,"swellDir":171,"swellPer":6.3,"wind":6,"gust":18,"windDir":72,"rain":0,"cloud":100},{"h":"16h","swell":0.6,"swellDir":160,"swellPer":6.7,"wind":9,"gust":24,"windDir":102,"rain":0,"cloud":100},{"h":"18h","swell":0.6,"swellDir":138,"swellPer":6.2,"wind":2,"gust":10,"windDir":63,"rain":0.1,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"08:00","s":"−0,1 m"},{"k":"MARÉ ALTA","v":"14:00","s":"0,4 m"}],"sunrise":"05:41","sunset":"18:20"},{"date":"2026-10-13","waveRange":"0,9–1,0 m","swellTxt":"SSE · 7 s","windTxt":"N 7 km/h","water":"19,5 °C","summary":"Manhã lateral (NNO 3 km/h) · à tarde vira terral (ONO) · chuva 14,5 mm no dia","hours":[{"h":"06h","swell":0.6,"swellDir":139,"swellPer":6.3,"wind":3,"gust":17,"windDir":345,"rain":3.5,"cloud":91},{"h":"08h","swell":0.5,"swellDir":161,"swellPer":7.2,"wind":7,"gust":17,"windDir":354,"rain":0,"cloud":100},{"h":"10h","swell":0.5,"swellDir":170,"swellPer":7.8,"wind":12,"gust":30,"windDir":1,"rain":0.1,"cloud":100},{"h":"12h","swell":0.5,"swellDir":165,"swellPer":8,"wind":17,"gust":40,"windDir":9,"rain":0,"cloud":93},{"h":"14h","swell":0.5,"swellDir":167,"swellPer":7.8,"wind":17,"gust":43,"windDir":33,"rain":0.1,"cloud":100},{"h":"16h","swell":0.6,"swellDir":167,"swellPer":7.8,"wind":11,"gust":26,"windDir":7,"rain":1.3,"cloud":99},{"h":"18h","swell":0.6,"swellDir":166,"swellPer":8,"wind":2,"gust":12,"windDir":288,"rain":0,"cloud":99}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"−0,1 m"},{"k":"MARÉ ALTA","v":"14:00","s":"0,3 m"}],"sunrise":"05:40","sunset":"18:21"},{"date":"2026-10-14","waveRange":"1,1–1,3 m","swellTxt":"SSE · 6 s","windTxt":"S 4 km/h","water":"19,7 °C","summary":"Manhã maral (ESE 3 km/h) · à tarde vira lateral (SSE) · chuva 3,9 mm no dia","hours":[{"h":"06h","swell":0.9,"swellDir":160,"swellPer":6.4,"wind":3,"gust":11,"windDir":112,"rain":0,"cloud":95},{"h":"08h","swell":1,"swellDir":156,"swellPer":6.4,"wind":4,"gust":16,"windDir":183,"rain":0,"cloud":83},{"h":"10h","swell":1,"swellDir":153,"swellPer":6.5,"wind":8,"gust":23,"windDir":172,"rain":0,"cloud":59},{"h":"12h","swell":1,"swellDir":151,"swellPer":6.6,"wind":14,"gust":34,"windDir":150,"rain":0,"cloud":36},{"h":"14h","swell":1,"swellDir":148,"swellPer":6.6,"wind":23,"gust":51,"windDir":161,"rain":0,"cloud":69},{"h":"16h","swell":1.1,"swellDir":146,"swellPer":6.5,"wind":24,"gust":59,"windDir":164,"rain":0,"cloud":94},{"h":"18h","swell":1.2,"swellDir":143,"swellPer":6.2,"wind":18,"gust":57,"windDir":165,"rain":0,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"0,0 m"},{"k":"MARÉ ALTA","v":"14:00","s":"0,2 m"}],"sunrise":"05:39","sunset":"18:21"},{"date":"2026-10-15","waveRange":"1,5–1,8 m","swellTxt":"SE · 6 s","windTxt":"S 11 km/h","water":"19,7 °C","summary":"Manhã lateral (S 10 km/h) · à tarde vira maral (SE) · chuva 21,6 mm no dia","hours":[{"h":"06h","swell":1.4,"swellDir":134,"swellPer":6.2,"wind":10,"gust":28,"windDir":183,"rain":0.9,"cloud":73},{"h":"08h","swell":1.4,"swellDir":134,"swellPer":6.3,"wind":11,"gust":27,"windDir":172,"rain":0.6,"cloud":92},{"h":"10h","swell":1.4,"swellDir":133,"swellPer":6.3,"wind":13,"gust":31,"windDir":158,"rain":0,"cloud":99},{"h":"12h","swell":1.3,"swellDir":132,"swellPer":6.3,"wind":16,"gust":37,"windDir":147,"rain":0.1,"cloud":90},{"h":"14h","swell":1.4,"swellDir":132,"swellPer":6.3,"wind":20,"gust":43,"windDir":146,"rain":0.2,"cloud":97},{"h":"16h","swell":1.4,"swellDir":135,"swellPer":6.5,"wind":22,"gust":48,"windDir":142,"rain":1.6,"cloud":100},{"h":"18h","swell":1.4,"swellDir":140,"swellPer":6.9,"wind":23,"gust":51,"windDir":134,"rain":2.3,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"0,0 m"},{"k":"MARÉ ALTA","v":"15:00","s":"0,2 m"}],"sunrise":"05:38","sunset":"18:22"},{"date":"2026-10-16","waveRange":"2,0–2,2 m","swellTxt":"SE · 7 s","windTxt":"ESE 19 km/h","water":"19,9 °C","summary":"Manhã maral (SE 16 km/h) · tarde parecida · chuva 52,7 mm no dia","hours":[{"h":"06h","swell":1.9,"swellDir":121,"swellPer":7,"wind":16,"gust":37,"windDir":129,"rain":4.6,"cloud":100},{"h":"08h","swell":1.7,"swellDir":125,"swellPer":7,"wind":19,"gust":37,"windDir":122,"rain":0.8,"cloud":100},{"h":"10h","swell":1.6,"swellDir":121,"swellPer":6.9,"wind":19,"gust":38,"windDir":117,"rain":1,"cloud":100},{"h":"12h","swell":1.4,"swellDir":110,"swellPer":6.6,"wind":19,"gust":41,"windDir":117,"rain":1,"cloud":100},{"h":"14h","swell":1.6,"swellDir":113,"swellPer":6.6,"wind":19,"gust":43,"windDir":120,"rain":1,"cloud":100},{"h":"16h","swell":1.7,"swellDir":115,"swellPer":6.6,"wind":18,"gust":44,"windDir":121,"rain":2.2,"cloud":100},{"h":"18h","swell":1.7,"swellDir":116,"swellPer":6.6,"wind":18,"gust":42,"windDir":123,"rain":2.2,"cloud":100}],"tides":[{"k":"MARÉ BAIXA","v":"09:00","s":"0,1 m"},{"k":"MARÉ ALTA","v":"15:00","s":"0,2 m"}],"sunrise":"05:37","sunset":"18:22"}]};
     var SAMPLE_DAY = {
       date: '', updated: '',
@@ -288,12 +365,13 @@ class Component extends DCLogic {
     var S = st.live || ((DATA && DATA.date) ? DATA : SAMPLE), live = !!(st.live || (DATA && DATA.date)), realtime = !!st.live;
     var SAMPLE = { updated: '', days: [SAMPLE_DAY] };
     var SRC = st.live || ((DATA && DATA.days && DATA.days.length) ? DATA : SAMPLE), live = SRC !== SAMPLE, realtime = !!st.live;
+    var OM = SRC; var WVD = wavesDays(st.wv, (st.live || DATA || {}).days); var tIso0 = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10); if (WVD && WVD.days.filter(function (d) { return d.date >= tIso0; }).length >= 2) { SRC = WVD; live = true; }
     var pad2 = function (n) { return (n < 10 ? '0' : '') + n; }, nowD = new Date();
     var todayIso = nowD.getFullYear() + '-' + pad2(nowD.getMonth() + 1) + '-' + pad2(nowD.getDate());
     var allDays = SRC.days.filter(function (d) { return !d.date || d.date >= todayIso; }).slice(0, 7);
     if (!allDays.length) allDays = SRC.days.slice(-1);
     var di = Math.max(0, Math.min(allDays.length - 1, st.day || 0));
-    var S = allDays[di], SC = scoreDay(S);
+    var S = allDays[di], SC = S.wvPicos ? { picos: S.wvPicos, condition: wvConds(S.wvPicos[0].nota) } : scoreDay(S);
     S.updated = SRC.updated;
     var WDL = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
     var dayTabs = allDays.map(function (d, i) {
@@ -320,7 +398,7 @@ class Component extends DCLogic {
     var picos = (SC.picos || []).map(function (p, i) {
       if (p.nota != null) {
         var n5 = Math.max(0, Math.min(5, Math.round(p.nota / 2)));
-        return { disp: (i < 5 || st.morePicos) ? 'flex' : 'none', n: String(i + 1), name: p.name, note: p.note, grade: String(p.nota).replace('.', ','), gc: p.color, dots: '●●●●●'.slice(0, n5) + '○○○○○'.slice(0, 5 - n5), bc: i === 0 ? '#4CC3B5' : 'transparent', nc: i === 0 ? '#4CC3B5' : '#9DACA6' };
+        return { disp: (i < 5 || st.morePicos) ? 'flex' : 'none', n: String(i + 1), name: p.name, note: p.note, grade: String(p.nota).replace('.', ',') + (p.oficial ? '' : '*'), dots: '●●●●●'.slice(0, n5) + '○○○○○'.slice(0, 5 - n5), bc: i === 0 ? '#4CC3B5' : 'transparent', nc: i === 0 ? '#4CC3B5' : '#9DACA6' };
       }
       var sc = Math.max(0, Math.min(5, Math.round(p.score)));
       return { disp: (i < 5 || st.morePicos) ? 'flex' : 'none', n: String(i + 1), name: p.name, note: p.note, grade: (Math.round(Math.max(1, Math.min(5, p.raw)) * 10) / 10).toFixed(1).replace('.', ','), dots: '●●●●●'.slice(0, sc) + '○○○○○'.slice(0, 5 - sc), bc: i === 0 ? '#4CC3B5' : 'transparent', nc: i === 0 ? '#4CC3B5' : '#9DACA6' };
@@ -332,7 +410,7 @@ class Component extends DCLogic {
       dateLabel: dateLabel, badge: st.refreshing ? 'Atualizando…' : ((realtime ? 'Ao vivo · ' + (S.updated || '').slice(6) : (live ? 'Atualizado ' + (S.updated || '') : 'Dados de exemplo')) + ' ↻'), refreshNow: function () { if (st.refreshing) return; self.setState({ refreshing: true }); loadLive(); }, badgeColor: live ? '#4CC3B5' : '#9DACA6', badgeBorder: live ? 'solid' : 'dashed',
       waveRange: S.waveRange, condition: SC.condition, dayTabs: dayTabs, dayName: dayName.toLowerCase() === 'hoje' || dayName === 'Amanhã' ? dayName.toLowerCase() : dateLabel, swellTxt: S.swellTxt, windTxt: S.windTxt, water: S.water, summary: S.summary,
       swellBars: swellBars, windBars: windBars, tiles: tiles, picos: picos, moreDisp: picos.length > 5 ? 'block' : 'none', moreLabel: st.morePicos ? 'Ver menos' : 'Ver mais', toggleMore: function () { self.setState({ morePicos: !st.morePicos }); },
-      source: 'Notas de 0 a 10 pelas condições ideais de cada praia (swell, vento e tamanho), média da manhã. ' + (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
+      source: SRC.waves ? 'Fonte: Waves (picos, ondas, vento e maré · atualizado ' + SRC.updated + ') + Open-Meteo (chuva, nuvens, água e sol). Notas de 0 a 10: hoje é a nota oficial do Waves para a manhã; * = estimativa calibrada pela nota de hoje.' : (live ? 'Fonte: Open-Meteo (ondas, vento, maré e chuva). Previsão de ' + allDays.length + ' dias; mostrando ' + dateLabel + '.' : 'Aguardando a primeira atualização.') + (realtime ? ' Buscado agora, ao abrir a tela.' : (st.liveFail ? ' Sem acesso direto à previsão daqui; mostrando a última atualização automática.' : ''))
     };
   }
 }
