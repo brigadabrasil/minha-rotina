@@ -72,7 +72,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </div>
 <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">{{tdTitle}}</span><button onClick="{{tdSwap}}" aria-label="Trocar para outros mestres" style="display: {{tdSwapDisp}}; min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outros mestres</button></div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
-<sc-for list="{{tdToques}}" as="x" hint-placeholder-count="2"><button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="min-height: 56px; padding: 8px 10px; border-radius: 12px; border: 1px solid {{x.bd}}; background: {{x.bg}}; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 8px"><span style="width: 30px; height: 30px; flex-shrink: 0; border-radius: 99px; background: #F2A93B; color: #1A1205; display: flex; align-items: center; justify-content: center; font-size: 12px">{{x.icon}}</span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 700; font-size: 13px">{{x.name}}</span><span style="font-size: 11px; color: #9DACA6">{{x.sub}}</span></span></button></sc-for>
+<sc-for list="{{tdToques}}" as="x" hint-placeholder-count="2"><button onClick="{{x.pick}}" data-stop-audio="1" aria-pressed="{{x.on}}" style="min-height: 56px; padding: 8px 10px; border-radius: 12px; border: 1px solid {{x.bd}}; background: {{x.bg}}; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 8px"><span style="width: 30px; height: 30px; flex-shrink: 0; border-radius: 99px; background: #F2A93B; color: #1A1205; display: flex; align-items: center; justify-content: center; font-size: 12px">{{x.icon}}</span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 700; font-size: 13px">{{x.name}}</span><span style="font-size: 11px; color: #9DACA6">{{x.sub}}</span></span></button></sc-for>
 </div>
 <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 11px; font-weight: 700; color: #9DACA6; letter-spacing: 1px">MÚSICAS COM ESTE TOQUE</span><button onClick="{{tdSongSwap}}" aria-label="Trocar músicas" style="min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outras músicas</button></div>
 <div style="display: flex; flex-direction: column; gap: 8px">
@@ -138,12 +138,12 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #1D2925">
 <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">{{toqueName}}</span><span style="font-size: 12px; color: #9DACA6">{{toqueMestre}}</span></div>
 <audio controls autoplay dc-src="{{toqueSrc}}" style="width: 100%; height: 44px"></audio>
-<sc-if value="{{toqueMulti}}" hint-placeholder-val="{{true}}"><div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; color: #9DACA6">{{toqueCount}}</span><button onClick="{{toqueSwap}}" aria-label="Ouvir outro mestre" style="min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outro mestre</button></div></sc-if>
+<sc-if value="{{toqueMulti}}" hint-placeholder-val="{{true}}"><div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; color: #9DACA6">{{toqueCount}}</span><button onClick="{{toqueSwap}}" data-stop-audio="1" aria-label="Ouvir outro mestre" style="min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outro mestre</button></div></sc-if>
 </div>
 </sc-if>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
 <sc-for list="{{toques}}" as="tq" hint-placeholder-count="20">
-<button onClick="{{tq.pick}}" aria-pressed="{{tq.on}}" style="padding: 12px; min-height: 64px; border-radius: 14px; background: {{tq.bg}}; border: 1px solid {{tq.bd}}; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer; display: {{tq.disp}}; justify-content: space-between; align-items: center; gap: 8px"><span style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px">{{tq.name}}</span><span style="font-size: 12px; color: #9DACA6">{{tq.sub}}</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="10"></circle><path d="M10 8l6 4-6 4Z"></path></svg></button>
+<button onClick="{{tq.pick}}" data-stop-audio="1" aria-pressed="{{tq.on}}" style="padding: 12px; min-height: 64px; border-radius: 14px; background: {{tq.bg}}; border: 1px solid {{tq.bd}}; color: #EEF3F0; font-family: inherit; text-align: left; cursor: pointer; display: {{tq.disp}}; justify-content: space-between; align-items: center; gap: 8px"><span style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px">{{tq.name}}</span><span style="font-size: 12px; color: #9DACA6">{{tq.sub}}</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="10"></circle><path d="M10 8l6 4-6 4Z"></path></svg></button>
 </sc-for>
 </div>
 <button onClick="{{tqMoreToggle}}" style="padding: 12px; border-radius: 14px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">{{tqMoreLabel}}</button>
@@ -221,17 +221,28 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":4250}}'>
-/* Um áudio por vez: tocar um pausa os outros; player escondido ou removido para de tocar. */
+/* Um áudio por vez: tocar um pausa os outros; trocar de mestre/música ou fechar o player para o som. */
 (function () {
-  if (window.__mrMedia) return; window.__mrMedia = 1;
+  if (window.__mrMedia2) return; window.__mrMedia2 = 1; window.__mrMedia = 1;
   var playing = [];
-  function hidden(m) { return !m.isConnected || !m.getClientRects().length; }
-  function stopOthers(t) { Array.prototype.slice.call(document.querySelectorAll('audio,video')).concat(playing).forEach(function (m) { if (m !== t && !m.paused) try { m.pause(); } catch (e) {} }); }
-  document.addEventListener('play', function (e) { var t = e.target; if (!t || !/^(AUDIO|VIDEO)$/.test(t.tagName)) return; stopOthers(t); if (playing.indexOf(t) < 0) playing.push(t); }, true);
+  function list() { return Array.prototype.slice.call(document.querySelectorAll('audio,video')).concat(playing); }
+  function stop(m) { try { if (!m.paused) m.pause(); } catch (e) {} }
+  function stopAll(except) { list().forEach(function (m) { if (m !== except) stop(m); }); }
+  window.mrStopAll = stopAll;
+  function onPlay(e) { var t = e.target; if (!t || !/^(AUDIO|VIDEO)$/.test(t.tagName)) return; stopAll(t); if (playing.indexOf(t) < 0) playing.push(t); }
+  document.addEventListener('play', onPlay, true);
+  document.addEventListener('playing', onPlay, true);
+  function onTap(e) { var t = e.target; if (t && t.closest && t.closest('[data-stop-audio]')) stopAll(); }
+  document.addEventListener('pointerdown', onTap, true);
+  document.addEventListener('click', onTap, true);
   setInterval(function () {
-    playing = playing.filter(function (m) { if (m.paused) return false; if (hidden(m)) { try { m.pause(); } catch (e) {} return false; } return true; });
-  }, 250);
+    var vis = list().filter(function (m) { return !m.paused; });
+    vis.forEach(function (m) { if (!m.isConnected || !m.getClientRects().length) stop(m); });
+    playing = list().filter(function (m) { return !m.paused; }).filter(function (m, i, a) { return a.indexOf(m) === i; });
+    if (playing.length > 1) playing.slice(0, -1).forEach(stop);
+  }, 200);
 })();
+
 
 class Component extends DCLogic {
   renderVals() {

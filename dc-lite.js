@@ -7,16 +7,26 @@
   var PERSIST = ['pics', 'done', 'hk'];
   var KEY = 'mr:' + location.pathname.split('/').pop();
 
-  /* Um áudio por vez: tocar um pausa os outros; player escondido ou removido para de tocar. */
+  /* Um áudio por vez: tocar um pausa os outros; trocar de mestre/música ou fechar o player para o som. */
 (function () {
-  if (window.__mrMedia) return; window.__mrMedia = 1;
+  if (window.__mrMedia2) return; window.__mrMedia2 = 1; window.__mrMedia = 1;
   var playing = [];
-  function hidden(m) { return !m.isConnected || !m.getClientRects().length; }
-  function stopOthers(t) { Array.prototype.slice.call(document.querySelectorAll('audio,video')).concat(playing).forEach(function (m) { if (m !== t && !m.paused) try { m.pause(); } catch (e) {} }); }
-  document.addEventListener('play', function (e) { var t = e.target; if (!t || !/^(AUDIO|VIDEO)$/.test(t.tagName)) return; stopOthers(t); if (playing.indexOf(t) < 0) playing.push(t); }, true);
+  function list() { return Array.prototype.slice.call(document.querySelectorAll('audio,video')).concat(playing); }
+  function stop(m) { try { if (!m.paused) m.pause(); } catch (e) {} }
+  function stopAll(except) { list().forEach(function (m) { if (m !== except) stop(m); }); }
+  window.mrStopAll = stopAll;
+  function onPlay(e) { var t = e.target; if (!t || !/^(AUDIO|VIDEO)$/.test(t.tagName)) return; stopAll(t); if (playing.indexOf(t) < 0) playing.push(t); }
+  document.addEventListener('play', onPlay, true);
+  document.addEventListener('playing', onPlay, true);
+  function onTap(e) { var t = e.target; if (t && t.closest && t.closest('[data-stop-audio]')) stopAll(); }
+  document.addEventListener('pointerdown', onTap, true);
+  document.addEventListener('click', onTap, true);
   setInterval(function () {
-    playing = playing.filter(function (m) { if (m.paused) return false; if (hidden(m)) { try { m.pause(); } catch (e) {} return false; } return true; });
-  }, 250);
+    var vis = list().filter(function (m) { return !m.paused; });
+    vis.forEach(function (m) { if (!m.isConnected || !m.getClientRects().length) stop(m); });
+    playing = list().filter(function (m) { return !m.paused; }).filter(function (m, i, a) { return a.indexOf(m) === i; });
+    if (playing.length > 1) playing.slice(0, -1).forEach(stop);
+  }, 200);
 })();
 
   function DCLogic(props) { this.props = props || {}; this.state = {}; }
@@ -110,7 +120,9 @@
     out.push(el);
   }
 
+  function hush(node) { if (node && node.nodeType === 1) { var ms = /^(audio|video)$/.test(node.localName) ? [node] : node.querySelectorAll('audio,video'); for (var i = 0; i < ms.length; i++) try { ms[i].pause(); } catch (e) {} } }
   function sameAttrs(o, n) {
+    if (/^(audio|video)$/.test(o.localName) && o.getAttribute('src') !== n.getAttribute('src')) hush(o);
     var na = n.attributes, oa = o.attributes, i;
     for (i = oa.length - 1; i >= 0; i--) { var nm = oa[i].name; if (!n.hasAttribute(nm)) o.removeAttribute(nm); }
     for (i = 0; i < na.length; i++) { if (o.getAttribute(na[i].name) !== na[i].value) o.setAttribute(na[i].name, na[i].value); }
@@ -132,9 +144,9 @@
       var o = olds[i], n = list[i];
       if (!o) parent.appendChild(n);
       else if (same(o, n)) morphNode(o, n);
-      else parent.replaceChild(n, o);
+      else { hush(o); parent.replaceChild(n, o); }
     }
-    while (parent.childNodes.length > list.length) parent.removeChild(parent.lastChild);
+    while (parent.childNodes.length > list.length) { hush(parent.lastChild); parent.removeChild(parent.lastChild); }
   }
 
   var root, tpl = [], comp, pending = false, rendering = false;
