@@ -86,7 +86,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
 <div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
 <sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
-<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+<div data-ap="{{it.ap.src}}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 4px 10px 4px 4px; border-radius: 99px; background: #0E1513; border: 1px solid #2A3833"><button onClick="{{it.ap.toggle}}" aria-label="{{it.ap.label}}" style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 99px; border: 0; background: #F2A93B; color: #1A1205; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer">{{it.ap.icon}}</button><div data-seek="1" onClick="{{it.ap.seek}}" style="flex-grow: 1; height: 32px; display: flex; align-items: center; cursor: pointer"><div style="width: 100%; height: 6px; border-radius: 99px; background: #2A3833; overflow: hidden; pointer-events: none"><div style="width: {{it.ap.pct}}%; height: 100%; background: #F2A93B"></div></div></div><span style="flex-shrink: 0; min-width: 72px; text-align: right; font-size: 12px; color: #9DACA6; font-variant-numeric: tabular-nums">{{it.ap.time}}</span></div>
 </sc-if>
 <div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
 <sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
@@ -111,7 +111,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </div>
 <div style="display: {{tdDisp}}; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #121B18">
 <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">{{tdName}}</span><span style="font-size: 12px; color: #9DACA6">{{tdWho}}</span></div>
-<sc-if value="{{tdOn}}" hint-placeholder-val="{{false}}"><audio controls autoplay dc-src="{{tdSrc}}" style="width: 100%; height: 44px"></audio></sc-if>
+<sc-if value="{{tdOn}}" hint-placeholder-val="{{false}}"><div data-ap="{{tdAp.src}}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 4px 10px 4px 4px; border-radius: 99px; background: #0E1513; border: 1px solid #2A3833"><button onClick="{{tdAp.toggle}}" aria-label="{{tdAp.label}}" style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 99px; border: 0; background: #F2A93B; color: #1A1205; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer">{{tdAp.icon}}</button><div data-seek="1" onClick="{{tdAp.seek}}" style="flex-grow: 1; height: 32px; display: flex; align-items: center; cursor: pointer"><div style="width: 100%; height: 6px; border-radius: 99px; background: #2A3833; overflow: hidden; pointer-events: none"><div style="width: {{tdAp.pct}}%; height: 100%; background: #F2A93B"></div></div></div><span style="flex-shrink: 0; min-width: 72px; text-align: right; font-size: 12px; color: #9DACA6; font-variant-numeric: tabular-nums">{{tdAp.time}}</span></div></sc-if>
 </div>
 </section>
 
@@ -137,7 +137,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <sc-if value="{{toqueOn}}" hint-placeholder-val="{{false}}">
 <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #1D2925">
 <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 700">{{toqueName}}</span><span style="font-size: 12px; color: #9DACA6">{{toqueMestre}}</span></div>
-<audio controls autoplay dc-src="{{toqueSrc}}" style="width: 100%; height: 44px"></audio>
+<div data-ap="{{toqueAp.src}}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 4px 10px 4px 4px; border-radius: 99px; background: #0E1513; border: 1px solid #2A3833"><button onClick="{{toqueAp.toggle}}" aria-label="{{toqueAp.label}}" style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 99px; border: 0; background: #F2A93B; color: #1A1205; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer">{{toqueAp.icon}}</button><div data-seek="1" onClick="{{toqueAp.seek}}" style="flex-grow: 1; height: 32px; display: flex; align-items: center; cursor: pointer"><div style="width: 100%; height: 6px; border-radius: 99px; background: #2A3833; overflow: hidden; pointer-events: none"><div style="width: {{toqueAp.pct}}%; height: 100%; background: #F2A93B"></div></div></div><span style="flex-shrink: 0; min-width: 72px; text-align: right; font-size: 12px; color: #9DACA6; font-variant-numeric: tabular-nums">{{toqueAp.time}}</span></div>
 <sc-if value="{{toqueMulti}}" hint-placeholder-val="{{true}}"><div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; color: #9DACA6">{{toqueCount}}</span><button onClick="{{toqueSwap}}" data-stop-audio="1" aria-label="Ouvir outro mestre" style="min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid #2A3833; background: transparent; color: #F2A93B; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer">⇄ Outro mestre</button></div></sc-if>
 </div>
 </sc-if>
@@ -186,7 +186,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
 <div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
 <sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
-<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+<div data-ap="{{it.ap.src}}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 4px 10px 4px 4px; border-radius: 99px; background: #0E1513; border: 1px solid #2A3833"><button onClick="{{it.ap.toggle}}" aria-label="{{it.ap.label}}" style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 99px; border: 0; background: #F2A93B; color: #1A1205; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer">{{it.ap.icon}}</button><div data-seek="1" onClick="{{it.ap.seek}}" style="flex-grow: 1; height: 32px; display: flex; align-items: center; cursor: pointer"><div style="width: 100%; height: 6px; border-radius: 99px; background: #2A3833; overflow: hidden; pointer-events: none"><div style="width: {{it.ap.pct}}%; height: 100%; background: #F2A93B"></div></div></div><span style="flex-shrink: 0; min-width: 72px; text-align: right; font-size: 12px; color: #9DACA6; font-variant-numeric: tabular-nums">{{it.ap.time}}</span></div>
 </sc-if>
 <div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
 <sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
@@ -221,31 +221,44 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":4250}}'>
-/* Um áudio por vez: tocar um pausa os outros; trocar de mestre/música ou fechar o player para o som. */
+/* Player único: só existe UM áudio na tela; tocar outro troca a faixa, e ele para quando o mini player some. */
 (function () {
-  if (window.__mrMedia2) return; window.__mrMedia2 = 1; window.__mrMedia = 1;
-  var playing = [];
-  function list() { return Array.prototype.slice.call(document.querySelectorAll('audio,video')).concat(playing); }
-  function stop(m) { try { if (!m.paused) m.pause(); } catch (e) {} }
-  function stopAll(except) { list().forEach(function (m) { if (m !== except) stop(m); }); }
-  window.mrStopAll = stopAll;
-  function onPlay(e) { var t = e.target; if (!t || !/^(AUDIO|VIDEO)$/.test(t.tagName)) return; stopAll(t); if (playing.indexOf(t) < 0) playing.push(t); }
-  document.addEventListener('play', onPlay, true);
-  document.addEventListener('playing', onPlay, true);
-  function onTap(e) { var t = e.target; if (t && t.closest && t.closest('[data-stop-audio]')) stopAll(); }
-  document.addEventListener('pointerdown', onTap, true);
-  document.addEventListener('click', onTap, true);
+  if (window.mrPlayer) return;
+  var a = new Audio(); a.preload = 'auto';
+  var P = window.mrPlayer = { src: '', comps: [] };
+  function ping() { P.comps.forEach(function (c) { try { c.setState({ _ap: Date.now() }); } catch (e) {} }); }
+  ['play', 'pause', 'ended', 'loadedmetadata', 'playing', 'waiting', 'error'].forEach(function (ev) { a.addEventListener(ev, ping); });
+  var last = 0; a.addEventListener('timeupdate', function () { var n = Date.now(); if (n - last > 450) { last = n; ping(); } });
+  function hushNative() { var m = document.querySelectorAll('audio,video'); for (var i = 0; i < m.length; i++) try { m[i].pause(); } catch (e) {} }
+  P.bind = function (c) { if (P.comps.indexOf(c) < 0) P.comps.push(c); };
+  P.play = function (src) { if (!src) return; hushNative(); if (P.src !== src) { a.pause(); a.src = src; P.src = src; } var pr = a.play(); if (pr && pr.catch) pr.catch(function () {}); ping(); };
+  P.stop = function () { a.pause(); if (P.src) { P.src = ''; a.removeAttribute('src'); try { a.load(); } catch (e) {} } ping(); };
+  P.toggle = function (src) { if (P.src === src && !a.paused) { a.pause(); ping(); } else P.play(src); };
+  P.seek = function (src, f) { if (P.src !== src) P.play(src); var go = function () { if (a.duration) a.currentTime = f * a.duration; ping(); }; if (a.duration) go(); else a.addEventListener('loadedmetadata', go, { once: true }); };
+  function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
+  window.mrAp = function (src, label) {
+    var on = !!src && P.src === src, pl = on && !a.paused;
+    return { src: src || '', icon: pl ? '❚❚' : '▶', label: (pl ? 'Pausar ' : 'Tocar ') + (label || ''),
+      pct: on && a.duration ? Math.min(100, a.currentTime / a.duration * 100).toFixed(1) : '0',
+      time: on ? fmt(a.currentTime) + ' / ' + (a.duration ? fmt(a.duration) : '–:––') : (on ? '' : '0:00'),
+      toggle: function () { P.toggle(src); },
+      seek: function (e) { var el = e && e.target && e.target.closest ? e.target.closest('[data-seek]') : null; if (!el) return; var r = el.getBoundingClientRect(); P.seek(src, Math.max(0, Math.min(1, (e.clientX - r.left) / r.width))); } };
+  };
+  var miss = 0;
   setInterval(function () {
-    var vis = list().filter(function (m) { return !m.paused; });
-    vis.forEach(function (m) { if (!m.isConnected || !m.getClientRects().length) stop(m); });
-    playing = list().filter(function (m) { return !m.paused; }).filter(function (m, i, a) { return a.indexOf(m) === i; });
-    if (playing.length > 1) playing.slice(0, -1).forEach(stop);
-  }, 200);
+    hushNative();
+    if (!P.src || a.paused) { miss = 0; return; }
+    var els = document.querySelectorAll('[data-ap]'), found = false;
+    for (var i = 0; i < els.length; i++) if (els[i].getAttribute('data-ap') === P.src && els[i].getClientRects().length) found = true;
+    if (found) miss = 0; else if (++miss >= 2) P.stop();
+  }, 300);
 })();
+
 
 
 class Component extends DCLogic {
   renderVals() {
+    if (window.mrPlayer) mrPlayer.bind(this);
     var LYRQ = "letra";
     var LYRL = "Ver letra";
     var AUD = {"lad:soumandingueiro": "media/a/b00.mp4", "lad:voumeemboraprabahia": "media/a/b01.mp4", "lad:osenhordoengenho": "media/a/b02.mp4", "lad:tinhameudinheiro": "media/a/b03.mp4", "lad:anu": "media/a/b04.mp4", "lad:mamaequeroserbombeiro": "media/a/b05.mp4", "lad:eraeuerameumano": "media/a/b06.mp4", "qa:adeuscamaradaadeus": "media/a/b07.mp4", "qa:mamaeoxum": "media/a/b08.mp4", "qa:capoeiraquemmeensinou": "media/a/b09.mp4", "qa:botadende": "media/a/b10.mp4", "qa:maeafrica": "media/a/b11.mp4", "qa:lalaela": "media/a/b12.mp4", "qa:sobradodemamae": "media/a/b13.mp4", "ca:adeuscorina": "media/a/b14.mp4", "ca:soueumaita": "media/a/b15.mp4", "ca:paranae": "media/a/b16.mp4", "ca:ondevaicaiman": "media/a/b17.mp4", "ca:maresubiu": "media/a/b18.mp4", "ca:catarina": "media/a/b19.mp4", "ca:erabesouro": "media/a/b20.mp4", "ch:lembrancadomestre": "media/a/b21.mp4", "ch:quadras": "media/a/b22.mp4", "ch:eunascide7meses": "media/a/b23.mp4", "ch:saicatarina": "media/a/b24.mp4", "ch:eiparana": "media/a/b25.mp4", "ch:santoamaro": "media/a/b26.mp4", "qr:semprelembrado": "media/a/b27.mp4", "qr:besouromanganga": "media/a/b28.mp4", "qr:jogoarrepiado": "media/a/b29.mp4", "qr:jogoperigoso": "media/a/b30.mp4", "qr:aidenegaafricana": "media/a/b31.mp4", "qr:historiadepescador": "media/a/b32.mp4", "qr:africaseuniu": "media/a/b33.mp4", "cr:avisameumano": "media/a/b34.mp4", "cr:ouvifalar": "media/a/b35.mp4", "cr:leleleo": "media/a/b36.mp4", "cr:ventania": "media/a/b37.mp4", "cr:gungaemeu": "media/a/b38.mp4", "cr:sinhosaobento": "media/a/b39.mp4", "cr:catarinavemver": "media/a/b40.mp4", "sbg:acendealuz": "media/a/b41.mp4", "sbg:elalaelaela": "media/a/b42.mp4", "sbg:redenavaranda": "media/a/b43.mp4", "sbg:hojetemcapoeira": "media/a/b44.mp4", "sbg:maliciaemanha": "media/a/b45.mp4", "sbg:maranhao": "media/a/b46.mp4", "sbg:marecheia": "media/a/b47.mp4", "sr:areiadomar": "media/a/b48.mp4", "sr:pisanalinhalevantaoboi": "media/a/b49.mp4", "sr:alomangueira": "media/a/b50.mp4", "sr:notabuleirodabaiana": "media/a/b51.mp4", "sr:ojoaochofer": "media/a/b52.mp4", "sr:alobahia": "media/a/b53.mp4", "sr:queluzeaquela": "media/a/b54.mp4", "mac:maculelebarrao": "media/a/b55.mp4", "mac:maculelesuassuna": "media/a/b56.mp4", "mac:maculelesuassuna2": "media/a/b57.mp4", "mac:ocongochegou": "media/a/b58.mp4", "mac:maculelecarolinasoares": "media/a/b59.mp4", "mac:maculeleorixas": "media/a/b60.mp4", "mac:racas": "media/a/b61.mp4", "pr:puxadaderedesaopaulo": "media/a/b62.mp4", "pr:puxadaderedeburgues1": "media/a/b63.mp4", "pr:puxadaderedeburgues2": "media/a/b64.mp4", "pr:puxadaderedecarolinasoares": "media/a/b65.mp4", "pr:puxadaderedekenura": "media/a/b66.mp4", "folk:blowininthewind": "media/a/h67.mp4", "folk:dontthinktwiceitsallright": "media/a/h68.mp4", "folk:heartofgold": "media/a/h69.mp4", "folk:theriver": "media/a/h70.mp4", "folk:maryjaneslastdance": "media/a/h71.mp4", "rock:lovemedo": "media/a/h72.mp4", "rock:roadhouseblues": "media/a/h73.mp4", "rock:missyou": "media/a/h74.mp4", "rock:midnightrambler": "media/a/h75.mp4", "rock:houseoftherisingsun": "media/a/h76.mp4", "rock:cryin": "media/a/h77.mp4", "rock:redemptionsong": "media/a/h78.mp4", "folk:comesatime": "media/a/h79.mp4", "folk:atlanticcity": "media/a/h80.mp4", "lad:oexercitoedebatalha": "media/s/s000.mp4", "lad:eujavivoenjoado": "media/s/s001.mp4", "lad:maioredeus": "media/s/s002.mp4", "lad:cartaopostal": "media/s/s003.mp4", "lad:omundodedeusegrande": "media/s/s004.mp4", "lad:siridemangue": "media/s/s005.mp4", "lad:eunascide7meses": "media/s/s006.mp4", "lad:berimbaudeouro": "media/s/s007.mp4", "lad:camaleao": "media/s/s008.mp4", "lad:quemsoueu": "media/s/s009.mp4", "lad:torpedeiroencouracado": "media/s/s010.mp4", "lad:dentedeouro": "media/s/s011.mp4", "lad:eusaicedodecasa": "media/s/s012.mp4", "lad:3diasdenascido": "media/s/s013.mp4", "lad:meninoquemfoiteumestre": "media/s/s014.mp4", "lad:juradevinganca": "media/s/s015.mp4", "lad:notempoqueacapoeira": "media/s/s016.mp4", "qa:temareia": "media/s/s017.mp4", "qa:suacoroadeouroemario": "media/s/s018.mp4", "qa:valhamedeus": "media/s/s019.mp4", "qa:saidocongopasseiporangola": "media/s/s020.mp4", "qa:dendeodende": "media/s/s021.mp4", "qa:oareia": "media/s/s022.mp4", "qa:seufeitornaomaltrateonegroassim": "media/s/s023.mp4", "qa:adeuscorina": "media/s/s024.mp4", "qa:catarina": "media/s/s025.mp4", "qa:abraarodaminhagente": "media/s/s026.mp4", "qa:aemiremire": "media/s/s027.mp4", "qa:chamaele": "media/s/s028.mp4", "qa:odendeodende": "media/s/s029.mp4", "qa:venhaverangola": "media/s/s030.mp4", "qa:esimao": "media/s/s031.mp4", "qa:omaeamanhaeuvou": "media/s/s032.mp4", "qa:omeuboimorreu": "media/s/s033.mp4", "qa:vemjogarmaiseu": "media/s/s034.mp4", "qa:inae": "media/s/s035.mp4", "qa:euvimdeangola": "media/s/s036.mp4", "qa:lendaviva": "media/s/s037.mp4", "qa:grauna": "media/s/s038.mp4", "qa:historiaqueconto": "media/s/s039.mp4", "ca:eetumtumtum": "media/s/s040.mp4", "ca:oabcd": "media/s/s041.mp4", "ca:horagrande": "media/s/s042.mp4", "ca:bemtevibotougameleiranochao": "media/s/s043.mp4", "ca:aiaiaide": "media/s/s044.mp4", "ca:oareia": "media/s/s045.mp4", "ca:olhaohomemqueeumatei": "media/s/s046.mp4", "ca:marinheiroso": "media/s/s047.mp4", "ca:adaocadesalome": "media/s/s048.mp4", "ca:idalinatamechamando": "media/s/s049.mp4", "ca:lembaeulemba": "media/s/s050.mp4", "ca:meuatabaqueedecourodeboi": "media/s/s051.mp4", "ca:odoralice": "media/s/s052.mp4", "ca:tamandua": "media/s/s053.mp4", "ca:omeuboimorreu": "media/s/s054.mp4", "ca:camugere": "media/s/s055.mp4", "ca:agorasimquematarammeubesouro": "media/s/s056.mp4", "ca:aescultura": "media/s/s057.mp4", "ca:angolaeangola": "media/s/s058.mp4", "ca:travalinguas": "media/s/s059.mp4", "ca:noitesemlua": "media/s/s060.mp4", "ca:axedoterreiro": "media/s/s061.mp4", "ca:quandoeumorrer2": "media/s/s062.mp4", "ca:quandoeumorrer": "media/s/s063.mp4", "ca:ohinacio": "media/s/s064.mp4", "ca:obahia": "media/s/s065.mp4", "ca:angolae": "media/s/s066.mp4", "ca:bahiadetodosossantos": "media/s/s067.mp4", "ca:euviosolvialuaclarear": "media/s/s068.mp4", "ca:nabeiradomar": "media/s/s069.mp4", "ca:quandoeuvimladabahia": "media/s/s070.mp4", "ca:eoinganga": "media/s/s071.mp4", "ca:ventania": "media/s/s072.mp4", "ca:querovergiraralua": "media/s/s073.mp4", "ca:negronaoquermaiscorrer": "media/s/s074.mp4", "ca:pegadasnaareia": "media/s/s075.mp4", "ca:horaciodomato": "media/s/s076.mp4", "ca:beiramarioio": "media/s/s077.mp4", "qr:hojetemcapoeira": "media/s/s078.mp4", "qr:iaiaioio": "media/s/s079.mp4", "qr:lutaebrincadeira": "media/s/s080.mp4", "qr:meninonago": "media/s/s081.mp4", "qr:magalenha": "media/s/s082.mp4", "qr:notempodocativeiro": "media/s/s083.mp4", "cr:corridos": "media/s/s084.mp4", "cr:eiparana": "media/s/s085.mp4", "cr:saicatarina": "media/s/s086.mp4", "cr:santoamaro": "media/s/s087.mp4", "cr:ligeiros": "media/s/s088.mp4", "cr:naaruanda": "media/s/s089.mp4", "cr:navionegreiro": "media/s/s090.mp4", "sbg:lalaela": "media/s/s091.mp4", "sbg:minhavaranda": "media/s/s092.mp4", "sbg:vocedisseumdia": "media/s/s093.mp4", "sbg:omestreecomoareiadomar": "media/s/s094.mp4", "sbg:preparaoarame": "media/s/s095.mp4", "sbg:santoantonioqueroagua": "media/s/s096.mp4", "sbg:temqueteraxe": "media/s/s097.mp4", "sbg:saobentograndedeangola": "media/s/s098.mp4", "sbg:vimnobalancodomar": "media/s/s099.mp4", "sbg:vimnonaviodearuanda": "media/s/s100.mp4", "sbg:oareia": "media/s/s101.mp4", "sbg:lanabahia": "media/s/s102.mp4", "sbg:lanabahia2": "media/s/s103.mp4", "sbg:oqueseriadacapoeira": "media/s/s104.mp4", "sbg:artesecular": "media/s/s105.mp4", "sbg:lutaebrincadeira": "media/s/s106.mp4", "sbg:diadefesta": "media/s/s107.mp4", "sbg:madalena": "media/s/s108.mp4", "sbg:mercadomodelo2": "media/s/s109.mp4", "sbg:mercadomodelo3": "media/s/s110.mp4", "sbg:mercadomodelo": "media/s/s111.mp4", "sbg:edanossacor": "media/s/s112.mp4", "sbg:ahoraeessa": "media/s/s113.mp4", "sbg:saosalvador2": "media/s/s114.mp4", "sbg:saosalvador": "media/s/s115.mp4", "sbg:capoeiracantou": "media/s/s116.mp4", "sbg:lamento": "media/s/s117.mp4", "sbg:sabiacantou": "media/s/s118.mp4", "sbg:pisacaboclo": "media/s/s119.mp4", "sbg:forcabaiana": "media/s/s120.mp4", "sbg:pediroaxe": "media/s/s121.mp4", "sbg:facaamolada": "media/s/s122.mp4", "sbg:jogoperigoso": "media/s/s123.mp4", "sbg:capoeiraestadeluto": "media/s/s124.mp4", "sbg:ventania": "media/s/s125.mp4", "sbg:ohinacio": "media/s/s126.mp4", "sbg:vivaloremil": "media/s/s127.mp4", "sbg:seentregacorisco": "media/s/s128.mp4", "sbg:saculejodonavio": "media/s/s129.mp4", "sbg:nabeiradomar": "media/s/s130.mp4", "sbg:historiadepescador": "media/s/s131.mp4", "sbg:rainhadomar": "media/s/s132.mp4", "sbg:aidenegaafricana": "media/s/s133.mp4", "sbg:leleleo": "media/s/s134.mp4", "sbg:bandadebandalue": "media/s/s135.mp4", "sbg:chegapraca": "media/s/s136.mp4", "sbg:luanae": "media/s/s137.mp4", "sbg:enaaruanda": "media/s/s138.mp4", "sbg:africaseuniu": "media/s/s139.mp4", "sbg:quandomeumestresefoi": "media/s/s140.mp4", "sbg:asaboborasdocaldeiraodaserra": "media/s/s141.mp4", "sbg:naovicapoeiranascer": "media/s/s142.mp4", "sbg:mandaloia": "media/s/s143.mp4", "sbg:seucapoeiraoqueaconteceu": "media/s/s144.mp4", "sbg:comovaicomovaivoce": "media/s/s145.mp4", "sbg:noitedasaudade": "media/s/s146.mp4", "sr:sambaderodacaicara": "media/s/s147.mp4", "sr:sambaderodacurio": "media/s/s148.mp4", "sr:sambaderodaburgues": "media/s/s149.mp4", "sr:sambaderodakenura": "media/s/s150.mp4", "sr:sambaderodadeputado": "media/s/s151.mp4", "sr:sambaderodacarolinasoares": "media/s/s152.mp4", "sr:saisaisaiopiranha": "media/s/s153.mp4", "sr:senosdoismorassejunto": "media/s/s154.mp4", "sr:paiepaimaeemae": "media/s/s155.mp4"};
@@ -309,7 +322,7 @@ class Component extends DCLogic {
       var pics = picsAll[skey] || [];
       var audio = AUD[cur.id + ':' + nrm(i[0])] || '';
       return {
-        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio,
+        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio, ap: window.mrAp ? mrAp(audio, i[0]) : {},
         open: open, chev: open ? '−' : '+', bd: open ? '#F2A93B' : '#16201D',
         toggle: toggleFn,
         where: 'No seu OneDrive: ' + cur.dir + (cur.byItem ? ' › ' + i[1] : ''),
@@ -394,7 +407,7 @@ class Component extends DCLogic {
     var tdCur = null;
     var tdItems = TD.map(function (q) {
       var on = st.tdPlay === q.k; if (on) tdCur = q;
-      return { name: q.name, sub: q.sub, on: on, icon: on ? '■' : '▶', bg: on ? '#1D2925' : '#121B18', bd: on ? '#F2A93B' : '#2A3833', pick: function () { self.setState({ tdPlay: on ? null : q.k, toque: null }); } };
+      return { name: q.name, sub: q.sub, on: on, icon: on ? '■' : '▶', bg: on ? '#1D2925' : '#121B18', bd: on ? '#F2A93B' : '#2A3833', pick: function () { if (window.mrPlayer) { if (on) mrPlayer.stop(); else mrPlayer.play(q.src); } self.setState({ tdPlay: on ? null : q.k, toque: null }); } };
     });
     out.tdToques = tdItems;
     out.sesName = RT.n;
@@ -419,6 +432,7 @@ class Component extends DCLogic {
     out.tdWho = tdCur ? tdCur.who : '';
     out.tdSrc = tdCur ? tdCur.src : '';
     out.tdOn = !!tdCur;
+    out.tdAp = window.mrAp ? mrAp(tdCur ? tdCur.src : '', RT.n) : {};
     var TQ = [{"name": "Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/t81.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq100.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq101.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq102.mp4"}, {"m": "Mestre Mão Branca · dobrado", "src": "media/a/tq103.mp4"}]}, {"name": "São Bento Pequeno", "recs": [{"m": "Mestre Caiçara", "src": "media/a/t82.mp4"}, {"m": "Mestre Morais", "src": "media/a/t89.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/t90.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/t91.mp4"}]}, {"name": "São Bento Grande de Angola", "recs": [{"m": "Mestre Morais", "src": "media/a/tq104.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq105.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq106.mp4"}]}, {"name": "São Bento Grande (Regional)", "recs": [{"m": "Mestre Bimba", "src": "media/a/t83.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq107.mp4"}, {"m": "Mestre Deputado", "src": "media/a/tq108.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq109.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq110.mp4"}]}, {"name": "Iúna", "recs": [{"m": "Mestre Bimba", "src": "media/a/t84.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq111.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq112.mp4"}, {"m": "Mestre Mão Branca", "src": "media/a/tq113.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq114.mp4"}]}, {"name": "Santa Maria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t85.mp4"}, {"m": "Mestre Caiçara", "src": "media/a/tq115.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq116.mp4"}, {"m": "Mestre Paulo Lima", "src": "media/a/tq117.mp4"}, {"m": "Mestre Tucano Preto", "src": "media/a/tq118.mp4"}]}, {"name": "Cavalaria", "recs": [{"m": "Mestre Bimba", "src": "media/a/t86.mp4"}, {"m": "Mestre Morais", "src": "media/a/tq119.mp4"}, {"m": "Mestre Suassuna", "src": "media/a/tq120.mp4"}, {"m": "Silvio Acarajé · antiga", "src": "media/a/tq121.mp4"}]}, {"name": "Amazonas", "recs": [{"m": "Mestre Bimba", "src": "media/a/t87.mp4"}, {"m": "Mestre Barrão", "src": "media/a/tq122.mp4"}]}, {"name": "Benguela", "recs": [{"m": "Mestre Bimba", "src": "media/a/t88.mp4"}]}, {"name": "Idalina", "recs": [{"m": "Mestre Bimba", "src": "media/a/tq123.mp4"}, {"m": "Silvio Acarajé · de Angola", "src": "media/a/tq124.mp4"}]}, {"name": "Jogo de Dentro", "recs": [{"m": "Mestre Morais", "src": "media/a/tq125.mp4"}, {"m": "Mestre Jogo de Dentro", "src": "media/a/tq126.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq127.mp4"}]}, {"name": "Jogo de Fora", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq128.mp4"}]}, {"name": "Muzenza", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq129.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq130.mp4"}]}, {"name": "Samango", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq131.mp4"}]}, {"name": "Apanha Laranja no Chão Tico-Tico", "recs": [{"m": "Mestre Jogo de Dentro", "src": "media/a/tq132.mp4"}, {"m": "Mestre Limãozinho", "src": "media/a/tq133.mp4"}, {"m": "Silvio Acarajé", "src": "media/a/tq134.mp4"}]}, {"name": "Samba de Roda", "recs": [{"m": "Mestre Paulo Lima", "src": "media/a/tq135.mp4"}, {"m": "Mestre Caiçara · samba de Angola", "src": "media/a/tq136.mp4"}, {"m": "Sorriso Bimbau · repicado", "src": "media/a/tq137.mp4"}]}, {"name": "Gegê (Jeje)", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq138.mp4"}, {"m": "Silvio Acarajé · toque de Gegy", "src": "media/a/tq139.mp4"}, {"m": "Mestre Limãozinho · São Bento Grande em Jeje", "src": "media/a/tq140.mp4"}]}, {"name": "Barravento", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq141.mp4"}, {"m": "Sorriso Bimbau", "src": "media/a/tq142.mp4"}]}, {"name": "Miudinho", "recs": [{"m": "Mestre Suassuna", "src": "media/a/tq143.mp4"}]}, {"name": "Aviso", "recs": [{"m": "Silvio Acarajé", "src": "media/a/tq144.mp4"}]}];
     var tsel = st.toque, tcur = null, recIdx = st.tqRec || 0;
     out.toques = TQ.map(function (q, qi) {
@@ -426,7 +440,7 @@ class Component extends DCLogic {
       if (on) tcur = q;
       var n = q.recs.length;
       return { disp: (qi < 8 || st.tqMore) ? 'flex' : 'none', name: q.name, sub: (q.name === RT.n ? 'Toque do estudo · ' : '') + n + (n > 1 ? ' mestres' : ' mestre'), on: on, bg: on ? '#1D2925' : '#16201D', bd: on ? '#F2A93B' : (q.name === RT.n ? '#5A6B65' : '#16201D'),
-        pick: function () { self.setState({ toque: on ? null : q.name, tqRec: 0, tdPlay: null }); } };
+        pick: function () { if (window.mrPlayer) { if (on) mrPlayer.stop(); else mrPlayer.play(q.recs[0].src); } self.setState({ toque: on ? null : q.name, tqRec: 0, tdPlay: null }); } };
     });
     var rec = tcur ? tcur.recs[recIdx % tcur.recs.length] : null;
     out.tqMoreLabel = st.tqMore ? 'Ver menos' : 'Ver mais';
@@ -435,9 +449,10 @@ class Component extends DCLogic {
     out.toqueName = tcur ? 'Ouvindo: ' + tcur.name : '';
     out.toqueMestre = rec ? rec.m : '';
     out.toqueSrc = rec ? rec.src : '';
+    out.toqueAp = window.mrAp ? mrAp(rec ? rec.src : '', tcur ? tcur.name : '') : {};
     out.toqueMulti = !!(tcur && tcur.recs.length > 1);
     out.toqueCount = tcur ? ((recIdx % tcur.recs.length) + 1) + ' de ' + tcur.recs.length + ' mestres' : '';
-    out.toqueSwap = function () { if (tcur) self.setState({ tqRec: (recIdx + 1) % tcur.recs.length }); };
+    out.toqueSwap = function () { if (!tcur) return; var nx = (recIdx + 1) % tcur.recs.length; if (window.mrPlayer) mrPlayer.play(tcur.recs[nx].src); self.setState({ tqRec: nx }); };
     var VIR = [["Angola", ["q_vAWACymZY", "SQ8gTxAY0NI", "gjQfnNCGVQQ", "tNUUJVA07Hw", "oUhDETDz3Io", "EeIbZhwZoq4", "PDU-x_N9hRo", "CAX3hzYkbYk", "M9nQqP2E-GU"]], ["São Bento Grande", ["Of7VIIkUdac", "CAX3hzYkbYk", "WgPNu3ffemY", "Z6Dv4TWJ-Jk", "3BSuSVSr0UA", "nFa3MTzPt3M", "BCsmMRMRevo", "epAD6Z1Wrhs", "kIr7dqm8BqI"]], ["São Bento Pequeno", ["NtxIWYlIC30"]], ["Outros toques", ["A3zSrckMT8U", "kzMvgk2kgc0", "kR-5D7yP5Wg", "v-8mi7a4Up8", "hWpLNNi6v-E", "8iKrKQTEW6I"]], ["Pandeiro", ["_ydAIAEEPrs", "cDTQOb1LjIM", "Em9k8mnJQ7k"]]];
     var vrSel = st.vrTq === undefined || st.vrTq === null ? null : st.vrTq;
     out.vrOpen = !!st.vrOpen; out.vrDisp = st.vrOpen ? 'flex' : 'none'; out.vrChev = st.vrOpen ? '▴' : '▾';

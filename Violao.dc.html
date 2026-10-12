@@ -100,7 +100,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
 <div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
 <sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
-<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+<div data-ap="{{it.ap.src}}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 4px 10px 4px 4px; border-radius: 99px; background: #0E1513; border: 1px solid #2A3833"><button onClick="{{it.ap.toggle}}" aria-label="{{it.ap.label}}" style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 99px; border: 0; background: #F2A93B; color: #1A1205; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer">{{it.ap.icon}}</button><div data-seek="1" onClick="{{it.ap.seek}}" style="flex-grow: 1; height: 32px; display: flex; align-items: center; cursor: pointer"><div style="width: 100%; height: 6px; border-radius: 99px; background: #2A3833; overflow: hidden; pointer-events: none"><div style="width: {{it.ap.pct}}%; height: 100%; background: #F2A93B"></div></div></div><span style="flex-shrink: 0; min-width: 72px; text-align: right; font-size: 12px; color: #9DACA6; font-variant-numeric: tabular-nums">{{it.ap.time}}</span></div>
 </sc-if>
 <div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
 <sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
@@ -166,7 +166,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <sc-if value="{{it.open}}" hint-placeholder-val="{{false}}">
 <div style="padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px">
 <sc-if value="{{it.hasAudio}}" hint-placeholder-val="{{false}}">
-<audio controls preload="none" dc-src="{{it.audio}}" style="width: 100%; height: 44px"></audio>
+<div data-ap="{{it.ap.src}}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 4px 10px 4px 4px; border-radius: 99px; background: #0E1513; border: 1px solid #2A3833"><button onClick="{{it.ap.toggle}}" aria-label="{{it.ap.label}}" style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 99px; border: 0; background: #F2A93B; color: #1A1205; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer">{{it.ap.icon}}</button><div data-seek="1" onClick="{{it.ap.seek}}" style="flex-grow: 1; height: 32px; display: flex; align-items: center; cursor: pointer"><div style="width: 100%; height: 6px; border-radius: 99px; background: #2A3833; overflow: hidden; pointer-events: none"><div style="width: {{it.ap.pct}}%; height: 100%; background: #F2A93B"></div></div></div><span style="flex-shrink: 0; min-width: 72px; text-align: right; font-size: 12px; color: #9DACA6; font-variant-numeric: tabular-nums">{{it.ap.time}}</span></div>
 </sc-if>
 <div style="font-size: 12px; color: #9DACA6; line-height: 1.45">{{it.where}}</div>
 <sc-if value="{{it.hasPics}}" hint-placeholder-val="{{false}}">
@@ -201,31 +201,44 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3100}}'>
-/* Um áudio por vez: tocar um pausa os outros; trocar de mestre/música ou fechar o player para o som. */
+/* Player único: só existe UM áudio na tela; tocar outro troca a faixa, e ele para quando o mini player some. */
 (function () {
-  if (window.__mrMedia2) return; window.__mrMedia2 = 1; window.__mrMedia = 1;
-  var playing = [];
-  function list() { return Array.prototype.slice.call(document.querySelectorAll('audio,video')).concat(playing); }
-  function stop(m) { try { if (!m.paused) m.pause(); } catch (e) {} }
-  function stopAll(except) { list().forEach(function (m) { if (m !== except) stop(m); }); }
-  window.mrStopAll = stopAll;
-  function onPlay(e) { var t = e.target; if (!t || !/^(AUDIO|VIDEO)$/.test(t.tagName)) return; stopAll(t); if (playing.indexOf(t) < 0) playing.push(t); }
-  document.addEventListener('play', onPlay, true);
-  document.addEventListener('playing', onPlay, true);
-  function onTap(e) { var t = e.target; if (t && t.closest && t.closest('[data-stop-audio]')) stopAll(); }
-  document.addEventListener('pointerdown', onTap, true);
-  document.addEventListener('click', onTap, true);
+  if (window.mrPlayer) return;
+  var a = new Audio(); a.preload = 'auto';
+  var P = window.mrPlayer = { src: '', comps: [] };
+  function ping() { P.comps.forEach(function (c) { try { c.setState({ _ap: Date.now() }); } catch (e) {} }); }
+  ['play', 'pause', 'ended', 'loadedmetadata', 'playing', 'waiting', 'error'].forEach(function (ev) { a.addEventListener(ev, ping); });
+  var last = 0; a.addEventListener('timeupdate', function () { var n = Date.now(); if (n - last > 450) { last = n; ping(); } });
+  function hushNative() { var m = document.querySelectorAll('audio,video'); for (var i = 0; i < m.length; i++) try { m[i].pause(); } catch (e) {} }
+  P.bind = function (c) { if (P.comps.indexOf(c) < 0) P.comps.push(c); };
+  P.play = function (src) { if (!src) return; hushNative(); if (P.src !== src) { a.pause(); a.src = src; P.src = src; } var pr = a.play(); if (pr && pr.catch) pr.catch(function () {}); ping(); };
+  P.stop = function () { a.pause(); if (P.src) { P.src = ''; a.removeAttribute('src'); try { a.load(); } catch (e) {} } ping(); };
+  P.toggle = function (src) { if (P.src === src && !a.paused) { a.pause(); ping(); } else P.play(src); };
+  P.seek = function (src, f) { if (P.src !== src) P.play(src); var go = function () { if (a.duration) a.currentTime = f * a.duration; ping(); }; if (a.duration) go(); else a.addEventListener('loadedmetadata', go, { once: true }); };
+  function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
+  window.mrAp = function (src, label) {
+    var on = !!src && P.src === src, pl = on && !a.paused;
+    return { src: src || '', icon: pl ? '❚❚' : '▶', label: (pl ? 'Pausar ' : 'Tocar ') + (label || ''),
+      pct: on && a.duration ? Math.min(100, a.currentTime / a.duration * 100).toFixed(1) : '0',
+      time: on ? fmt(a.currentTime) + ' / ' + (a.duration ? fmt(a.duration) : '–:––') : (on ? '' : '0:00'),
+      toggle: function () { P.toggle(src); },
+      seek: function (e) { var el = e && e.target && e.target.closest ? e.target.closest('[data-seek]') : null; if (!el) return; var r = el.getBoundingClientRect(); P.seek(src, Math.max(0, Math.min(1, (e.clientX - r.left) / r.width))); } };
+  };
+  var miss = 0;
   setInterval(function () {
-    var vis = list().filter(function (m) { return !m.paused; });
-    vis.forEach(function (m) { if (!m.isConnected || !m.getClientRects().length) stop(m); });
-    playing = list().filter(function (m) { return !m.paused; }).filter(function (m, i, a) { return a.indexOf(m) === i; });
-    if (playing.length > 1) playing.slice(0, -1).forEach(stop);
-  }, 200);
+    hushNative();
+    if (!P.src || a.paused) { miss = 0; return; }
+    var els = document.querySelectorAll('[data-ap]'), found = false;
+    for (var i = 0; i < els.length; i++) if (els[i].getAttribute('data-ap') === P.src && els[i].getClientRects().length) found = true;
+    if (found) miss = 0; else if (++miss >= 2) P.stop();
+  }, 300);
 })();
+
 
 
 class Component extends DCLogic {
   renderVals() {
+    if (window.mrPlayer) mrPlayer.bind(this);
     var LYRQ = "cifra";
     var LYRL = "▶ Ouvir música";
     var AUD = {"lad:soumandingueiro": "media/a/b00.mp4", "lad:voumeemboraprabahia": "media/a/b01.mp4", "lad:osenhordoengenho": "media/a/b02.mp4", "lad:tinhameudinheiro": "media/a/b03.mp4", "lad:anu": "media/a/b04.mp4", "lad:mamaequeroserbombeiro": "media/a/b05.mp4", "lad:eraeuerameumano": "media/a/b06.mp4", "qa:adeuscamaradaadeus": "media/a/b07.mp4", "qa:mamaeoxum": "media/a/b08.mp4", "qa:capoeiraquemmeensinou": "media/a/b09.mp4", "qa:botadende": "media/a/b10.mp4", "qa:maeafrica": "media/a/b11.mp4", "qa:lalaela": "media/a/b12.mp4", "qa:sobradodemamae": "media/a/b13.mp4", "ca:adeuscorina": "media/a/b14.mp4", "ca:soueumaita": "media/a/b15.mp4", "ca:paranae": "media/a/b16.mp4", "ca:ondevaicaiman": "media/a/b17.mp4", "ca:maresubiu": "media/a/b18.mp4", "ca:catarina": "media/a/b19.mp4", "ca:erabesouro": "media/a/b20.mp4", "ch:lembrancadomestre": "media/a/b21.mp4", "ch:quadras": "media/a/b22.mp4", "ch:eunascide7meses": "media/a/b23.mp4", "ch:saicatarina": "media/a/b24.mp4", "ch:eiparana": "media/a/b25.mp4", "ch:santoamaro": "media/a/b26.mp4", "qr:semprelembrado": "media/a/b27.mp4", "qr:besouromanganga": "media/a/b28.mp4", "qr:jogoarrepiado": "media/a/b29.mp4", "qr:jogoperigoso": "media/a/b30.mp4", "qr:aidenegaafricana": "media/a/b31.mp4", "qr:historiadepescador": "media/a/b32.mp4", "qr:africaseuniu": "media/a/b33.mp4", "cr:avisameumano": "media/a/b34.mp4", "cr:ouvifalar": "media/a/b35.mp4", "cr:leleleo": "media/a/b36.mp4", "cr:ventania": "media/a/b37.mp4", "cr:gungaemeu": "media/a/b38.mp4", "cr:sinhosaobento": "media/a/b39.mp4", "cr:catarinavemver": "media/a/b40.mp4", "sbg:acendealuz": "media/a/b41.mp4", "sbg:elalaelaela": "media/a/b42.mp4", "sbg:redenavaranda": "media/a/b43.mp4", "sbg:hojetemcapoeira": "media/a/b44.mp4", "sbg:maliciaemanha": "media/a/b45.mp4", "sbg:maranhao": "media/a/b46.mp4", "sbg:marecheia": "media/a/b47.mp4", "sr:areiadomar": "media/a/b48.mp4", "sr:pisanalinhalevantaoboi": "media/a/b49.mp4", "sr:alomangueira": "media/a/b50.mp4", "sr:notabuleirodabaiana": "media/a/b51.mp4", "sr:ojoaochofer": "media/a/b52.mp4", "sr:alobahia": "media/a/b53.mp4", "sr:queluzeaquela": "media/a/b54.mp4", "mac:maculelebarrao": "media/a/b55.mp4", "mac:maculelesuassuna": "media/a/b56.mp4", "mac:maculelesuassuna2": "media/a/b57.mp4", "mac:ocongochegou": "media/a/b58.mp4", "mac:maculelecarolinasoares": "media/a/b59.mp4", "mac:maculeleorixas": "media/a/b60.mp4", "mac:racas": "media/a/b61.mp4", "pr:puxadaderedesaopaulo": "media/a/b62.mp4", "pr:puxadaderedeburgues1": "media/a/b63.mp4", "pr:puxadaderedeburgues2": "media/a/b64.mp4", "pr:puxadaderedecarolinasoares": "media/a/b65.mp4", "pr:puxadaderedekenura": "media/a/b66.mp4", "folk:blowininthewind": "media/a/h67.mp4", "folk:dontthinktwiceitsallright": "media/a/h68.mp4", "folk:heartofgold": "media/a/h69.mp4", "folk:theriver": "media/a/h70.mp4", "folk:maryjaneslastdance": "media/a/h71.mp4", "rock:lovemedo": "media/a/h72.mp4", "rock:roadhouseblues": "media/a/h73.mp4", "rock:missyou": "media/a/h74.mp4", "rock:midnightrambler": "media/a/h75.mp4", "rock:houseoftherisingsun": "media/a/h76.mp4", "rock:cryin": "media/a/h77.mp4", "rock:redemptionsong": "media/a/h78.mp4", "folk:comesatime": "media/a/h79.mp4", "folk:atlanticcity": "media/a/h80.mp4"};
@@ -358,7 +371,7 @@ class Component extends DCLogic {
       var pics = picsAll[skey] || [];
       var audio = AUD[cur.id + ':' + nrm(i[0])] || '';
       return {
-        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio,
+        t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio, ap: window.mrAp ? mrAp(audio, i[0]) : {},
         open: open, chev: open ? '−' : '+', bd: open ? '#F2A93B' : '#16201D',
         toggle: toggleFn,
         where: 'No seu OneDrive: ' + cur.dir + (cur.byItem ? ' › ' + i[1] : ''),
