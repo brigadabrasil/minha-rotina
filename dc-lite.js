@@ -39,9 +39,38 @@
   DCLogic.prototype.forceUpdate = function () { schedule(); };
   window.DCLogic = DCLogic;
 
+  /* Dados pequenos (feitos, hábitos) ficam no localStorage; fotos ficam no IndexedDB, que aguenta muito mais. */
+  var BIG = { pics: 1 }, idbP = null, lastBig = {};
+  function idb() {
+    if (idbP) return idbP;
+    idbP = new Promise(function (ok, no) {
+      try { var rq = indexedDB.open('minha-rotina', 1); rq.onupgradeneeded = function () { rq.result.createObjectStore('kv'); }; rq.onsuccess = function () { ok(rq.result); }; rq.onerror = function () { no(rq.error); }; } catch (e) { no(e); }
+    });
+    return idbP;
+  }
+  function idbGet(k) { return idb().then(function (db) { return new Promise(function (ok) { var rq = db.transaction('kv').objectStore('kv').get(k); rq.onsuccess = function () { ok(rq.result); }; rq.onerror = function () { ok(undefined); }; }); }); }
+  function idbPut(k, v) { return idb().then(function (db) { return new Promise(function (ok, no) { var t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = function () { ok(); }; t.onerror = function () { no(t.error); }; }); }); }
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
   function load() { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } }
   function save(st) {
-    try { var o = {}; PERSIST.forEach(function (k) { if (st[k] !== undefined) o[k] = st[k]; }); localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+    var o = {};
+    PERSIST.forEach(function (k) {
+      if (st[k] === undefined) return;
+      if (BIG[k]) { if (lastBig[k] !== st[k]) { lastBig[k] = st[k]; idbPut(KEY + ':' + k, st[k]).catch(function (e) { console.error('Não foi possível gravar ' + k, e); }); } }
+      else o[k] = st[k];
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+  }
+  function loadBig(comp) {
+    Object.keys(BIG).forEach(function (k) {
+      idbGet(KEY + ':' + k).then(function (v) {
+        var cur = comp.state[k];
+        if (v && typeof v === 'object' && !Array.isArray(v) && cur && typeof cur === 'object') v = Object.assign({}, cur, v);
+        if (v !== undefined) { comp.state = Object.assign({}, comp.state, (function () { var x = {}; x[k] = v; return x; })()); }
+        if (comp.state[k] !== undefined) { lastBig[k] = undefined; save(comp.state); }
+        schedule();
+      }).catch(function () {});
+    });
   }
 
   function lit(p) {
@@ -182,6 +211,7 @@
     var Comp = new Function('DCLogic', sEl.textContent + '\n;return Component;')(DCLogic);
     comp = new Comp({});
     comp.state = Object.assign({}, comp.state || {}, load());
+    loadBig(comp);
     ['click', 'input', 'change', 'submit', 'keydown', 'keyup', 'focus', 'blur', 'dblclick', 'pointerdown', 'pointerup'].forEach(function (t) { document.addEventListener(t, dispatch, t === 'focus' || t === 'blur'); });
     update();
     x.style.display = 'block';
