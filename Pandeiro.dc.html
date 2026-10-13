@@ -88,7 +88,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
 <sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
-<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+<div style="position: relative"><img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF"><button onClick="{{pc.del}}" aria-label="Apagar foto" style="position: absolute; top: 6px; right: 6px; width: 32px; height: 32px; border-radius: 99px; border: 0; background: rgba(14,21,19,0.78); color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1; cursor: pointer">×</button></div>
 </sc-for>
 </div>
 </sc-if>
@@ -157,7 +157,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
 <sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
-<img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF">
+<div style="position: relative"><img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF"><button onClick="{{pc.del}}" aria-label="Apagar foto" style="position: absolute; top: 6px; right: 6px; width: 32px; height: 32px; border-radius: 99px; border: 0; background: rgba(14,21,19,0.78); color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1; cursor: pointer">×</button></div>
 </sc-for>
 </div>
 </sc-if>
@@ -288,7 +288,7 @@ class Component extends DCLogic {
         lyr: 'https://www.google.com/search?q=' + encodeURIComponent(LYRQ + ' ' + i[0] + ' ' + i[1]),
         lyrLabel: LYRL,
         ytDisp: ytv === null ? 'none' : 'inline-flex', yt: ytv ? 'https://www.youtube.com/watch?v=' + ytv : 'https://www.youtube.com/results?search_query=' + encodeURIComponent(i[1] + ' ' + i[0]),
-        pics: pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0] }; }), hasPics: pics.length > 0,
+        pics: pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0], del: function (e) { if (e && e.stopPropagation) e.stopPropagation(); var all = Object.assign({}, (self.state || {}).pics || {}); var arr = (all[skey] || []).slice(); arr.splice(n, 1); if (arr.length) all[skey] = arr; else delete all[skey]; self.setState({ pics: all }); } }; }), hasPics: pics.length > 0,
         canUpload: !(i[5] && i[5].length), upLabel: pics.length ? 'Inserir outra imagem' : 'Inserir imagem da ' + LYRT.toLowerCase(),
         lyrTitle: LYRT.toUpperCase(), tid: 'img-' + cur.id + '-' + idx,
         onFile: function (e) {
