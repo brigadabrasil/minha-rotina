@@ -110,6 +110,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 </div>
 <div style="display: {{tqDisp}}; flex-direction: column; gap: 8px">
 <div style="font-size: 13px; color: #9DACA6; padding: 2px 4px">{{tqHead}}</div>
+<a href="{{tqPl}}" target="_blank" rel="noopener" style="display: {{tqPlDisp}}; align-self: flex-start; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none; background: #E5484D; color: #FFFFFF">▶ Ouvir playlist</a>
 <sc-for list="{{tqItems}}" as="it" hint-placeholder-count="3">
 <div style="border-radius: 14px; background: #16201D; border: 1px solid {{it.bd}}">
 <button onClick="{{it.toggle}}" aria-expanded="{{it.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 10px 14px; border: 0; background: transparent; color: #EEF3F0; font-family: inherit; font-size: 15px; text-align: left; cursor: pointer">
@@ -331,6 +332,7 @@ class Component extends DCLogic {
     });
     var subs = SUBS.map(function (g) { var on = g === subSel; return { label: g, n: cur.items.filter(function (i) { return (i[4] || 'Outros') === g; }).length, bg: on ? '#4CC3B5' : '#121B18', fg: on ? '#06201C' : '#EEF3F0', bd: on ? '#4CC3B5' : '#2A3833', pick: function () { self.setState({ sub: g, song: null, showAll: false }); } }; });
     var TQS = [['Samba Cabula', ''], ['Ijexá', ''], ['Nagô', ''], ['Congo', ''], ['Barravento', '']];
+    var TQ_PL = { 'Samba Cabula': 'PLH9l9WCtlD8DYDNXnMOVkNc4bQYNJjBeO', 'Ijexá': 'PLH9l9WCtlD8A-I5qZUiMLaBlZnSjVUJn_', 'Nagô': 'PLH9l9WCtlD8DMkfYezSJlwcQd4ivswBU9', 'Congo': 'PLH9l9WCtlD8B3j48KKF_Ks-mVIwt6hd7t', 'Barravento': 'PLH9l9WCtlD8CncjxUHr1qXEtlzetgZFw5' };
     var tqSel = st.tq || null;
     var tqAll = [];
     CATS.forEach(function (c) { c.items.forEach(function (it, ix) { if (it[2] === tqSel) tqAll.push([c, it, ix]); }); });
@@ -340,7 +342,7 @@ class Component extends DCLogic {
     var toqs = TQS.map(function (t) { var on = t[0] === tqSel; var n = 0; CATS.forEach(function (c) { c.items.forEach(function (it) { if (it[2] === t[0]) n++; }); });
       return { label: t[0], sub: t[1] || (n ? n + ' pontos na apostila' : 'Sem pontos na apostila'), on: on, bg: on ? '#1D2925' : '#16201D', bd: on ? '#F2A93B' : '#16201D', fg: on ? '#F2A93B' : '#EEF3F0',
         pick: function () { self.setState({ tq: on ? null : t[0], tqAll: false, tqSong: null }); } }; });
-    var SES_TQ = { toqs: toqs, tqItems: tqItems, tqDisp: tqSel ? 'flex' : 'none',
+    var SES_TQ = { toqs: toqs, tqItems: tqItems, tqDisp: tqSel ? 'flex' : 'none', tqPl: TQ_PL[tqSel] ? 'https://www.youtube.com/playlist?list=' + TQ_PL[tqSel] : '', tqPlDisp: TQ_PL[tqSel] ? 'inline-flex' : 'none',
       tqHead: tqAll.length ? tqAll.length + ' pontos com o toque ' + tqSel : 'A apostila não traz pontos com o toque ' + tqSel + '. Use-o como base e pratique os pontos dos outros toques.',
       tqMoreLabel: st.tqAll ? 'Ver menos' : 'Ver mais (' + (tqAll.length - 10) + ')', tqMoreDisp: tqAll.length > 10 ? 'block' : 'none',
       tqMoreToggle: function () { self.setState({ tqAll: !st.tqAll, tqSong: null }); } };
