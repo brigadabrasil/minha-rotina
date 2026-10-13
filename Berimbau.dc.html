@@ -93,7 +93,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
 <sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
-<div style="position: relative"><img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF"><button onClick="{{pc.del}}" aria-label="Apagar foto" style="position: absolute; top: 6px; right: 6px; width: 32px; height: 32px; border-radius: 99px; border: 0; background: rgba(14,21,19,0.78); color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1; cursor: pointer">×</button></div>
+<div style="position: relative"><img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF"><button onClick="{{pc.del}}" aria-label="Apagar foto" style="display: {{pc.delDisp}}; position: absolute; top: 6px; right: 6px; width: 32px; height: 32px; border-radius: 99px; border: 0; background: rgba(14,21,19,0.78); color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1; cursor: pointer">×</button></div>
 </sc-for>
 </div>
 </sc-if>
@@ -193,7 +193,7 @@ a{color:#4CC3B5}a:hover{color:#7DD8CD}
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 12px; font-weight: 700; color: #F2A93B; letter-spacing: 1px">{{it.lyrTitle}}</span>
 <sc-for list="{{it.pics}}" as="pc" hint-placeholder-count="1">
-<div style="position: relative"><img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF"><button onClick="{{pc.del}}" aria-label="Apagar foto" style="position: absolute; top: 6px; right: 6px; width: 32px; height: 32px; border-radius: 99px; border: 0; background: rgba(14,21,19,0.78); color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1; cursor: pointer">×</button></div>
+<div style="position: relative"><img dc-src="{{pc.src}}" alt="{{pc.alt}}" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #FFFFFF"><button onClick="{{pc.del}}" aria-label="Apagar foto" style="display: {{pc.delDisp}}; position: absolute; top: 6px; right: 6px; width: 32px; height: 32px; border-radius: 99px; border: 0; background: rgba(14,21,19,0.78); color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1; cursor: pointer">×</button></div>
 </sc-for>
 </div>
 </sc-if>
@@ -317,9 +317,10 @@ class Component extends DCLogic {
     });
     var openSong = st.song;
     var picsAll = st.pics || {};
+    var LYR_IMG = {"lad:Sou Mandingueiro": "media/lt/lad_01.png", "lad:Vou me Embora pra Bahia": "media/lt/lad_02.png", "lad:O Senhor do Engenho": "media/lt/lad_03.png", "lad:Tinha Meu Dinheiro": "media/lt/lad_04.png", "lad:Anú": "media/lt/lad_05.png", "lad:Mamãe Quero Ser Bombeiro": "media/lt/lad_06.png", "lad:Era Eu, Era Meu Mano": "media/lt/lad_07.png", "lad:O Exercito é de Batalha": "media/lt/lad_08.png", "lad:Eu Já Vivo Enjoado": "media/lt/lad_09.png", "lad:Maior é Deus": "media/lt/lad_10.png", "lad:Cartão Postal": "media/lt/lad_11.png", "lad:O Mundo de Deus é Grande": "media/lt/lad_12.png", "lad:Siri de Mangue": "media/lt/lad_13.png", "lad:Eu Nasci de 7 Meses": "media/lt/lad_14.png", "lad:Berimbau de Ouro": "media/lt/lad_15.png", "lad:Camaleão": "media/lt/lad_16.png", "lad:Quem Sou Eu": "media/lt/lad_17.png", "lad:Torpedeiro Encouraçado": "media/lt/lad_18.png", "lad:Dente de Ouro": "media/lt/lad_19.png"}; // letras da apostila (fixas no app)
     function mkItem(cur, i, idx, open, toggleFn) {
       var skey = cur.id + ':' + i[0];
-      var pics = picsAll[skey] || [];
+      var pics = picsAll[skey] || [], fixed = LYR_IMG[skey] ? [LYR_IMG[skey]] : [];
       var audio = AUD[cur.id + ':' + nrm(i[0])] || '';
       return {
         t: i[0], s: i[1], tag: i[2] || '', hasTag: !!i[2], tc: i[3] || '#EEF3F0', audio: audio, hasAudio: !!audio, ap: window.mrAp ? mrAp(audio, i[0]) : {},
@@ -328,7 +329,7 @@ class Component extends DCLogic {
         where: 'No seu OneDrive: ' + cur.dir + (cur.byItem ? ' › ' + i[1] : ''),
         lyr: 'https://www.google.com/search?q=' + encodeURIComponent(LYRQ + ' ' + i[0] + ' ' + i[1]),
         lyrLabel: LYRL,
-        pics: pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0], del: function (e) { if (e && e.stopPropagation) e.stopPropagation(); var all = Object.assign({}, (self.state || {}).pics || {}); var arr = (all[skey] || []).slice(); arr.splice(n, 1); if (arr.length) all[skey] = arr; else delete all[skey]; self.setState({ pics: all }); } }; }), hasPics: pics.length > 0,
+        pics: fixed.map(function (src) { return { src: src, alt: LYRT + ' · ' + i[0], delDisp: 'none', del: function () {} }; }).concat(pics.map(function (src, n) { return { src: src, alt: LYRT + ' ' + (n + 1) + ' · ' + i[0], delDisp: 'block', del: function (e) { if (e && e.stopPropagation) e.stopPropagation(); var all = Object.assign({}, (self.state || {}).pics || {}); var arr = (all[skey] || []).slice(); arr.splice(n, 1); if (arr.length) all[skey] = arr; else delete all[skey]; self.setState({ pics: all }); } }; })), hasPics: pics.length + fixed.length > 0,
         canUpload: !(i[5] && i[5].length), upLabel: pics.length ? 'Inserir outra imagem' : 'Inserir imagem da ' + LYRT.toLowerCase(),
         lyrTitle: LYRT.toUpperCase(), tid: 'img-' + cur.id + '-' + idx,
         onFile: function (e) {
