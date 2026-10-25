@@ -1,4 +1,4 @@
-var V = 'mr-202610131818', CORE = ["./", "index.html", "dc-lite.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "Main.dc.html", "Alimentacao.dc.html", "Capoeira.dc.html", "Surf.dc.html", "Berimbau.dc.html", "Pandeiro.dc.html", "Atabaque.dc.html", "Violao.dc.html", "Harmonica.dc.html"];
+var V = 'mr-202610242157', CORE = ["./", "index.html", "dc-lite.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "Main.dc.html", "Alimentacao.dc.html", "Capoeira.dc.html", "Surf.dc.html", "Berimbau.dc.html", "Pandeiro.dc.html", "Atabaque.dc.html", "Violao.dc.html", "Harmonica.dc.html"];
 self.addEventListener('install', function (e) { e.waitUntil(caches.open(V).then(function (c) { return c.addAll(CORE); }).then(function () { return self.skipWaiting(); })); });
 self.addEventListener('activate', function (e) { e.waitUntil(caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k !== V && k !== 'mr-media'; }).map(function (k) { return caches.delete(k); })); }).then(function () { return self.clients.claim(); })); });
 self.addEventListener('fetch', function (e) {
